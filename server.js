@@ -2,6 +2,8 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var PORT = 8080;
+var Bitpay = require("bitpay-api");
+var bitpay = new Bitpay();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -11,5 +13,7 @@ app.listen(PORT, function(){
 })
 app.get("/", (req, res)=>{
 	console.log("/");
-	res.send("Crypto shop");
+	bitpay.getBTCBestBidRates(function(err, rates) {
+		res.send("Crypto shop"+rates[1].rate);
+	});
 })
