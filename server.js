@@ -10,7 +10,8 @@ app.use(bodyParser.json());
 
 app.listen(PORT, function(){
 	console.log("Server started at:" +PORT);
-})
+});
+
 app.get("/", (req, res)=>{
 	console.log("/");
 	bitpay.getBTCBestBidRates(function(err, rates) {
