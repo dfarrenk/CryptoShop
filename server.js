@@ -2,14 +2,16 @@ var bodyParser = require("body-parser");
 var Join = require("path").join;
 var express = require("express");
 var app = express();
+var PORT = process.env.PORT || 8080;
+var Bitpay = require("bitpay-api");
+var bitpay = new Bitpay();
+var blockexplorer = require('blockchain.info/blockexplorer'); //another way to get a TXID confirmation
 
 const _ = require("lodash");
 const CookieParser = require("cookie-parser");
 const Passport = require("./config/jwt.js");
 const Jwt = require("jsonwebtoken");
 const jwtConfig = require("./config/jwt_config.js");
-
-var PORT = process.env.PORT || 8080;
 
 const http = require("http"); // with this pattern we can easily switch to https later
 const server = http.createServer(app); // with this pattern we can easily switch to https later
@@ -27,9 +29,15 @@ server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
 });
 
-app.get("/", (req, res) => {
-	console.log(req.path);
-	res.send("Crypto shop");
+app.get("/", (req, res)=>{
+	console.log("/");
+	bitpay.getBTCBestBidRates(function(err, rates) {
+		res.send("Crypto shop\n"+rates[1].name+" : "+ rates[1].rate);
+	});
+})
+
+app.get("/txid/:TXID", (req, res)=>{
+	res.send(blockexplorer.getTx(req.params.TXID));
 });
 
 /*
