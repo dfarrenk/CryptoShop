@@ -14,6 +14,6 @@ app.listen(PORT, function(){
 app.get("/", (req, res)=>{
 	console.log("/");
 	bitpay.getBTCBestBidRates(function(err, rates) {
-		res.send("Crypto shop"+rates[1].rate);
+		res.send("Crypto shop\n"+rates[1].name+" : "+ rates[1].rate);
 	});
 })
