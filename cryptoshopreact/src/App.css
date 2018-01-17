@@ -40,10 +40,16 @@
 }
 
 .--center>form input {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.--center>form input[type="submit"] {
+  margin-top: 0.25rem;
+  min-height: 28px;
 }
 
 .--center>form a {
+  margin-top: 0.75rem;
   text-align: right;
   cursor: pointer;
   user-select: none;

@@ -5,20 +5,18 @@ const Passport = require("../config/jwt.js");
 const { jwtOpts: config } = require("../config/config.js")("dev");
 
 module.exports = function() {
-
 	authRoute.post("/login", function(req, res) {
 		// console.log(req.body);
-		const { username: name, password } = req.body;
+		const { username, password, email } = req.body;
 
-		if (!name || !password) {
-			res
-				.status(401)
-				.send("Error 401, required user to filled up the form before post");
+		if (!username || !password) { // not neccessary
+			res.status(401).send("Error 401, username or password missing");
 			return;
 		}
 
 		// usually this would be a database call:
-		const user = Users[_.findIndex(Users, { username: name })];
+		const searchField = email ? { email } : { username };
+		const user = Users[_.findIndex(Users, searchField)];
 
 		if (!user) {
 			res.status(401).json({ message: "no such user found" });
@@ -57,11 +55,13 @@ const Users = [
 	{
 		_id: 1,
 		username: "71emj",
+		email: "tim.jeng@gmail.com",
 		password: "11111111"
 	},
 	{
 		_id: 2,
 		username: "timjeng",
+		email: "tim.jeng@outlook.com",
 		password: "22222222"
 	}
 ];
