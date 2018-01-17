@@ -6,6 +6,7 @@ var PORT = process.env.PORT || 8080;
 var Bitpay = require("bitpay-api");
 var bitpay = new Bitpay();
 var blockexplorer = require('blockchain.info/blockexplorer'); //another way to get a TXID confirmation
+var mongoose = require("mongoose");
 
 const _ = require("lodash");
 const CookieParser = require("cookie-parser");
@@ -24,6 +25,12 @@ app.use(Passport.initialize());
 app.use(CookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongooseScraper";
+mongoose.connect(MONGODB_URI);
 
 server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
