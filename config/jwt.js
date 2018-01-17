@@ -4,7 +4,7 @@ const JwtStrategy = PassportJwt.Strategy;
 const Jwt = require("jsonwebtoken");
 const Bcrypt = require("bcrypt");
 const base64Url = require("base64-url");
-const config = require("./jwt_config.js");
+const { jwtOpts: config } = require("./config.js")("dev");
 const _ = require("lodash");
 
 const Users = [
@@ -21,7 +21,7 @@ const Users = [
 ];
 
 Passport.use(new JwtStrategy(config, function(jwt_payload, next) {
-	
+
 	console.log("this is payload", jwt_payload);
 
 	const user = Users[_.findIndex(Users, { _id: jwt_payload._id })];
