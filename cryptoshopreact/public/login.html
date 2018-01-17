@@ -47,13 +47,13 @@
 	}
 
 	function getMainPage(token) {
-
+		
 		$.ajax({
 			method: "GET",
-			url: "/user",
-			beforeSend: function(request) {
-				request.setRequestHeader("Authorization", `bearer ${token}`);
-			}
+			url: "/user"
+			// beforeSend: function(request) {
+			// 	request.setRequestHeader("Authorization", `bearer ${token}`);
+			// }
 		}).then((res) => {
 			console.log("authorized");
 			location.assign("/user");
