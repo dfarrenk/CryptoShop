@@ -7,6 +7,7 @@ var Bitpay = require("bitpay-api");
 var bitpay = new Bitpay();
 var blockexplorer = require('blockchain.info/blockexplorer'); //another way to get a TXID confirmation
 var mongoose = require("mongoose");
+var db = require("./models");
 
 const _ = require("lodash");
 const CookieParser = require("cookie-parser");
@@ -29,7 +30,7 @@ app.use(bodyParser.json());
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongooseScraper";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/crypto";
 mongoose.connect(MONGODB_URI);
 
 server.listen(PORT, function(err) {
@@ -109,3 +110,26 @@ app.get("/user", Passport.authenticate("jwt", { session: false }), function(req,
 	res.status(200).send("Success! You can not see this without a token");
 });
 
+
+//Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
+app.get("/api/user", function(req, res) {
+	db.User
+		.find({})
+		.then(function(dbUser) {
+			res.json(dbUser);	
+		})
+		.catch(function(err) {
+			res.json(err);
+		});
+});
+
+//Test route to add a User
+app.get("/api/user/testUser", function(req, res) {
+	let testUser = { name: "testUser", password: "1234", email: "testUser@gmail.com"};
+	db.User
+		.create(testUser)
+		.then(function() {
+			console.log(`User inserted`);
+		});
+	
+});
