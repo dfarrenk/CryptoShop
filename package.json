@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/dfarrenk/project-3/issues"
   },
-  "homepage": "https://github.com/dfarrenk/project-3#readme"
+  "homepage": "https://github.com/dfarrenk/project-3#readme",
+  "dependencies": {}
 }

@@ -5,29 +5,28 @@ body {
   /*background: radial-gradient(#f6a705, #fcfcfc);*/
   /*background: url("./assets/images/bitcoinLogo.png")center no-repeat;*/
   font-family: 'Josefin Sans', sans-serif;
+}
 
-
+.container-fluid {
+  padding: 0;
 }
 
 #topNav {
   background: linear-gradient(#ffffff, #4069ac);
 }
 
-#searchBar input[type=search] {
-  width: 40%;
-}
 
 #cover {
   height: 25%;
   align-items: center;
   background: #4069ac;
   color: white;
-  /*text-shadow: 2px 2px 15px black;*/
+  text-shadow: 2px 2px 15px black;
 }
 
 #searchBtn {
   background: #f6a705;
-  padding: .5% 4%;
+  /*padding: .5% 4%;*/
   color: white;
 }
 
@@ -38,58 +37,48 @@ body {
   padding: 5px;
 }
 
+#footer {
+  margin: 0 auto;
+  background: #4068ab;
+}
+
 #footText {
   margin-bottom: auto;
 }
 
 
-@media (max-width: 992px) {
-
-  #navbarSupportedContent {
-    left: 91%;
-    position: relative;
-  }
-
+#fullWidth {
+  display: inline-block;
 }
 
-@media (max-width: 767px) {
-
-  #navbarSupportedContent {
-    left: 90%;
-    position: relative;
-  }
-
+#fullWidth a:hover {
+  background-color: rgba(251, 251, 255, 0.4);
 }
 
-@media (max-width: 737px) {
-
-  #navbarSupportedContent {
-    left: 88%;
-    position: relative;
-  }
-
+#fullWidth a:active {
+  background-color: rgba(64, 104, 171, 0.4);
 }
 
-@media (max-width: 500px) {
-
-  #navbarSupportedContent {
-    left: 79%;
-    position: relative;
-  }
-
+.sidebar-card {
+  background: #4068ab;
+  padding-top: 20%;
 }
 
-@media (max-width: 499px) {
-
-  #navbarSupportedContent {
-    left: 79%;
-    position: relative;
-  }
-
+.card-size {
+  width: 200px;
+  height: auto;
+  margin: auto;
+  margin-top: 5%;
 }
 
-/*#navbarSupportedContent {*/
+.nav-link:hover {
+  background: #b5bec6;
+}
 
-/*  margin-left: 65%;*/
+.nav-link:active {
+  background: #4068ab;
+}
 
-/*}*/
+.nav-link:visited {
+  background: #4068ab;
+}

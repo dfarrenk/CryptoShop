@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>The CryptoShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="sidebar.css">
+</head>
+
+<body>
+
+  <!-- Bootstrap Nav-->
+
+  <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
+    <a class="navbar-brand" href="#">
+        <img src="./assets/images/cryptoLogo-transBlack.png" width="200" alt="cryptoLogo" />
+      </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span style="color: white;"> Menu</span>
+      </button>
+    <form class="form-inline" id=searchBar action="/searchResults" method="GET">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button id="searchBtn" class="btn my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        <li class="nav-item">
+          <a class="nav-link" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#menu-toggle" class="btn btn-secondary" id="menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#profileShow" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
+
+  <!-- Page Wrapper-->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <div class="card sidebar-card" style="width: 15.6rem;">
+        <div class="card-header text-center">
+          Xchange Rates per 1 coin
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Bitcoin: $10,813 </li>
+          <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
+          <li class="list-group-item">Ethereum: $967.62</li>
+          <li class="list-group-item">Dash: $766.66</li>
+          <li class="list-group-item">Byteball Bytes: $723.21</li>
+          <li class="list-group-item">Litecoin: $175.17</li>
+        </ul>
+      </div>
+
+      <div class="card sidebar-card" style="width: 15.6rem;">
+        <div class="card-header text-center">
+          Recent Searches
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Your search Here</li>
+          <li class="list-group-item">Your search Here</li>
+          <li class="list-group-item">Your search Here</li>
+          <li class="list-group-item">Your search Here</li>
+          <li class="list-group-item">Your search Here</li>
+        </ul>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="col">
+          <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+              <a class="btn nav-link" data-target=".showName" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showName">Name & Address Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn nav-link" data-target=".showUsername" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showUsername">Username & Password</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn nav-link" data-target=".showBilling" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showBilling">Billing Details</a>
+            </li>
+          </ul>
+        </div>
+
+
+        <!-- Row to hold user's data -->
+        <div class="row text-center">
+
+          <!-- Cards displaying name and address info -->
+          <div class="col collapse multi-collapse showName">
+            <div class="card card-size">
+              <img class="card-img-top" src="http://via.placeholder.com/200x150" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Item heading</h5>
+                <p class="card-text">description of item</p>
+                <p class="card-text">Price of item</p>
+                <a href="#" class="btn btn-primary">Buy It Now</a>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+        </div>
+        <!-- /div row -->
+      </div>
+      <!-- /container-fluid -->
+
+
+
+
+      <!-- Footer -->
+      <div class="container-fluid fixed-bottom" id="footer">
+        <div class="row text-center justify-content-center">
+          <nav class="navbar sticky-bottom navbar-light">
+            <a class="navbar-brand">
+                <img src="./assets/images/cryptoLogo-transBlack.png" width="150" alt="cryptoLogo" />
+                <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. <br> All rights reserved.</p>
+              </a>
+          </nav>
+        </div>
+      </div>
+
+
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+</body>
+
+</html>
