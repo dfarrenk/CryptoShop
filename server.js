@@ -68,7 +68,8 @@ app.get("/login", (req, res) => {
 	// res.clearCookie("jwt-token");
 	console.log(req.path);
 	// res.send("/login");
-	res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
+	res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
+	// res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
 });
 
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.

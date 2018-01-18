@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { login, register } from "./util/auth";
+import fields from "./authconfig.json";
 import "./style.css";
 
 class Login extends Component {
@@ -10,103 +11,97 @@ class Login extends Component {
 			password: "",
 			passconfirm: "",
 			email: "",
+			fields: fields,
 			isLogin: true
 		};
 	}
 
 	inputHandler = evt => {
-		let { name, value } = evt.target;
-
-		if (value.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
-			name = "email";
-		}
-
-		this.setState({
-			[name]: value
-		});
+		const { name, value } = evt.target;
+		this.setState({ [name]: value });
 	};
 
 	submitHandler = evt => {
 		evt.preventDefault();
-		const { isLogin } = this.state;
+		const { isLogin, fields } = this.state;
+
+		for (let elem in fields) {
+			delete fields[elem].err;
+		}
 
 		isLogin
 			? login(this.state)
 					.then(this.responseHandler)
-					.catch(this.validationHandler)
+					.catch(err => this.validationHandler(err, fields))
 			: register(this.state)
 					.then(this.responseHandler)
-					.catch(this.validationHandler);
+					.catch(err => this.validationHandler(err, fields));
 
 		console.log(this.state);
+
 		this.setState({
 			password: "",
-			passconfirm: "",
-			isLogin: true
+			passconfirm: ""
 		});
 	};
 
-	validationHandler = error => {
-		console.log(error);
-		// switch (error) {
+	validationHandler = (error, fields) => {
+		const errMsg = (e, keyword) => {
+			let errname = null;
+
+			e.match(/email/) && (errname = "email");
+			e.match(/username/) && (errname = "username");
+			e.match(/password/) && (errname = "password");
+			e.match(/passconfirm/) && (errname = "passconfirm");
 			
-		// }
+			fields[errname].err = `${keyword} ${errname}`;
+			this.setState({ fields: fields });
+		};
+
+		const e = error;
+		switch (true) {
+			case !!e.match(/missing/):
+				errMsg(e, "missing");
+				break;
+			case !!e.match(/invalid/):
+				errMsg(e, "invalid");
+				break;
+			case !!e.match(/mismatched/):
+				errMsg(e, "mismatched");
+				break;
+			default:
+				console.log("wrong place");
+		}
 	};
 
 	responseHandler = response => {
 		console.log(response);
 		if (response.status === 200) {
-			// window.location.assign("/user"); // not working as expected
+			window.location.assign("/"); // not working as expected
 		}
 	};
 
 	renFooter() {
 		const { isLogin } = this.state;
 		const msg = isLogin ? "New User?" : "Already Registered?";
-
+		
 		return <a onClick={() => this.setState({ isLogin: !isLogin })}>{msg}</a>;
 	}
 
 	renLogin() {
-		const fields = [
-			{
-				name: "username",
-				val: "Username or Email"
-			},
-			{
-				name: "password",
-				val: "Password",
-				type: "password"
-			}
-		];
+		const { username, password } = this.state.fields;
+		username.val = "username or email";
+		password.val = "password";
+		const loginFields = [ username, password ];
 
-		return this.renderFields(fields);
+		return this.renderFields(loginFields);
 	}
 
 	renRegister() {
-		const fields = [
-			{
-				name: "username",
-				val: "Username"
-			},
-			{
-				name: "email",
-				val: "Email Address",
-				type: "email"
-			},
-			{
-				name: "password",
-				val: "Password",
-				type: "password"
-			},
-			{
-				name: "passwordconfirm",
-				val: "Confirm Your Password",
-				type: "password"
-			}
-		];
+		const { username, password, email, passconfirm } = this.state.fields;
+		const registerFields = [ username, email, password, passconfirm ];
 
-		return this.renderFields(fields);
+		return this.renderFields(registerFields);
 	}
 
 	renderFields(args) {
@@ -114,14 +109,14 @@ class Login extends Component {
 			return (
 				<div key={index} className="form-group">
 					<label htmlFor={elem.name}>
-						{elem.name.replace(/\b\w/g, elem => elem.toUpperCase()) + ": "}
+						{elem.label}
 					</label>
 					<input
-						type={elem.type ? elem.type : "text"}
+						type={elem.type}
 						onChange={this.inputHandler}
 						name={elem.name}
 						id={elem.name}
-						placeholder={elem.val}
+						placeholder={elem.err || elem.val}
 						className="form-control"
 						value={this.state[elem.name]}
 					/>
