@@ -1,8 +1,9 @@
 class Validator {
-	set Setprops(args) {
+	Setprops(args) {
 		for (let elem in args) {
 			this[elem] = args[elem];
 		}
+		return this;
 	}
 
 	get Allprops() {
@@ -12,16 +13,18 @@ class Validator {
 	validate() {
 		const props = this.Allprops;
 		const invalid = props.reduce((obj, elem) => {
-			obj[elem[0]] =
-				this.isBlank(elem[1], elem[0]) || this.isInvalidFormat(elem[1], elem[0])
-					? 0
-					: 1;
+			const isBlank = this.isBlank(elem[1], elem[0]);
+			const isInvalid = this.isInvalidFormat(elem[1], elem[0]);
+
+			obj[elem[0]] = isBlank || isInvalid ? isBlank || isInvalid : 0;
+
 			return obj;
 		}, {});
 
+		console.log(invalid);
 		for (let elem in invalid) {
-			if (!invalid[elem]) {
-				return elem;
+			if (invalid[elem]) {
+				return invalid[elem];
 			}
 		}
 	}
@@ -30,7 +33,8 @@ class Validator {
 		return prop ? null : `missing ${name}`;
 	}
 
-	isInvalidFormat(prop, name) { // this can be more flexible
+	isInvalidFormat(prop, name) {
+		// this can be more flexible
 		switch (name) {
 			case "email":
 				return !!prop.match(/(.*?@[a-z]+\.[a-z]+)+$/g) ? null : "invalid email";
@@ -39,7 +43,7 @@ class Validator {
 				return !!prop.match(/.{8,}/) ? null : "invalid password";
 				break;
 			case "passconfirm":
-				return this.password === prop ? null : "password must matched";
+				return this.password === prop ? null : "mismatched password";
 			default:
 				return null;
 		}
