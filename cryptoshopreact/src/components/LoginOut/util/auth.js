@@ -3,20 +3,20 @@ import Validator from "./validate";
 
 const login = fields => {
 	return new Promise((resolve, reject) => {
-		const { email, username, password } = fields;
+		const { username, password } = fields;
 		const validator = new Validator();
-		const data = {
-			username: username,
-			email: email,
-			password: password
-		};
+		const data = { username, password };
 
-		email ? delete data.username : delete data.email;
+		if (username.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
+			console.log("it's email format");
+			data.email = username;
+			delete data.username;
+		}
 
-		validator.Setprops = data;
-		const invalid = validator.validate();
+		const invalid = validator.Setprops(data).validate();
 		if (invalid) {
-			return reject("THIs is invalid: " + invalid);
+			console.log(invalid);
+			return reject(invalid);
 		}
 
 		resolve(axios.post("/login", data));
@@ -24,15 +24,20 @@ const login = fields => {
 };
 
 const register = fields => {
-	const { email, username, password, passconfirm } = fields;
+	return new Promise((resolve, reject) => {
+		const { email, username, password, passconfirm } = fields;
+		const validator = new Validator();
+		const data = { username, email, password, passconfirm };
 
-	const data = {
-		username: username,
-		email: email,
-		password: password
-	};
+		const invalid = validator.Setprops(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
 
-	return axios.post("/register", data);
+		delete data.passconfirm;
+		resolve(axios.post("/register", data));
+	});
 };
 
 export { login, register };

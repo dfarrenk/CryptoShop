@@ -3,9 +3,16 @@ const ExtractJwt = PassportJwt.ExtractJwt;
 const Jwt = require("jsonwebtoken");
 
 function ExtractFromCookie(req) {
-	const { authenticated, token } = req.session;
+	const { authenticated, token, key } = req.session;
+
 	if (authenticated) {
-		return token;
+		try {
+			const decoded = Jwt.verify(token, key); // decode with private key first
+			return decoded.token;
+		} catch(err) {
+			console.log(err);
+			return err;
+		}
 	}
 	return null;
 }
