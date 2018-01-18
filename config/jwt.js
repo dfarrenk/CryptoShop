@@ -11,27 +11,30 @@ const Users = [
 	{
 		_id: 1,
 		username: "71emj",
+		email: "tim.jeng@gmail.com",
 		password: "11111111"
 	},
 	{
 		_id: 2,
 		username: "timjeng",
+		email: "tim.jeng@outlook.com",
 		password: "22222222"
 	}
 ];
 
-Passport.use(new JwtStrategy(config, function(jwt_payload, next) {
 
+const strategy = new JwtStrategy(config, function(jwt_payload, next) {
 	console.log("this is payload", jwt_payload);
 
 	const user = Users[_.findIndex(Users, { _id: jwt_payload._id })];
-	
+
 	if (!user) {
 		return next(null, false);
 	}
-	
-	return next(null, user);
-}));
 
+	return next(null, user);
+});
+
+Passport.use(strategy);
 
 module.exports = Passport;

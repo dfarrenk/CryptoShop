@@ -16,7 +16,7 @@ module.exports = function(dev) {
 	const server_config = {
 		port: process.env.PORT || 8080,
 		authyAPIKey: process.env.AUTHY_API_KEY,
-		mongoURL: process.env.MONGOLAB_URI || "mongodb/localhost/cryptodb"
+		mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
 	};
 
 	const jwt_config = {
