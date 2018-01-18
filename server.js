@@ -11,7 +11,6 @@ const _ = require("lodash");
 const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
 const Passport = require("./config/jwt.js");
-const Jwt = require("jsonwebtoken");
 const { serOpts: serConf, sessOpts: sessConf } = require("./config/config.js")("dev");
 
 const http = require("http"); // with this pattern we can easily switch to https later

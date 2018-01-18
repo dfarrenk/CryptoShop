@@ -1,7 +1,8 @@
 const Jwt = require("jsonwebtoken");
+const Bcrypt = require("bcrypt");
+const Passport = require("../config/jwt.js");
 const authRoute = require("express").Router();
 const _ = require("lodash");
-const Passport = require("../config/jwt.js");
 const { jwtOpts: config } = require("../config/config.js")("dev");
 
 module.exports = function() {
@@ -9,10 +10,11 @@ module.exports = function() {
 		// console.log(req.body);
 		const { username, password, email } = req.body;
 
-		if (!username || !password) { // not neccessary
-			res.status(401).send("Error 401, username or password missing");
-			return;
-		}
+		// if (!username || !password) {
+		// 	// not neccessary
+		// 	res.status(401).send("Error 401, username or password missing");
+		// 	return;
+		// }
 
 		// usually this would be a database call:
 		const searchField = email ? { email } : { username };
@@ -27,18 +29,50 @@ module.exports = function() {
 			const payload = { _id: user._id };
 			const token = Jwt.sign(payload, config.secretOrKey);
 
-			req.session.cookie.maxAge = 6000; // timeout
+			req.session.cookie.maxAge = 12000; // timeout
 			req.session.authenticated = true;
 			req.session.token = token;
 
 			console.log(req.session);
-			res.json({ message: "ok", token: token });
+			res.status(200).json({ message: "ok", token: token });
 		} else {
 			res.status(401).json({ message: "passwords did not match" });
 		}
 	});
 
-	authRoute.get("/user", Passport.authenticate("jwt", { session: false }), function(req, res) {
+	authRoute.post("/register", function(req, res) {
+		// console.log(req.body);
+		// const { username, password, email } = req.body;
+
+		// // usually this would be a database call:
+		// const searchField = email ? { email } : { username };
+		// const user = Users[_.findIndex(Users, searchField)];
+
+		// if (!user) {
+		// 	res.status(401).json({ message: "no such user found" });
+		// }
+
+		// if (user.password === password) {
+		// 	// from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
+		// 	const payload = { _id: user._id };
+		// 	const token = Jwt.sign(payload, config.secretOrKey);
+
+		// 	req.session.cookie.maxAge = 6000; // timeout
+		// 	req.session.authenticated = true;
+		// 	req.session.token = token;
+
+		// 	console.log(req.session);
+		// 	res.status(200).json({ message: "ok", token: token });
+		// } else {
+		// 	res.status(401).json({ message: "passwords did not match" });
+		// }
+	});
+
+	authRoute.get("/user", Passport.authenticate("jwt", { session: false }), function(
+		req,
+		res
+	) {
+		// not getting get request from react
 		console.log("======================================");
 		console.log(req.session);
 		// req.session.regenerate();

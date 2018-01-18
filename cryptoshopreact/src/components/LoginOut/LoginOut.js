@@ -6,10 +6,10 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: null,
-			password: null,
-			passconfirm: null,
-			email: null,
+			username: "",
+			password: "",
+			passconfirm: "",
+			email: "",
 			isLogin: true
 		};
 	}
@@ -28,18 +28,37 @@ class Login extends Component {
 
 	submitHandler = evt => {
 		evt.preventDefault();
-		const isLogin = evt.target.value === "Login";
+		const { isLogin } = this.state;
 
 		isLogin
-			? login(this.state).then(this.responseHandler)
-			: register(this.state).then(this.responseHandler);
+			? login(this.state)
+					.then(this.responseHandler)
+					.catch(this.validationHandler)
+			: register(this.state)
+					.then(this.responseHandler)
+					.catch(this.validationHandler);
 
 		console.log(this.state);
+		this.setState({
+			password: "",
+			passconfirm: "",
+			isLogin: true
+		});
 	};
 
-	responseHandler = (response) => {
+	validationHandler = error => {
+		console.log(error);
+		// switch (error) {
+			
+		// }
+	};
+
+	responseHandler = response => {
 		console.log(response);
-	}
+		if (response.status === 200) {
+			// window.location.assign("/user"); // not working as expected
+		}
+	};
 
 	renFooter() {
 		const { isLogin } = this.state;
@@ -104,6 +123,7 @@ class Login extends Component {
 						id={elem.name}
 						placeholder={elem.val}
 						className="form-control"
+						value={this.state[elem.name]}
 					/>
 				</div>
 			);

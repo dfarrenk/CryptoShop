@@ -1,20 +1,31 @@
 import axios from "axios";
+import Validator from "./validate";
 
-const login = (fields) => {
-	const { email, username, password } = fields;
-	const data = {
-		username: username,
-		email: email,
-		password: password
-	};
+const login = fields => {
+	return new Promise((resolve, reject) => {
+		const { email, username, password } = fields;
+		const validator = new Validator();
+		const data = {
+			username: username,
+			email: email,
+			password: password
+		};
 
-	email ? delete data.username : delete data.email;
+		email ? delete data.username : delete data.email;
 
-	return axios.post("/login", data);
-}
+		validator.Setprops = data;
+		const invalid = validator.validate();
+		if (invalid) {
+			return reject("THIs is invalid: " + invalid);
+		}
 
-const register = (fields) => {
-	const { email, username, password } = fields;
+		resolve(axios.post("/login", data));
+	});
+};
+
+const register = fields => {
+	const { email, username, password, passconfirm } = fields;
+
 	const data = {
 		username: username,
 		email: email,
@@ -22,11 +33,6 @@ const register = (fields) => {
 	};
 
 	return axios.post("/register", data);
-}
+};
 
-const validation = () => {
-	return;
-}
-
-
-export { login, register, validation };
+export { login, register };
