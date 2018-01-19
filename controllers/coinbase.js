@@ -20,3 +20,10 @@ client.getAccounts({}, function(err, accounts) {
 client.createAccount({'name': 'New Wallet'}, function(err, acct) {
 	console.log(acct.name + ': ' + acct.balance.amount + ' ' + acct.balance.currency);
 });
+
+// testing
+// const someRoute = require("express").Router();
+
+// module.exports = function() {
+// 	return someRoute;
+// }

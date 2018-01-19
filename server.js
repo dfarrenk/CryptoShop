@@ -1,8 +1,7 @@
-var bodyParser = require("body-parser");
 var Join = require("path").join;
+var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
-var PORT = process.env.PORT || 8080;
 var Bitpay = require("bitpay-api");
 var bitpay = new Bitpay();
 var mongoose = require("mongoose");
@@ -13,11 +12,18 @@ var blockexplorer = require("blockchain.info/blockexplorer"); //another way to g
 const _ = require("lodash");
 const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
+const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
-const { serOpts: serConf, sessOpts: sessConf } = require("./config/config.js")("dev");
+const { serOpts: serConf, sessOpts: sessConf, httpsOpts: httpsConf } = require("./config/config.js")("dev");
+const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
-const http = require("http"); // with this pattern we can easily switch to https later
-const server = http.createServer(app); // with this pattern we can easily switch to https later
+const http = require("http"); 
+const server = http.createServer(app); 
+
+// https setup
+const https = require("https");
+const certificate = httpsConf;
+const server_s = https.createServer(certificate, app);
 
 // const static = Join(__dirname, "./cryptoshopreact/public");
 // app.use(express.static(static));
@@ -29,18 +35,23 @@ app.use(ExpSess(sessConf));
 // app.use(CookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
 
-// Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
+var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/crypto";
 mongoose.connect(MONGODB_URI);
 
 server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
 });
+
+server_s.listen(PORTs, function(err) {
+	console.log("Https server running on port %s", server_s.address().port);
+});
+
 
 app.get("/", (req, res) => {
 	console.log("/");
