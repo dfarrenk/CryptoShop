@@ -18,6 +18,27 @@ let UserSchema = new Schema({
         unique: true,
         trim: true
     },
+    address: {
+        type: String,
+        trim: true
+    },
+    // Appartment, Studio, or Floor.
+    addresstwo: {
+        type: String,
+        trim: true
+    },
+    city: {
+        type: String,
+        trim: true
+    },
+    state: {
+        type: String,
+        trim: true
+    },    
+    zip: {
+        type: String,
+        trim: true
+    },
     salt: {
         type: String
     },
