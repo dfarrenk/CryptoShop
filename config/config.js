@@ -1,6 +1,10 @@
 const PassportJwt = require("passport-jwt");
+const Fs = require("fs");
 const ExtractJwt = PassportJwt.ExtractJwt;
 const Jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 function ExtractFromCookie(req) {
 	const { authenticated, token, key } = req.session;
@@ -9,7 +13,7 @@ function ExtractFromCookie(req) {
 		try {
 			const decoded = Jwt.verify(token, key); // decode with private key first
 			return decoded.token;
-		} catch(err) {
+		} catch (err) {
 			console.log(err);
 			return err;
 		}
@@ -20,14 +24,20 @@ function ExtractFromCookie(req) {
 module.exports = function(dev) {
 	const devMode = dev === "dev";
 
+	const https_config = {
+		pfx: Fs.readFileSync("./encryption/crypto.pfx"),
+		passphrase: process.env.TLS_CERT_PASS
+	};
+
 	const server_config = {
 		port: process.env.PORT || 8080,
+		httpsPort: process.env.PORT || 443,
 		authyAPIKey: process.env.AUTHY_API_KEY,
 		mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
 	};
 
 	const jwt_config = {
-		secretOrKey: devMode ? "some secret" : process.env.API_SECRET,
+		secretOrKey: devMode ? "some secret" : process.env.JWT_SECRET,
 		jwtFromRequest: ExtractFromCookie,
 		algorithms: "HS256"
 	};
@@ -44,5 +54,5 @@ module.exports = function(dev) {
 		}
 	};
 
-	return { serOpts: server_config, jwtOpts: jwt_config, sessOpts: session_config };
+	return { httpsOpts: https_config, serOpts: server_config, jwtOpts: jwt_config, sessOpts: session_config };
 };

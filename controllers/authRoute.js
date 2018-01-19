@@ -1,4 +1,5 @@
 const Passport = require("../config/jwt.js");
+const Fs = require("fs");
 const authRoute = require("express").Router();
 
 const _ = require("lodash");
@@ -8,7 +9,7 @@ const signToken = require("../lib/signToken.js");
 const Users = require("../models").User;
 
 module.exports = function() {
-	
+
 	authRoute.post("/login", function(req, res) {
 		console.log(req.body);
 		const { username, password, email } = req.body;
