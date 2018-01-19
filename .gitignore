@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# csr RSA certificate
+.csr
+
+# Encryptions 
+encryption/

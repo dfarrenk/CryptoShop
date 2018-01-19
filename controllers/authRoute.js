@@ -8,7 +8,7 @@ const signToken = require("../lib/signToken.js");
 const Users = require("../models").User;
 
 module.exports = function() {
-	
+
 	authRoute.post("/login", function(req, res) {
 		console.log(req.body);
 		const { username, password, email } = req.body;
@@ -85,21 +85,3 @@ module.exports = function() {
 
 	return authRoute;
 };
-
-// temp database sim
-// const Users = [
-// 	{
-// 		_id: 1,
-// 		username: "71emj",
-// 		email: "tim.jeng@gmail.com",
-// 		password: "11111111",
-// 		publicKey: "iam71emj"
-// 	},
-// 	{
-// 		_id: 2,
-// 		username: "timjeng",
-// 		email: "tim.jeng@outlook.com",
-// 		password: "22222222",
-// 		publicKey: "iamtimjeng"
-// 	}
-// ];
