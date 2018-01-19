@@ -22,6 +22,39 @@
   font-size: large;
 }
 
+.--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.--center>form {
+  flex: 1;
+  min-height: 15rem;
+  padding: 1rem;
+}
+
+.--center>form input {
+  margin-bottom: 0.5rem;
+}
+
+.--center>form input[type="submit"] {
+  margin-top: 0.25rem;
+  min-height: 28px;
+}
+
+.--center>form a {
+  margin-top: 0.75rem;
+  text-align: right;
+  cursor: pointer;
+  user-select: none;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
