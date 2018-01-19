@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { login, register } from "./util/auth";
+import { login, register } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 

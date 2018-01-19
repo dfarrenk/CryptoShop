@@ -14,11 +14,16 @@ const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
-const { serOpts: serConf, sessOpts: sessConf, httpsOpts: httpsConf } = require("./config/config.js")("dev");
+const {
+	server_config: serConf,
+	session_config: sessConf,
+	https_config: httpsConf,
+	forceSSL_config: fsslConf
+} = require("./config/config.js")("dev");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
-const http = require("http"); 
-const server = http.createServer(app); 
+const http = require("http");
+const server = http.createServer(app);
 
 // https setup
 const https = require("https");
@@ -28,14 +33,13 @@ const server_s = https.createServer(certificate, app);
 // const static = Join(__dirname, "./cryptoshopreact/public");
 // app.use(express.static(static));
 // app.use("*", express.static(static));
+app.set("forceSSLOptions", fsslConf);
 
-app.use(Passport.initialize());
 app.use(ExpSess(sessConf));
-
-// app.use(CookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(ForceSSL);
+app.use(Passport.initialize());
 
 app.all("*", require("./controllers")); // all router
 
@@ -51,7 +55,6 @@ server.listen(PORT, function(err) {
 server_s.listen(PORTs, function(err) {
 	console.log("Https server running on port %s", server_s.address().port);
 });
-
 
 app.get("/", (req, res) => {
 	console.log("/");
