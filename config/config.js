@@ -29,9 +29,16 @@ module.exports = function(dev) {
 		passphrase: process.env.TLS_CERT_PASS
 	};
 
+	const forceSSL_config = {
+		enable301Redirects: true,
+		trustXFPHeader: false,
+		httpsPort: devMode ? 4443 : 443,
+		sslRequiredMessage: "SSL Required."
+	};
+
 	const server_config = {
 		port: process.env.PORT || 8080,
-		httpsPort: 4443,
+		httpsPort: 443,
 		authyAPIKey: process.env.AUTHY_API_KEY,
 		mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
 	};
@@ -54,5 +61,5 @@ module.exports = function(dev) {
 		}
 	};
 
-	return { httpsOpts: https_config, serOpts: server_config, jwtOpts: jwt_config, sessOpts: session_config };
+	return { https_config, forceSSL_config, server_config, jwt_config, session_config };
 };
