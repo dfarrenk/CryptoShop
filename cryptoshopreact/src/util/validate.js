@@ -38,10 +38,8 @@ class Validator {
 		switch (name) {
 			case "email":
 				return !!prop.match(/(.*?@[a-z]+\.[a-z]+)+$/g) ? null : "invalid email";
-				break;
 			case "password": // only matching length now
 				return !!prop.match(/.{8,}/) ? null : "invalid password";
-				break;
 			case "passconfirm":
 				return this.password === prop ? null : "mismatched password";
 			default:
