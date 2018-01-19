@@ -38,7 +38,6 @@ mongoose.Promise = Promise;
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/crypto";
 mongoose.connect(MONGODB_URI);
 
-
 server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
 });
@@ -74,10 +73,9 @@ app.get("/login", (req, res) => {
 
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
-	db.User
-		.find({})
+	db.User.find({})
 		.then(function(dbUser) {
-			res.json(dbUser);	
+			res.json(dbUser);
 		})
 		.catch(function(err) {
 			res.json(err);
@@ -86,12 +84,10 @@ app.get("/api/user", function(req, res) {
 
 //Test route to add a User
 app.get("/api/user/testUser", function(req, res) {
-	let testUser = { name: "testUser", password: "1234", email: "testUser@gmail.com"};
-	db.User
-		.create(testUser)
-		.then(function() {
-			console.log(`User inserted`);
-		});
-	
+	console.log("herer");
+	let testUser = { name: "testUser", password: "1234", email: "testUser@gmail.com" };
+	db.User.create(testUser).then(function(res) {
+		console.log(`User inserted`);
+		res.status(200).json(res);
+	});
 });
-
