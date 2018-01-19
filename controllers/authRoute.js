@@ -1,5 +1,4 @@
 const Passport = require("../config/jwt.js");
-const Fs = require("fs");
 const authRoute = require("express").Router();
 
 const _ = require("lodash");
@@ -86,21 +85,3 @@ module.exports = function() {
 
 	return authRoute;
 };
-
-// temp database sim
-// const Users = [
-// 	{
-// 		_id: 1,
-// 		username: "71emj",
-// 		email: "tim.jeng@gmail.com",
-// 		password: "11111111",
-// 		publicKey: "iam71emj"
-// 	},
-// 	{
-// 		_id: 2,
-// 		username: "timjeng",
-// 		email: "tim.jeng@outlook.com",
-// 		password: "22222222",
-// 		publicKey: "iamtimjeng"
-// 	}
-// ];
