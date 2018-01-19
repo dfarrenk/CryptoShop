@@ -5,39 +5,41 @@ const _ = require("lodash");
 const hash = require("../lib/encryptor.js");
 const signToken = require("../lib/signToken.js");
 
+const Users = require("../models").User;
+
 module.exports = function() {
+	
 	authRoute.post("/login", function(req, res) {
-		// console.log(req.body);
+		console.log(req.body);
 		const { username, password, email } = req.body;
+		const searchField = email ? { email } : { name: username };
 
-		// usually this would be a database call:
-		const searchField = email ? { email } : { username };
-		const user = Users[_.findIndex(Users, searchField)];
+		Users.findOne(searchField).then(user => {
+			if (!user) {
+				return res.status(401).json({ message: "no such user found" });
+			}
 
-		if (!user) {
-			res.status(401).json({ message: "no such user found" });
-		}
+			hash
+				.compare(password, user)
+				.then(isMatched => {
+					if (isMatched) {
+						signToken(user, req.session, 5 * 60); // sign token with private key && store in session
+						console.log(req.session);
 
-		hash
-			.compare(password, user)
-			.then(isMatched => {
-				if (isMatched) {
-					signToken(user, req.session, 5 * 60); // sign token with private key && store in session
-					console.log(req.session);
-
-					res.status(200).json({ message: "ok", token: req.session.token });
-				} else {
-					res.status(401).json({ message: "passwords did not match" });
-				}
-			})
-			.catch(err => {
-				console.log(err);
-				res
-					.status(500)
-					.send(
-						"Internval Server Error. Please note that our engineer is working hard to recover it."
-					);
-			});
+						res.status(200).json({ message: "ok", token: req.session.token });
+					} else {
+						res.status(401).json({ message: "passwords did not match" });
+					}
+				})
+				.catch(err => {
+					console.log(err);
+					res
+						.status(500)
+						.send(
+							"Internval Server Error. Please note that our engineer is working hard to recover it."
+						);
+				});
+		});
 	});
 
 	authRoute.post("/register", function(req, res) {
@@ -46,21 +48,17 @@ module.exports = function() {
 
 		hash
 			.create(password, username)
-			.then(({ salt, hash, publicKey }) => {
+			.then(({ salt, hash, publickey }) => {
 				const userData = {
-					username,
+					name: username,
 					email,
 					salt,
-					publicKey,
-					password: hash,
-					_id: Users.length + 1
+					publickey,
+					password: hash
 				};
-				return Promise.resolve(Users.concat(userData)); // should be mongo
+				return Users.create(userData);
 			})
-			.then(dataBase => {
-				console.log(dataBase);
-				const user = dataBase[_.findIndex(dataBase, { username })];
-
+			.then(user => {
 				signToken(user, req.session, 5 * 60);
 
 				console.log(req.session);
@@ -89,19 +87,19 @@ module.exports = function() {
 };
 
 // temp database sim
-const Users = [
-	{
-		_id: 1,
-		username: "71emj",
-		email: "tim.jeng@gmail.com",
-		password: "11111111",
-		publicKey: "iam71emj"
-	},
-	{
-		_id: 2,
-		username: "timjeng",
-		email: "tim.jeng@outlook.com",
-		password: "22222222",
-		publicKey: "iamtimjeng"
-	}
-];
+// const Users = [
+// 	{
+// 		_id: 1,
+// 		username: "71emj",
+// 		email: "tim.jeng@gmail.com",
+// 		password: "11111111",
+// 		publicKey: "iam71emj"
+// 	},
+// 	{
+// 		_id: 2,
+// 		username: "timjeng",
+// 		email: "tim.jeng@outlook.com",
+// 		password: "22222222",
+// 		publicKey: "iamtimjeng"
+// 	}
+// ];
