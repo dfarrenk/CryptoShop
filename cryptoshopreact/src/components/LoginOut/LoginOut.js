@@ -50,13 +50,17 @@ class Login extends Component {
 			let errname = null;
 
 			e.match(/email/) && (errname = "email");
-			e.match(/username/) && (errname = "username");
+			e.match(/user?(name|)/) && (errname = "username");
 			e.match(/password/) && (errname = "password");
 			e.match(/passconfirm/) && (errname = "passconfirm");
 			
 			fields[errname].err = `${keyword} ${errname}`;
 			this.setState({ fields: fields });
 		};
+		
+		if (error.response) {
+			return this.serverError(error.response);
+		}
 
 		const e = error;
 		switch (true) {
@@ -74,6 +78,12 @@ class Login extends Component {
 		}
 	};
 
+	serverError = error => {
+		const { data: e, status } = error;
+
+		console.log(e.message);
+	}
+
 	responseHandler = response => {
 		console.log(response);
 		if (response.status === 200) {
@@ -84,7 +94,7 @@ class Login extends Component {
 	renFooter() {
 		const { isLogin } = this.state;
 		const msg = isLogin ? "New User?" : "Already Registered?";
-		
+
 		return <a onClick={() => this.setState({ isLogin: !isLogin })}>{msg}</a>;
 	}
 
