@@ -10,7 +10,7 @@ var blockexplorer = require("blockchain.info/blockexplorer"); //another way to g
 const _ = require("lodash");
 const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
-const ForceSSL = require("express-force-ssl");
+// const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const { serOpts: serConf, sessOpts: sessConf, httpsOpts: httpsConf } = require("./config/config.js")("dev");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
@@ -33,7 +33,7 @@ app.use(ExpSess(sessConf));
 // app.use(CookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(ForceSSL);
+// app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
 
