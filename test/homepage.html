@@ -17,32 +17,31 @@
 
   <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
     <a class="navbar-brand" href="#">
-        <img src="./assets/images/cryptoLogo-transBlack.png" width="200" alt="cryptoLogo" />
+        <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
       </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span style="color: white;"> Menu</span>
+    <div class="dropdown d-lg-none">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Menu
       </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>
+        <a class="nav-link menu-toggle" href="#menu-toggle" class="btn btn-secondary" style="color: black; font-size: 1.2em;">Xchange Rates</a>
+        <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
+        <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
+        <a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>
+      </div>
+    </div>
     <form class="form-inline" id=searchBar>
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button id="searchBtn" class="btn my-2 my-sm-0" type="submit">Search</button>
     </form>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto text-center">
-        <li class="nav-item">
-          <a class="nav-link" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#menu-toggle" class="btn btn-secondary" id="menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>
-        </li>
+        <a class="nav-link" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>
+        <a class="nav-link menu-toggle" href="#menu-toggle" class="btn btn-secondary" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
+        <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
+        <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>
+        <a class="nav-link" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>
       </ul>
     </div>
   </nav>
@@ -137,8 +136,8 @@
           <div class="row text-center justify-content-center">
             <nav class="navbar sticky-bottom navbar-light">
               <a class="navbar-brand">
-                <img src="./assets/images/cryptoLogo-transBlack.png" width="150" alt="cryptoLogo" />
-                <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. <br> All rights reserved.</p>
+                <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
+                <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
               </a>
             </nav>
           </div>
@@ -298,7 +297,7 @@
 
   <!-- Menu Toggle Script -->
   <script>
-    $("#menu-toggle").click(function(e) {
+    $(".menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });

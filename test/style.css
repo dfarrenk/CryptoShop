@@ -82,3 +82,12 @@ body {
 .nav-link:visited {
   background: #4068ab;
 }
+
+.dropdown-toggle {
+  color: white;
+  background-color: #4067ab;
+}
+
+.dropdown-menu {
+  color: ;
+}
