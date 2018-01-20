@@ -8,6 +8,7 @@ const signToken = require("../lib/signToken.js");
 const Users = require("../models").User;
 
 module.exports = function() {
+	
 	authRoute.post("/login", function(req, res) {
 		console.log(req.body);
 		const { username, password, email } = req.body;

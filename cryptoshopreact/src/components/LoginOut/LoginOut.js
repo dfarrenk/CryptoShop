@@ -127,7 +127,7 @@ class Login extends Component {
 						name={elem.name}
 						id={elem.name}
 						placeholder={elem.err || elem.val}
-						className="form-control"
+						className={`form-control ${elem.err && "err"}`}
 						value={this.state[elem.name]}
 					/>
 				</div>
