@@ -7,12 +7,20 @@ const signToken = require("../lib/signToken.js");
 
 const Users = require("../models").User;
 
+const DEBUG = true;
+
 module.exports = function() {
-	
 	authRoute.post("/login", function(req, res) {
-		console.log(req.body);
+		DEBUG && console.log(req.body);
 		const { username, password, email } = req.body;
 		const searchField = email ? { email } : { name: username };
+
+		// DEBUG && console.log(req.session.views);
+		// req.session.reload((err) => {
+		// 	DEBUG && console.log(err);
+		// });
+		// DEBUG && console.log("[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]");
+		// DEBUG && console.log(req.session);
 
 		Users.findOne(searchField).then(user => {
 			if (!user) {
@@ -23,16 +31,16 @@ module.exports = function() {
 				.compare(password, user)
 				.then(isMatched => {
 					if (isMatched) {
-						signToken(user, req.session, 5 * 60); // sign token with private key && store in session
-						console.log(req.session);
-
-						res.status(200).json({ message: "ok", token: req.session.token });
+						signToken(req, user, 5 * 60).then(() => {
+							DEBUG && console.log(req.session);
+							res.status(200).json({ message: "ok", token: req.session.token });
+						}).catch(DEBUG && console.log.bind(console)); // sign token with private key && store in session
 					} else {
 						res.status(401).json({ message: "passwords did not match" });
 					}
 				})
 				.catch(err => {
-					console.log(err);
+					DEBUG && console.log(err);
 					res
 						.status(500)
 						.send(
@@ -43,7 +51,7 @@ module.exports = function() {
 	});
 
 	authRoute.post("/register", function(req, res) {
-		console.log(req.body);
+		DEBUG && console.log(req.body);
 		const { username, password, email } = req.body;
 
 		hash
@@ -59,14 +67,28 @@ module.exports = function() {
 				return Users.create(userData);
 			})
 			.then(user => {
-				signToken(user, req.session, 5 * 60);
+				signToken(req, user, 5 * 60, req).then(() => {
+					DEBUG && console.log("djfadjfla");
+					DEBUG && console.log(req.sessionID);
+					// DEBUG && console.log(req)
 
-				console.log(req.session);
-				res.status(200).json({ message: "ok", token: req.session.token });
+					Users
+					.findOneAndUpdate(
+						{ _id: user.id },
+						{ $set: { sid: req.sessUid } }
+					)
+					.then(() => {
+						delete req.sessUid;
+						res.status(200).json({ message: "ok", token: req.session.token });
+					})
+					.catch(console.log.bind(console));
+
+					
+				}).catch(DEBUG && console.log.bind(console));
 			})
 			.catch(err => {
-				console.log(err);
-				res.status(401).send(err);
+				DEBUG && console.log("is this where the null is? %s", err);
+				res.status(401).send(err); // process mongo related error
 			});
 	});
 
@@ -75,12 +97,14 @@ module.exports = function() {
 		res
 	) {
 		// not getting get request from react
-		console.log("======================================");
-		console.log(req.session);
+		DEBUG && console.log("======================================");
+		DEBUG && console.log(req.sessionID);
 		// req.session.regenerate();
 
-		console.log(req.session);
-		res.status(200).send("Success! You can not see this without a token");
+		DEBUG && console.log(req.user);
+
+		DEBUG && console.log(req.session);
+		res.status(200).json(req.user);
 	});
 
 	return authRoute;

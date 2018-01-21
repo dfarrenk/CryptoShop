@@ -12,6 +12,7 @@ const strategy = new JwtStrategy(config, function(jwt_payload, next) {
 		if (!user) {
 			return next(null, false);
 		}
+
 		return next(null, user);
 	});
 });
