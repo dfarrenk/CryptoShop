@@ -2,28 +2,30 @@ var Join = require("path").join;
 var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
-var Bitpay = require("bitpay-api");
-var bitpay = new Bitpay();
+// var Bitpay = require("bitpay-api");
+// var bitpay = new Bitpay();
 var mongoose = require("mongoose");
 var db = require("./models");
 
 var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
 const _ = require("lodash");
-const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
+// const MongoStore = require("connect-mongo")(ExpSess);
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
 	server_config: serConf,
 	session_config: sessConf,
 	https_config: httpsConf,
-	forceSSL_config: fsslConf
-} = require("./config/config.js")("dev");
+	forceSSL_config: fsslConf,
+	store_config: storeConf
+} = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
 const server = http.createServer(app);
+// console.log("iiiii", MongoStore);
 
 // https setup
 const https = require("https");
@@ -34,6 +36,19 @@ const server_s = https.createServer(certificate, app);
 // app.use(express.static(static));
 // app.use("*", express.static(static));
 
+// Connect to the Mongo DB
+var MONGODB_URI = mongoURL;
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+// sessConf.store = new MongoStore(storeConf);
+
+// sessConf.store = new MongoStore({
+// 	// url: MONGODB_URI,
+// 	// mongooseConnection: mongoose.connection,
+
+// });
+
 app.use(Passport.initialize());
 app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,11 +57,6 @@ app.set("forceSSLOptions", fsslConf);
 app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
-
-// Connect to the Mongo DB
-var MONGODB_URI = mongoURL;
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
 
 server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
@@ -80,6 +90,7 @@ app.get("/login", (req, res) => {
 	console.log("get");
 	// res.clearCookie("jwt-token");
 	console.log(req.path);
+	console.log(req.session.id);
 	// res.send("/login");
 	res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
 	// res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));

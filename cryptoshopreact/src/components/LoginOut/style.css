@@ -1,0 +1,19 @@
+input.err::-webkit-input-placeholder {
+   color: red;
+}
+
+input.err::-moz-placeholder {
+   color: red;
+}
+
+input.err:-ms-input-placeholder {
+   color: red;
+}
+
+input.err:-moz-placeholder {
+   color: red;
+}
+
+input.err::placeholder {
+   color: red;
+}

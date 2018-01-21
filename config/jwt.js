@@ -2,7 +2,7 @@ const Passport = require("passport");
 const PassportJwt = require("passport-jwt");
 const JwtStrategy = PassportJwt.Strategy;
 
-const { jwt_config: config } = require("./config.js")("dev");
+const { jwt_config: config } = require("./config.js");
 const Users = require("../models").User;
 
 const strategy = new JwtStrategy(config, function(jwt_payload, next) {
@@ -12,6 +12,7 @@ const strategy = new JwtStrategy(config, function(jwt_payload, next) {
 		if (!user) {
 			return next(null, false);
 		}
+
 		return next(null, user);
 	});
 });
