@@ -2,10 +2,13 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
-    name: {
+    userName: {
         type: String,
         required: true,
         unique: true
+    },
+    realName: {
+        type: String,
     },
     password: {
         type: String,
@@ -19,25 +22,27 @@ let UserSchema = new Schema({
         trim: true
     },
     address: {
-        type: String,
-        trim: true
-    },
-    // Appartment, Studio, or Floor.
-    addresstwo: {
-        type: String,
-        trim: true
-    },
-    city: {
-        type: String,
-        trim: true
-    },
-    state: {
-        type: String,
-        trim: true
-    },    
-    zip: {
-        type: String,
-        trim: true
+        addressOne: {
+            type: String,
+            trim: true
+        },
+        // Appartment, Studio, or Floor.
+        addressTwo: {
+            type: String,
+            trim: true
+        },
+        city: {
+            type: String,
+            trim: true
+        },
+        state: {
+            type: String,
+            trim: true
+        },    
+        zip: {
+            type: String,
+            trim: true
+        }
     },
     salt: {
         type: String
