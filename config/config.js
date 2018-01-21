@@ -3,6 +3,9 @@ const Fs = require("fs");
 const ExtractJwt = PassportJwt.ExtractJwt;
 const Jwt = require("jsonwebtoken");
 const Uid = require("uid-safe");
+const EventEmitter = require("events");
+const emitter = new EventEmitter();
+
 
 const dotenv = require("dotenv");
 
@@ -34,10 +37,8 @@ function ExtractFromSession(req) {
 
 function GenUUIDAndEmit(req) {
 	const string = Uid.sync(24);
+	emitter.emit("create", string);
 	console.log("UID gen: %s", string);
-	delete req.sessUid;
-	req.sessUid = string;
-	console.log(req.sessUid);
 	return string;
 }
 
@@ -95,7 +96,8 @@ module.exports = function(dev) {
 		server_config,
 		jwt_config,
 		session_config,
-		store_config
+		store_config,
+		emitter
 	};
 };
 

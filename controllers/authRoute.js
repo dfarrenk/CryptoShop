@@ -53,6 +53,10 @@ module.exports = function() {
 	authRoute.post("/register", function(req, res) {
 		DEBUG && console.log(req.body);
 		const { username, password, email } = req.body;
+		
+		console.log("this is a test");
+		console.log(req.session.regenerate(console.log.bind(console)));
+
 
 		hash
 			.create(password, username)
@@ -71,19 +75,7 @@ module.exports = function() {
 					DEBUG && console.log("djfadjfla");
 					DEBUG && console.log(req.sessionID);
 					// DEBUG && console.log(req)
-
-					Users
-					.findOneAndUpdate(
-						{ _id: user.id },
-						{ $set: { sid: req.sessUid } }
-					)
-					.then(() => {
-						delete req.sessUid;
-						res.status(200).json({ message: "ok", token: req.session.token });
-					})
-					.catch(console.log.bind(console));
-
-					
+					res.status(200).json({ message: "ok", token: req.session.token });
 				}).catch(DEBUG && console.log.bind(console));
 			})
 			.catch(err => {
