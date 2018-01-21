@@ -2,8 +2,6 @@ var Join = require("path").join;
 var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
-var Bitpay = require("bitpay-api");
-var bitpay = new Bitpay();
 var mongoose = require("mongoose");
 var db = require("./models");
 
@@ -58,9 +56,6 @@ server_s.listen(PORTs, function(err) {
 
 app.get("/", (req, res) => {
 	console.log("/");
-	bitpay.getBTCBestBidRates(function(err, rates) {
-		res.send("Crypto shop\n" + rates[1].name + " : " + rates[1].rate);
-	});
 });
 
 app.get("/txid/:TXID", (req, res) => {
@@ -88,12 +83,12 @@ app.get("/login", (req, res) => {
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
 	db.User.find({})
-		.then(function(dbUser) {
-			res.json(dbUser);
-		})
-		.catch(function(err) {
-			res.json(err);
-		});
+	.then(function(dbUser) {
+		res.json(dbUser);
+	})
+	.catch(function(err) {
+		res.json(err);
+	});
 });
 
 //Test route to add a User
