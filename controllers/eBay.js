@@ -8,6 +8,8 @@ module.exports = function() {
 	1)it should check BTC-transaction (more than 4 confirmations)
 	2) get eBay item number
 	3) buy it using coinbase or bitpay credentials
+	3.1) checkoutsessionid
+	3.2)updatepaymentinfo with credticard info (otherwise it will try to use paypal)
 	*/
 	let options = {
 		headers: {
@@ -16,11 +18,12 @@ module.exports = function() {
 			"X-EBAY-C-ENDUSERCTX": "contextualLocation=country=<2_character_country_code>,zip=<zip_code>"
 		}
 	};
+
 	routes.get("/buyItem/:ID", (req, res)=>{
 		console.log("buyItem route fires!");
 		options.url = 'https://api.sandbox.ebay.com/buy/browse/v1/item/get_item_by_legacy_id?legacy_item_id='+req.params.ID;
+		//ensure that there is such item
 		request(options, function (error, response, body) {
-			console.log(req.params.ID)
 			if (error) {
 				console.log(error);
 			} // Print the error if one occurred
@@ -28,7 +31,6 @@ module.exports = function() {
 			res.status(200).send(body) ;
 			
 		});
-
 	}); 
 
 	routes.get("/findItems/:query/:limit", (req, res)=>{
@@ -43,10 +45,27 @@ module.exports = function() {
 			res.status(200).send(body) ;
 			
 		});
+	});
 
-	}); 
-
-
+	//initiate checkout session
+	function initiateCheckOutSession(){
+		options.url = "https://api.sandbox.ebay.com/buy/order/v1/checkout_session/initiate";
+		let requestBody = {
+			"shippingAddress": {
+				"addressLine1": "2025 Hamilton Ave.",
+				"city": "San Jose",
+				"stateOrProvince": "CA",
+				"postalCode": "95125",
+				"country": "US",
+				"recipient": "Frank Smith",
+				"phoneNumber": "617 555 1212"
+			}
+			,"lineItemInputs": [{"quantity": 1, "itemId": "<item_id>"}]
+		}
+		request.post(options, {form:{key:'value'}}, (error, response, body)=>{
+			console.log(body);
+		});
+	}
 
 	return routes;
 }
