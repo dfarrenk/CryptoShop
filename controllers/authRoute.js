@@ -15,13 +15,6 @@ module.exports = function() {
 		const { username, password, email } = req.body;
 		const searchField = email ? { email } : { name: username };
 
-		// DEBUG && console.log(req.session.views);
-		// req.session.reload((err) => {
-		// 	DEBUG && console.log(err);
-		// });
-		// DEBUG && console.log("[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]");
-		// DEBUG && console.log(req.session);
-
 		Users.findOne(searchField).then(user => {
 			if (!user) {
 				return res.status(401).json({ message: "no such user found" });
@@ -32,7 +25,8 @@ module.exports = function() {
 				.then(isMatched => {
 					if (isMatched) {
 						signToken(req, user, 5 * 60).then(() => {
-							DEBUG && console.log(req.session);
+							DEBUG && console.log("this is fresh air", req.sessionID);
+
 							res.status(200).json({ message: "ok", token: req.session.token });
 						}).catch(DEBUG && console.log.bind(console)); // sign token with private key && store in session
 					} else {
@@ -54,10 +48,6 @@ module.exports = function() {
 		DEBUG && console.log(req.body);
 		const { username, password, email } = req.body;
 		
-		console.log("this is a test");
-		console.log(req.session.regenerate(console.log.bind(console)));
-
-
 		hash
 			.create(password, username)
 			.then(({ salt, hash, publickey }) => {

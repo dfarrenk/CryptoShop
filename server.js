@@ -11,7 +11,7 @@ var blockexplorer = require("blockchain.info/blockexplorer"); //another way to g
 
 const _ = require("lodash");
 const ExpSess = require("express-session");
-const MongoStore = require("connect-mongo")(ExpSess);
+// const MongoStore = require("connect-mongo")(ExpSess);
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
@@ -20,11 +20,12 @@ const {
 	https_config: httpsConf,
 	forceSSL_config: fsslConf,
 	store_config: storeConf
-} = require("./config/config.js")("dev");
+} = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
 const server = http.createServer(app);
+// console.log("iiiii", MongoStore);
 
 // https setup
 const https = require("https");
@@ -40,7 +41,7 @@ var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-sessConf.store = new MongoStore(storeConf);
+// sessConf.store = new MongoStore(storeConf);
 
 // sessConf.store = new MongoStore({
 // 	// url: MONGODB_URI,
