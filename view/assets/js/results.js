@@ -6,15 +6,17 @@ $(function() {
     e.preventDefault();
     searchTerm = $("#searchBar").val().trim();
     console.log(searchTerm);
-    ebayAPI(searchTerm);
     walmartAPI(searchTerm);
+    ebayAPI(searchTerm);
 
   });
+
+  $(".showEbay").show();
 
   // Function to make Walmart API call and Display Results
   function walmartAPI(searchTerm) {
     // var priceRange = 40;
-    console.log(searchTerm);
+    // console.log(searchTerm);
 
     var key = "5v2k2wffwxhrptsdztu8g69c";
     var url = "https://api.walmartlabs.com/v1/search?";
@@ -41,17 +43,18 @@ $(function() {
         return 1;
       }
       for (var i = 0; i < 10; i++) {
-        var newCard = $("<div class='col collapse multi-collapse showWalmart'>" +
-          "<div class='card card-size'>" +
-          "<img class'card-img-top' src='" + result.items[i].imageEntities[0].mediumImage + "'>" +
-          "<div class='card-body'>" +
-          "<h5 class='card-title'>" + result.items[i].name + "</h5>" +
-          "<p class='card-text'>" + "$" + result.items[i].salePrice + "</p>" +
-          "<a class='card-text' href='" + result.item[i].productUrl + "' target='_blank'>View on Walmart</a>" +
-          "<a href='#' class=btn btn-primary'> Buy It Now </a>" +
-          "</div>" +
-          "</div>" +
-          "</div>");
+        var newCard =
+          $("<div class='col collapse multi-collapse showWalmart' style='max-width: 16rem; margin: 2%;'>" +
+            "<div class='card card-size'>" +
+            "<img class'card-img-top' src='" + result.items[i].imageEntities[0].mediumImage + "'>" +
+            "<div class='card-body'>" +
+            "<h6 class='card-title'>" + result.items[i].name + "</h6>" +
+            "<p class='card-text'>" + "$" + result.items[i].salePrice + "</p>" +
+            "<a class='card-text' href='" + result.items[i].productUrl + "' target='_blank'>View on Walmart</a>" +
+            "<a href='#' class='btn btn-primary'> Buy It Now </a>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
         $("#productDisplay").append(newCard);
       }
     });
@@ -90,17 +93,18 @@ $(function() {
         }
       }
       for (var i = 0; i < 10; i++) {
-        var newCard = $("<div class='col collapse multi-collapse showEbay'>" +
-          "<div class='card card-size'>" +
-          "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
-          "<div class='card-body'>" +
-          "<h5 class='card-title'>" + short.item[i].title[0] + "</h5>" +
-          "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
-          "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-          "<a href='#' class='btn btn-primary'> Buy It Now </a>" +
-          "</div>" +
-          "</div>" +
-          "</div>");
+        var newCard =
+          $("<div class='col collapse multi-collapse showEbay' style='max-width: 16rem; margin: 2%;'>" +
+            "<div class='card card-size'>" +
+            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+            "<div class='card-body'>" +
+            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
+            "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
+            "<a href='#' class='btn btn-primary'> Buy It Now </a>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
         $("#productDisplay").append(newCard);
       }
     });

@@ -64,12 +64,13 @@ body {
   padding-top: 20%;
 }
 
-.card-size {
-  width: 200px;
-  height: auto;
-  margin: auto;
-  margin-top: 5%;
-}
+/*.card-size {
+  */
+  /*  width: 200px;*/
+  /*  height: auto;*/
+  /*  margin: auto;*/
+  /*  margin-top: 5%;*/
+  /*}*/
 
 .nav-link:hover {
   background-color: #5d99ff;
