@@ -48,7 +48,6 @@ module.exports = function() {
 		});
 	});
 
-
 	//initiate checkout session
 	function initiateCheckOutSession(itemId, quantity){
 		options.url = "https://api.sandbox.ebay.com/buy/order/v1/checkout_session/initiate";
@@ -64,16 +63,18 @@ module.exports = function() {
 			}
 			,"lineItemInputs": [{"quantity": quantity, "itemId": itemId}]
 		}
-		request.post(options, requestBody, (error, response, body)=>{
+		options.form = requestBody;
+		request.post(options, (error, response, body)=>{
+			console.log(body);
 			if(error){
 				throw error;
 			}
-			console.log(body);
+			
 		});
 	}
 	routes.get("/test/:id", (req, res)=>{
 		console.log("test route runs");
-		initiateCheckOutSession(req.params.id);
+		initiateCheckOutSession(req.params.id, 1);
 		res.status(200);
 	});
 
