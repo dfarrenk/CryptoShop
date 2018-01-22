@@ -24,6 +24,11 @@ let UserSchema = new Schema({
         unique: true,
         trim: true
     },
+    emailverified: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     address: {
         addressOne: {
             type: String,
