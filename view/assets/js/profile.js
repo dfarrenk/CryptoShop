@@ -1,5 +1,6 @@
 $(function() {
 
+
   $("#editUsernameValues").click(function(e) {
     e.preventDefault();
     $("#inputUsername").attr("readonly", false);

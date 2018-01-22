@@ -8,10 +8,17 @@ $(function() {
     console.log(searchTerm);
     walmartAPI(searchTerm);
     ebayAPI(searchTerm);
+    $(".showEbay").toggle();
 
   });
 
-  $(".showEbay").show();
+
+  // AJAX Get request to pull item ID from listings for crypto purchase on backend
+  $(".buyItNow").click(function() {
+    alert("hello world");
+    // $.get("/buyItem/:id"
+  });
+
 
   // Function to make Walmart API call and Display Results
   function walmartAPI(searchTerm) {
@@ -51,7 +58,7 @@ $(function() {
             "<h6 class='card-title'>" + result.items[i].name + "</h6>" +
             "<p class='card-text'>" + "$" + result.items[i].salePrice + "</p>" +
             "<a class='card-text' href='" + result.items[i].productUrl + "' target='_blank'>View on Walmart</a>" +
-            "<a href='#' class='btn btn-primary'> Buy It Now </a>" +
+            "<button class='btn btn-primary buyItNow' type='button' value='" + result.items[i].itemId + "'> Buy It Now </button>" +
             "</div>" +
             "</div>" +
             "</div>");
@@ -101,7 +108,7 @@ $(function() {
             "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
             "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
             "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-            "<a href='#' class='btn btn-primary'> Buy It Now </a>" +
+            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
             "</div>" +
             "</div>" +
             "</div>");
@@ -111,5 +118,24 @@ $(function() {
   }
 
 
+
+
 });
 //Document Ready End
+
+$(document).on("click", ".buyItNow", function() {
+  var data = $(event.target).attr("value");
+  console.log(data);
+  if (confirm("Would you really like to purchase this item?")) {
+    $("#buyItNowModal").show();
+    $.get({
+      url: "/searchPage.html/buyItem/" + data
+    }).catch(function(err, res) {
+      if (err) throw err;
+    });
+  }
+  else {
+    alert("Maybe another time?");
+  }
+
+});
