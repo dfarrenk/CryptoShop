@@ -2,12 +2,15 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true
     },
-    realName: {
+    firstname: {
+        type: String,
+    },
+    lastname: {
         type: String,
     },
     password: {
