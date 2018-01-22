@@ -41,14 +41,6 @@ var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-// sessConf.store = new MongoStore(storeConf);
-
-// sessConf.store = new MongoStore({
-// 	// url: MONGODB_URI,
-// 	// mongooseConnection: mongoose.connection,
-
-// });
-
 app.use(Passport.initialize());
 app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));

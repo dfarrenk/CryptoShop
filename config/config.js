@@ -14,8 +14,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 function ExtractFromSession(req) {
-	const { authenticated, token, key } = req.session;
 	console.log(req.session);
+	const { authenticated, user } = req.session;
+	const { token, key } = user;
 
 	if (authenticated) {
 		try {
@@ -24,13 +25,8 @@ function ExtractFromSession(req) {
 		} catch (err) {
 			err && console.log(err);
 
-			delete req.session.token;
-			delete req.session.key;
+			delete req.session.user;
 			req.session.authenticated = false;
-			// req.session.save(err => {
-			// 	console.log(err);
-			// });
-
 			return null;
 		}
 	}
@@ -93,6 +89,8 @@ const session_config = {
 	}
 };
 
+const authUser = {}; // required from a lib/memory.js cur not exist
+
 module.exports = {
 	https_config,
 	forceSSL_config,
@@ -101,5 +99,6 @@ module.exports = {
 	session_config,
 	store_config,
 	emitter,
-	session_config
+	session_config,
+	authUser
 };
