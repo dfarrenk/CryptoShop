@@ -25,7 +25,6 @@ const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
 const server = http.createServer(app);
-// console.log("iiiii", MongoStore);
 
 // https setup
 const https = require("https");
@@ -40,14 +39,6 @@ app.use("*", express.static(static));
 var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
-
-// sessConf.store = new MongoStore(storeConf);
-
-// sessConf.store = new MongoStore({
-// 	// url: MONGODB_URI,
-// 	// mongooseConnection: mongoose.connection,
-
-// });
 
 app.use(Passport.initialize());
 app.use(ExpSess(sessConf));
