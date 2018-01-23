@@ -17,8 +17,8 @@
 
   <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
     <a class="navbar-brand" href="homepage.html">
-        <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
-      </a>
+      <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
+    </a>
     <div class="dropdown d-lg-none">
       <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
@@ -89,81 +89,112 @@
               <a class="btn nav-link" data-target=".showEbay" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showEbay">eBay</a>
             </li>
             <!--<li class="nav-item">-->
-            <!--  <a class="btn nav-link" data-target=".showAmazon" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showAmazon">Amazon</a>-->
-            <!--</li>-->
-            <li class="nav-item">
-              <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>
-            </li>
-          </ul>
+              <!--  <a class="btn nav-link" data-target=".showAmazon" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showAmazon">Amazon</a>-->
+              <!--</li>-->
+              <li class="nav-item">
+                <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>
+              </li>
+            </ul>
+          </div>
+
+
+
+
+          <!-- Card model will get looped over to dynamically create in handlebars-->
+          <div class="row text-center" id="productDisplay">
+            <!-- Ebay search results -->
+            <!-- Walmart Search Results -->
+          </div>
+
+
+
+
+          <!-- Footer -->
+          <div class="fixed-bottom" id="footer">
+            <div class="row text-center justify-content-center">
+              <nav class="navbar sticky-bottom navbar-light">
+                <a class="navbar-brand">
+                  <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
+                  <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
+                </a>
+              </nav>
+            </div>
+          </div>
         </div>
 
 
 
+      </div>
+      <!-- /#page-content-wrapper -->
 
-        <!-- Card model will get looped over to dynamically create in handlebars-->
-        <div class="row text-center" id="productDisplay">
-          <!-- Ebay search results -->
-          <!-- Walmart Search Results -->
-        </div>
+    </div>
+    <!-- /#wrapper -->
 
-
-
-
-        <!-- Footer -->
-        <div class="fixed-bottom" id="footer">
-          <div class="row text-center justify-content-center">
-            <nav class="navbar sticky-bottom navbar-light">
-              <a class="navbar-brand">
-              <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
-              <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
-            </a>
-            </nav>
+    <div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">You want to order</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <h2 id="modalName">Title</h2>
+            <img src="" alt="of item" id="modalId">
+            <p id="modalPrice">Price: </p>
+            <a class="coinbase-widget"
+            id="coinbase_widget"
+            data-address=""
+            data-amount=""
+            data-code="35454657-0e2f-5a5c-8665-2c37c6826bcc"
+            data-currency="USD"
+            data-crypto_currency="BTC"
+            href="">Buy with Coinbase</a>
+            
+            <script type='text/javascript' id='coinbase_widget_loader' class='coinbase-widget-async-loader'>
+              document.currentScript.src ='';
+              (function() {
+                function asyncLoad() {
+                  var s = document.createElement('script');
+                  s.type = 'text/javascript';
+                  s.async = true;
+                  var theUrl = 'https://buy.coinbase.com/static/widget.js';
+                  s.src = theUrl+ (theUrl.indexOf("?") >= 0 ? '&' : '?') + 'ref=' + encodeURIComponent(window.location.href);
+                  var embedder = document.getElementById('coinbase_widget_loader');
+                  embedder.parentNode.insertBefore(s, embedder);
+                }
+                if (window.attachEvent) {
+                  window.attachEvent('onload', asyncLoad);
+                } else {
+                  window.addEventListener('load', asyncLoad, false);
+                }
+              })();
+            </script>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
-
-
-
     </div>
-    <!-- /#page-content-wrapper -->
-
-  </div>
-  <!-- /#wrapper -->
-
-  <div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
-  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script src="./assets/js/results.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="./assets/js/results.js"></script>
 
-  <!-- Menu Toggle Script -->
-  <script>
-    $(".menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
-</body>
+    <!-- Menu Toggle Script -->
+    <script>
+      $(".menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+  </body>
 
-</html>
+  </html>

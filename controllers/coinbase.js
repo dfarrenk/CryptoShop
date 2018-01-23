@@ -26,10 +26,26 @@ module.exports = function() {
 	});
 
 	routes.get("/test", (req,res)=>{
-		client.getPaymentMethods(null, function(err, paymentMethods) {
-			res.send(paymentMethods);
+		
+		// const parametrs = {
+		// 	"amount": "10.00", 
+		// 	"currency": "USD", 
+		// 	"name": "Order #123",
+		// 	"description": "Sample order",
+		// 	"metadata": {
+		// 		"customer_id": "id_1005",
+		// 		"customer_name": "Satoshi Nakamoto"}
+		// 	}
+
+		// 	// client.createOrder(parametrs, function(error, order) {
+		// 	// 	if(error){
+		// 	// 		throw(error);
+		// 	// 	}
+		// 	// 	console.log(order);
+		// 	// });
+
+
 		});
-	});
 
 	return routes;
 }
