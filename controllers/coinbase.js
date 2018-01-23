@@ -22,16 +22,17 @@ module.exports = function() {
 					res.send(rObject.address);
 				});
 				
-				account.creat
+
 
 			}
 		});
 	});
 
-	// this is not necessary for us
-	// client.createAccount({'name': 'New Wallet'}, function(err, acct) {
-	// 	console.log(acct.name + ': ' + acct.balance.amount + ' ' + acct.balance.currency);
-	// });
+	routes.get("/test", (req,res)=>{
+		client.getPaymentMethods(null, function(err, paymentMethods) {
+			res.send(paymentMethods);
+		});
+	});
 
 	return routes;
 }
