@@ -8,7 +8,7 @@ const Users = require("../models").User;
 const strategy = new JwtStrategy(config, function(jwt_payload, next) {
 	console.log("this is payload", jwt_payload);
 	console.log(memoryStore);
-	console.log(this);
+
 	const user = memoryStore[ jwt_payload.$id ];
 
 	if (!user) {
@@ -16,14 +16,6 @@ const strategy = new JwtStrategy(config, function(jwt_payload, next) {
 	}
 
 	return next(null, user);
-
-	// Users.findOne({ _id: jwt_payload._id }).then(user => {
-	// 	if (!user) {
-	// 		return next(null, false);
-	// 	}
-
-	// 	return next(null, user);
-	// });
 });
 
 Passport.use(strategy);

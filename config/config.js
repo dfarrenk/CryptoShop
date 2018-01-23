@@ -24,7 +24,7 @@ function ExtractFromSession(req) {
 			return decoded.token;
 		} catch (err) {
 			err && console.log(err);
-
+			
 			delete req.session.user;
 			req.session.authenticated = false;
 			return null;

@@ -25,7 +25,6 @@ const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
 const server = http.createServer(app);
-// console.log("iiiii", MongoStore);
 
 // https setup
 const https = require("https");
