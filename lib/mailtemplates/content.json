@@ -1,0 +1,22 @@
+{
+   "routes": [
+      "/user/verification?",
+      "/user/changePass?",
+      "/login?"
+   ],
+   "subjects": [
+      "Click to verify",
+      "Password reset requested",
+      "Password changed!!"
+   ],
+   "linktext": [
+      "Click to verify",
+      "Confirm change?",
+      "Start shopping now!!"
+   ],
+   "flagname": [
+      "verification.html",
+      "passwordchange.html",
+      "newpassword.html"
+   ]
+}

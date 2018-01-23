@@ -48,7 +48,7 @@
   min-height: 28px;
 }
 
-.--center>form a {
+.--center>form .--anchor {
   margin-top: 0.75rem;
   text-align: right;
   cursor: pointer;

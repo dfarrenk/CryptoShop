@@ -6,6 +6,7 @@ const ExtractJwt = PassportJwt.ExtractJwt;
 const Jwt = require("jsonwebtoken");
 const Uid = require("uid-safe");
 const MongoStore = require("./store_config");
+const memoryStore = require("./memoryStore");
 const EventEmitter = require("events");
 const emitter = new EventEmitter();
 
@@ -89,8 +90,6 @@ const session_config = {
 	}
 };
 
-const authUser = {}; // required from a lib/memory.js cur not exist
-
 module.exports = {
 	https_config,
 	forceSSL_config,
@@ -100,5 +99,5 @@ module.exports = {
 	store_config,
 	emitter,
 	session_config,
-	authUser
+	memoryStore
 };
