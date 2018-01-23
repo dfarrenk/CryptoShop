@@ -21,10 +21,6 @@ module.exports = function() {
 					console.log("The new address is" +rObject.address);
 					res.send(rObject.address);
 				});
-				
-
-				<<<<<<< HEAD
-
 			}
 		});
 	});
