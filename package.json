@@ -18,7 +18,6 @@
     "url": "https://github.com/dfarrenk/project-3/issues"
   },
   "homepage": "https://github.com/dfarrenk/project-3#readme",
-
   "dependencies": {
     "base64-url": "^2.1.0",
     "bcrypt": "^1.0.3",
