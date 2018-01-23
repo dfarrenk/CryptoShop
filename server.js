@@ -110,3 +110,8 @@ app.get("/search/:id", function(req, res) {
 	let searchTerm = req.params.id;
 	res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
+
+
+app.put("/api/user", function(req, res) {
+	console.log(req.body);
+})
