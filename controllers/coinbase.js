@@ -16,18 +16,14 @@ module.exports = function() {
 				err.message == "API Key disabled" && console.log("\x1b[32mEverything is fine, we have to wait 48 hours since 1/18/18 for API key activation\x1b[0m");
 				res.send("API disabled: test passed!");
 			}else{
-				account.createAddress(function(err, addr) {					
-					accounts.forEach(function(acct) {
-						console.log(acct.name + ': ' + acct.balance.amount + ' ' + acct.balance.currency);
-						acct.getTransactions(null, function(err, txns) {
-							txns.forEach(function(txn) {
-								console.log('txn: ' + txn.id);
-							});
-						});
-					});
-					console.log("The new address is" +addr);
-					res.send(addr);
+				account.createAddress(null, function(err, rObject) {					
+
+					console.log("The new address is" +rObject.address);
+					res.send(rObject.address);
 				});
+				
+				account.creat
+
 			}
 		});
 	});
