@@ -45,6 +45,7 @@ app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("forceSSLOptions", fsslConf);
+
 // app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
@@ -85,15 +86,27 @@ app.get("/login", (req, res) => {
 	// res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
 });
 
+app.post("/api/user", function(req, res) {
+	console.log(req);
+	//var query = {'username':req.user.username};
+	//var query - ('_id': req.user._id);
+	req.newData.username = req.user.username;
+	// req.newData.field = req.user.field;
+	db.User.findOneAndUpdate(query, req.newData, function(err, doc){
+	    if (err) return res.send(500, { error: err });
+	    return res.send("succesfully saved");
+	});
+});
+
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
 	db.User.find({})
-		.then(function(dbUser) {
-			res.json(dbUser);
-		})
-		.catch(function(err) {
-			res.json(err);
-		});
+	.then(function(dbUser) {
+		res.json(dbUser);
+	})
+	.catch(function(err) {
+		res.json(err);
+	});
 });
 
 //Test route to add a User

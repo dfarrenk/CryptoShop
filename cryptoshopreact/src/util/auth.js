@@ -40,4 +40,20 @@ const register = fields => {
 	});
 };
 
-export { login, register };
+const reset = fields => {
+	return new Promise((resolve, reject) => {
+		const { username, email } = fields;
+		const validator = new Validator();
+		const data = { username, email };
+
+		const invalid = validator.Setprops(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		resolve(axios.post("/user/forgotPass", data));
+	});
+}
+
+export { login, register, reset };

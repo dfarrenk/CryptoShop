@@ -70,7 +70,7 @@ module.exports = function() {
                console.log(req.originalUrl);
 
                //////////////////////
-               mail(req.hostname, user, refId);
+               mail({ user, token: refId }, 0);
                /////////////////////
 
                res.status(200).json({ message: "ok", token: req.session.token });
@@ -90,6 +90,7 @@ module.exports = function() {
       DEBUG && console.log("======================================");
       DEBUG && console.log(req.sessionID);
       DEBUG && console.log(req.user);
+      
       const { user, session } = req;
       const userInfo = session[user._id];
 

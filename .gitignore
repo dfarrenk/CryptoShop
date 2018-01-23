@@ -62,3 +62,6 @@ typings/
 
 # Encryptions 
 encryption/
+
+#Coinbase config file
+config/coinbase.js
