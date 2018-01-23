@@ -2,22 +2,25 @@ var Join = require("path").join;
 var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
+// var Bitpay = require("bitpay-api");
+// var bitpay = new Bitpay();
 var mongoose = require("mongoose");
 var db = require("./models");
 
 var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
 const _ = require("lodash");
-const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
+// const MongoStore = require("connect-mongo")(ExpSess);
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
 	server_config: serConf,
 	session_config: sessConf,
 	https_config: httpsConf,
-	forceSSL_config: fsslConf
-} = require("./config/config.js")("dev");
+	forceSSL_config: fsslConf,
+	store_config: storeConf
+} = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
@@ -31,20 +34,20 @@ const server_s = https.createServer(certificate, app);
 // const static = Join(__dirname, "./cryptoshopreact/public");
 // app.use(express.static(static));
 // app.use("*", express.static(static));
-app.set("forceSSLOptions", fsslConf);
-
-app.use(ExpSess(sessConf));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(ForceSSL);
-app.use(Passport.initialize());
-
-app.all("*", require("./controllers")); // all router
 
 // Connect to the Mongo DB
 var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
+
+app.use(Passport.initialize());
+app.use(ExpSess(sessConf));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.set("forceSSLOptions", fsslConf);
+app.use(ForceSSL);
+
+app.all("*", require("./controllers")); // all router
 
 server.listen(PORT, function(err) {
 	console.log("Server started at: %s", server.address().port);
@@ -56,6 +59,9 @@ server_s.listen(PORTs, function(err) {
 
 app.get("/", (req, res) => {
 	console.log("/");
+	bitpay.getBTCBestBidRates(function(err, rates) {
+		res.send("Crypto shop\n" + rates[1].name + " : " + rates[1].rate);
+	});
 });
 
 app.get("/txid/:TXID", (req, res) => {
@@ -75,6 +81,7 @@ app.get("/login", (req, res) => {
 	console.log("get");
 	// res.clearCookie("jwt-token");
 	console.log(req.path);
+	console.log(req.session.id);
 	// res.send("/login");
 	res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
 	// res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
@@ -83,12 +90,12 @@ app.get("/login", (req, res) => {
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
 	db.User.find({})
-	.then(function(dbUser) {
-		res.json(dbUser);
-	})
-	.catch(function(err) {
-		res.json(err);
-	});
+		.then(function(dbUser) {
+			res.json(dbUser);
+		})
+		.catch(function(err) {
+			res.json(err);
+		});
 });
 
 //Test route to add a User
