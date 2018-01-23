@@ -51,17 +51,17 @@ $(function() {
       }
       for (var i = 0; i < 10; i++) {
         var newCard =
-          $("<div class='col collapse multi-collapse showWalmart' style='max-width: 16rem; margin: 2%;'>" +
-            "<div class='card card-size'>" +
-            "<img class'card-img-top' src='" + result.items[i].imageEntities[0].mediumImage + "'>" +
-            "<div class='card-body'>" +
-            "<h6 class='card-title'>" + result.items[i].name + "</h6>" +
-            "<p class='card-text'>" + "$" + result.items[i].salePrice + "</p>" +
-            "<a class='card-text' href='" + result.items[i].productUrl + "' target='_blank'>View on Walmart</a>" +
-            "<button class='btn btn-primary buyItNow' type='button' value='" + result.items[i].itemId + "'> Buy It Now </button>" +
-            "</div>" +
-            "</div>" +
-            "</div>");
+        $("<div class='col collapse multi-collapse showWalmart' style='max-width: 16rem; margin: 2%;'>" +
+          "<div class='card card-size'>" +
+          "<img class'card-img-top' src='" + result.items[i].imageEntities[0].mediumImage + "'>" +
+          "<div class='card-body'>" +
+          "<h6 class='card-title'>" + result.items[i].name + "</h6>" +
+          "<p class='card-text' >" + "$" + result.items[i].salePrice + "</p>" +
+          "<a class='card-text' href='" + result.items[i].productUrl + "' target='_blank'>View on Walmart</a>" +
+          "<button class='btn btn-primary buyItNow' type='button' value='" + result.items[i].itemId + "'> Buy It Now </button>" +
+          "</div>" +
+          "</div>" +
+          "</div>");
         $("#productDisplay").append(newCard);
       }
     });
@@ -101,17 +101,17 @@ $(function() {
       }
       for (var i = 0; i < 10; i++) {
         var newCard =
-          $("<div class='col collapse multi-collapse showEbay' style='max-width: 16rem; margin: 2%;'>" +
-            "<div class='card card-size'>" +
-            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
-            "<div class='card-body'>" +
-            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
-            "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
-            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
-            "</div>" +
-            "</div>" +
-            "</div>");
+        $("<div class='col collapse multi-collapse showEbay' style='max-width: 16rem; margin: 2%;'>" +
+          "<div class='card card-size'>" +
+          "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+          "<div class='card-body'>" +
+          "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
+          "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+          "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
+          "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
+          "</div>" +
+          "</div>" +
+          "</div>");
         $("#productDisplay").append(newCard);
       }
     });
