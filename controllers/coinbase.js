@@ -53,11 +53,16 @@ module.exports = function() {
 				res.send(err.message);
 			}else{				
 				account.getTransactions(null,function(err, txs) {
+					let objectToDisplay = [];
 					txs.map((data)=>{
-						console.log(data.amount)
-
+						objectToDisplay.push({
+							"id":data.id,
+							"amount": data.amount.amount,
+							"createdAt": data.created_at,
+							"status": data.status
+						});
 					});
-					res.send(txs);
+					res.send(objectToDisplay);
 				});
 			}
 		});
