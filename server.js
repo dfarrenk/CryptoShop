@@ -45,6 +45,7 @@ app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("forceSSLOptions", fsslConf);
+
 // app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
