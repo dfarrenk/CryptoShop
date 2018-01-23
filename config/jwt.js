@@ -2,7 +2,7 @@ const Passport = require("passport");
 const PassportJwt = require("passport-jwt");
 const JwtStrategy = PassportJwt.Strategy;
 
-const { jwt_config: config, authUser: memoryStore } = require("./config.js");
+const { jwt_config: config, memoryStore } = require("./config.js");
 const Users = require("../models").User;
 
 const strategy = new JwtStrategy(config, function(jwt_payload, next) {

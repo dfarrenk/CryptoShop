@@ -1,22 +1,78 @@
+// AJAX Get request to pull item ID from listings for crypto purchase on backend
+$(document).on("click", ".buyItNow", function() {
+  var data = $(event.target).attr("value");
+  console.log(data);
+  if (confirm("Would you really like to purchase this item?")) {
+    $("#buyItNowModal").show();
+    $.get({
+      url: "/searchPage.html/buyItem/" + data
+    }).catch(function(err, res) {
+      if (err) throw err;
+    });
+  }
+  else {
+    alert("Maybe another time?");
+  }
+
+});
+
+
 $(function() {
 
-  var searchTerm;
+  let searchTerm = searchToObject();
+  searchTerm = searchTerm.item;
 
   $("#searchBtn").click(function(e) {
     e.preventDefault();
     searchTerm = $("#searchBar").val().trim();
     console.log(searchTerm);
     walmartAPI(searchTerm);
-    ebayAPI(searchTerm);
-    $(".showEbay").toggle();
-
+    ebayAPI(searchTerm).then(function(data) {
+      $(".showEbay").collapse();
+      $("#hideMeOnSearch").toggle("show");
+    });
   });
 
+  console.log(`search term: ${searchTerm}`);
 
-  // AJAX Get request to pull item ID from listings for crypto purchase on backend
-  $(".buyItNow").click(function() {
-    alert("hello world");
-    // $.get("/buyItem/:id"
+  if (typeof searchTerm !== 'undefined') {
+    walmartAPI(searchTerm);
+    ebayAPI(searchTerm).then(function(data) {
+      $(".showEbay").collapse();
+      $("#hideMeOnSearch").toggle("show");
+    });
+  }
+
+  //TODO run a search with searchQuery.item
+  //TODO replace iphone with text from search field
+
+  function searchToObject() {
+    var pairs = window.location.search.substring(1).split("&"),
+      obj = {},
+      pair,
+      i;
+
+    for (i in pairs) {
+      if (pairs[i] === "") continue;
+
+      pair = pairs[i].split("=");
+      obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+
+    return obj;
+  }
+
+  $("#homeSearch").click(function(e) {
+    e.preventDefault();
+
+    // TODO get string from search bar
+    let searchQuery = $("#searchBar").val().trim();
+
+    $.get("/search/" + searchQuery)
+      .done(function(res) {
+        console.log(res);
+        location.assign(res).done(function() {});
+      });
   });
 
 
@@ -69,51 +125,54 @@ $(function() {
 
   //Function to make Ebay API call and Display Results
   function ebayAPI(searchTerm) {
-    var key = "StephenC-SecretSa-PRD-6132041a0-943144c9";
-    var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+    return new Promise((resolve, reject) => {
+      var key = "StephenC-SecretSa-PRD-6132041a0-943144c9";
+      var url = "https://svcs.ebay.com/services/search/FindingService/v1";
 
-    $.ajax({
-      url: url,
-      method: "GET",
-      dataType: "jsonp",
-      data: {
-        "OPERATION-NAME": "findItemsByKeywords",
-        "SERVICE-VERSION": "1.0.0",
-        "SECURITY-APPNAME": "StephenC-SecretSa-PRD-6132041a0-943144c9",
-        "RESPONSE-DATA-FORMAT": "JSON",
-        "paginationInput.entriesPerPage": "10",
-        keywords: searchTerm
-      }
-
-    }).done(function(result) {
-      console.log(result);
-
-      var short = result.findItemsByKeywordsResponse[0].searchResult[0];
-      try {
-        short.item[0];
-      }
-      catch (err) {
-        if (err) {
-          console.log(err);
-          $("#productDisplay").html("<h3>No goods found</h3>");
-          return 1;
+      $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "jsonp",
+        data: {
+          "OPERATION-NAME": "findItemsByKeywords",
+          "SERVICE-VERSION": "1.0.0",
+          "SECURITY-APPNAME": "StephenC-SecretSa-PRD-6132041a0-943144c9",
+          "RESPONSE-DATA-FORMAT": "JSON",
+          "paginationInput.entriesPerPage": "10",
+          keywords: searchTerm
         }
-      }
-      for (var i = 0; i < 10; i++) {
-        var newCard =
-          $("<div class='col collapse multi-collapse showEbay' style='max-width: 16rem; margin: 2%;'>" +
-            "<div class='card card-size'>" +
-            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
-            "<div class='card-body'>" +
-            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
-            "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
-            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
-            "</div>" +
-            "</div>" +
-            "</div>");
-        $("#productDisplay").append(newCard);
-      }
+
+      }).done(function(result) {
+        console.log(result);
+
+        var short = result.findItemsByKeywordsResponse[0].searchResult[0];
+        try {
+          short.item[0];
+        }
+        catch (err) {
+          if (err) {
+            console.log(err);
+            $("#productDisplay").html("<h3>No goods found</h3>");
+            return 1;
+          }
+        }
+        for (var i = 0; i < 10; i++) {
+          var newCard =
+            $("<div class='col collapse multi-collapse showEbay' style='min-width: 14rem; margin: 2%;'>" +
+              "<div class='card card-size'>" +
+              "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+              "<div class='card-body'>" +
+              "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
+              "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+              "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
+              "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
+              "</div>" +
+              "</div>" +
+              "</div>");
+          $("#productDisplay").append(newCard);
+          resolve();
+        }
+      });
     });
   }
 
@@ -122,20 +181,3 @@ $(function() {
 
 });
 //Document Ready End
-
-$(document).on("click", ".buyItNow", function() {
-  var data = $(event.target).attr("value");
-  console.log(data);
-  if (confirm("Would you really like to purchase this item?")) {
-    $("#buyItNowModal").show();
-    $.get({
-      url: "/searchPage.html/buyItem/" + data
-    }).catch(function(err, res) {
-      if (err) throw err;
-    });
-  }
-  else {
-    alert("Maybe another time?");
-  }
-
-});
