@@ -32,9 +32,9 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-// const static = Join(__dirname, "./cryptoshopreact/public");
-// app.use(express.static(static));
-// app.use("*", express.static(static));
+const static = Join(__dirname, "./view");
+app.use(express.static(static));
+app.use("*", express.static(static));
 
 // Connect to the Mongo DB
 var MONGODB_URI = mongoURL;
@@ -54,7 +54,7 @@ app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("forceSSLOptions", fsslConf);
-app.use(ForceSSL);
+// app.use(ForceSSL);
 
 app.all("*", require("./controllers")); // all router
 
@@ -68,9 +68,7 @@ server_s.listen(PORTs, function(err) {
 
 app.get("/", (req, res) => {
 	console.log("/");
-	bitpay.getBTCBestBidRates(function(err, rates) {
-		res.send("Crypto shop\n" + rates[1].name + " : " + rates[1].rate);
-	});
+	res.sendFile(Join(__dirname, "./view/homepage.html"));
 });
 
 app.get("/txid/:TXID", (req, res) => {
@@ -115,4 +113,9 @@ app.get("/api/user/testUser", function(req, res) {
 		console.log(`User inserted`);
 		res.status(200).json(res);
 	});
+});
+
+app.get("/search/:id", function(req, res) {
+	let searchTerm = req.params.id;
+	res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
