@@ -24,7 +24,7 @@
         Menu
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>
+        <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
         <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
         <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
         <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
@@ -153,6 +153,23 @@
 
 
 
+  <!-- Log In Modal Ready for React-->
+  <div class="modal fade" id="loginModalReact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="root">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Log In Modal-->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -174,7 +191,8 @@
               <label for="exampleInputPassword1">Password</label>
               <input type="password" class="form-control" id="loginPass" placeholder="Password">
             </div>
-            <button type="submit" class="btn btn-primary">Log In</button>
+            <button type="submit" class="btn btn-primary" id="logInStatic">Log In</button>
+            <a style="float: right;" href="#signUpModal" data-toggle="modal" data-dismiss="modal"><small>Register</small></a>
           </form>
         </div>
       </div>
@@ -212,9 +230,9 @@
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
+            <a data-toggle="modal" href="#loginModal" data-dismiss="modal" style="float: right;"><small>Already Registered?</small></a>
           </form>
         </div>
-        <small class="nav-link" data-toggle="modal" data-target="#loginModal" data-dismiss="modal" style="margin-left: 70%">Already Registered?</small>
       </div>
     </div>
   </div>
