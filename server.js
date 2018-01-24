@@ -101,12 +101,12 @@ app.post("/api/user", function(req, res) {
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
    db.User.find({})
-      .then(function(dbUser) {
-         res.json(dbUser);
-      })
-      .catch(function(err) {
-         res.json(err);
-      });
+   .then(function(dbUser) {
+      res.json(dbUser);
+   })
+   .catch(function(err) {
+      res.json(err);
+   });
 });
 
 //Test route to add a User

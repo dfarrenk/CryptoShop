@@ -6,7 +6,7 @@ module.exports = function() {
 	//this route should create a new coinbase bitcoin address, and send this back to client side
 	//where script will create a payment button using generated address. Funds will go directly
 	//to primary BTC coinbase wallet.
-	routes.post("/getAddress", (req, res)=>{
+	routes.get("/getAddress", (req, res)=>{
 		console.log("getTransaction route fires!");
 		
 		client.getAccount('primary', function(err, account) {
@@ -53,11 +53,16 @@ module.exports = function() {
 				res.send(err.message);
 			}else{				
 				account.getTransactions(null,function(err, txs) {
+					let objectToDisplay = [];
 					txs.map((data)=>{
-						console.log(data.amount)
-
+						objectToDisplay.push({
+							"id":data.id,
+							"amount": data.amount.amount,
+							"createdAt": data.created_at,
+							"status": data.status
+						});
 					});
-					res.send(txs);
+					res.send(objectToDisplay);
 				});
 			}
 		});
