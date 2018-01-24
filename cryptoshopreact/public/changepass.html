@@ -33,7 +33,7 @@
 		const url = "/user/resetPass" + location.search;
 		
 		$.ajax({
-			method: "POST",
+			method: "PUT",
 			data: userdat,
 			url: url
 		}).then((response) => {

@@ -30,6 +30,12 @@ body {
   color: white;
 }
 
+#homeSearch {
+  background: #f6a705;
+  /*padding: .5% 4%;*/
+  color: white;
+}
+
 .shopBuy {
   text-align: center;
   margin: auto;
