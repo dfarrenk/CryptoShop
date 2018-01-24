@@ -101,17 +101,17 @@
 
 
 
-        <!-- Card model will get looped over to dynamically create in handlebars-->
-        <div class="row text-center" id="productDisplay">
-          <div class="jumbotron jumbotron-fluid m-auto" id="hideMeOnSearch">
-            <div class="container">
-              <h1 class="display-4">Search Results Will be Displayed here</h1>
-              <p class="lead">Start by using the search box above!</p>
+          <!-- Card model will get looped over to dynamically create in handlebars-->
+          <div class="row text-center" id="productDisplay">
+            <div class="jumbotron jumbotron-fluid m-auto" id="hideMeOnSearch">
+              <div class="container">
+                <h1 class="display-4">Search Results Will be Displayed here</h1>
+                <p class="lead">Start by using the search box above!</p>
+              </div>
             </div>
+            <!-- Ebay search results -->
+            <!-- Walmart Search Results -->
           </div>
-          <!-- Ebay search results -->
-          <!-- Walmart Search Results -->
-        </div>
 
 
 
@@ -142,13 +142,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">You want to order</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#buyItNowModal').modal('dispose')">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body" >
             <h2 id="modalName">Title</h2>
-            <img src="" alt="of item" id="modalId">
+            <img src="" alt="of item" id="modalImg">
             <p id="modalPrice">Price: </p>
             <a class="coinbase-widget"
             id="coinbase_widget"
@@ -178,6 +178,8 @@
                 }
               })();
             </script>
+
+
             
           </div>
           <div class="modal-footer">

@@ -1,18 +1,20 @@
 // AJAX Get request to pull item ID from listings for crypto purchase on backend
 $(document).on("click", ".buyItNow", function() {
   var data = $(event.target).attr("value");
-  console.log(data);
-  if (confirm("Would you really like to purchase this item?")) {
-    $("#buyItNowModal").show();
-    $.get({
-      url: "/searchPage.html/buyItem/" + data
-    }).catch(function(err, res) {
-      if (err) throw err;
-    });
-  }
-  else {
-    alert("Maybe another time?");
-  }
+  console.log("Clicked:"+data);
+  $("#buyItNowModal").show();
+  $.get({
+    url: "/searchPage.html/buyItem/" + data
+  }).catch(function(err, res) {
+    if (err) throw err;
+  });
+
+  console.log();
+  //price
+  $("#modalPrice").text($(event.target).parent().find("p").text());
+  //image
+  $("#modalImg").attr("src", $(event.target).parent().parent().find("img").attr("src"));
+  //title
 
 });
 
@@ -163,7 +165,7 @@ $(function() {
             "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
             "<div class='card-body'>" +
             "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
-            "<p class='card-text'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+            "<p class='card-text price'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
             "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
             "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
             "</div>" +
