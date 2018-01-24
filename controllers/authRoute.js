@@ -1,11 +1,11 @@
 const DEBUG = true;
 
-const Passport = require("../config/jwt.js");
+const Passport = require("../config/jwt");
 const authRoute = require("express").Router();
 const CRUD = require("../lib/CRUD");
-const hash = require("../lib/encryptor.js");
-const signToken = require("../lib/signToken.js");
-const mail = require("../lib/sendgrid.js");
+const hash = require("../lib/encryptor");
+const signToken = require("../lib/signToken");
+const mail = require("../lib/sendgrid");
 const _ = require("lodash");
 
 module.exports = function() {
@@ -30,7 +30,7 @@ module.exports = function() {
                         DEBUG && console.log("this is fresh air", req.sessionID);
 
                         res.status(200).json({ message: "ok", token: req.session.token });
-                     }).catch(DEBUG && console.log.bind(console)); // sign token with private key && store in session
+                     }).catch(console.log.bind(console)); // sign token with private key && store in session
                   } else {
                      res.status(401).json({ message: "passwords did not match" });
                   }
@@ -65,16 +65,13 @@ module.exports = function() {
             // timeout should be passed from a config.json which stores lots of stuff
             signToken(req, user, 5 * 60).then(refId => {
                DEBUG && console.log("djfadjfla");
-               DEBUG && console.log(req.sessionID);
                console.log(req.hostname);
                console.log(req.originalUrl);
 
                //////////////////////
                mail({ user, token: refId }, 0);
-               /////////////////////
-
                res.status(200).json({ message: "ok", token: req.session.token });
-            }).catch(DEBUG && console.log.bind(console));
+            }).catch(console.log.bind(console));
          })
          .catch(err => {
             DEBUG && console.log("is this where the null is? %s", err);
