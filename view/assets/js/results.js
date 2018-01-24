@@ -9,13 +9,12 @@ $(document).on("click", ".buyItNow", function() {
     if (err) throw err;
   });
 
-  console.log();
   //price
   $("#modalPrice").text($(event.target).parent().find("p").text());
   //image
   $("#modalImg").attr("src", $(event.target).parent().parent().find("img").attr("src"));
   //title
-
+  $("#modalName").text($(event.target).parent().find(".card-title").text());
 });
 
 
