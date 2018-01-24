@@ -31,7 +31,8 @@ module.exports = function() {
 
                         res.status(200).json({ message: "ok", token: req.session.token });
                      }).catch(console.log.bind(console)); // sign token with private key && store in session
-                  } else {
+                  }
+                  else {
                      res.status(401).json({ message: "passwords did not match" });
                   }
                })
@@ -87,7 +88,7 @@ module.exports = function() {
       DEBUG && console.log("======================================");
       DEBUG && console.log(req.sessionID);
       DEBUG && console.log(req.user);
-      
+
       const { user, session } = req;
       const userInfo = session[user._id];
 
