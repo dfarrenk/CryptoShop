@@ -4,7 +4,7 @@ $(document).on("click", ".buyItNow", function() {
   console.log("Clicked:"+data);
   $("#buyItNowModal").show();
   $.get({
-    url: "/searchPage.html/buyItem/" + data
+    url: "/getAddress" + data
   }).catch(function(err, res) {
     if (err) throw err;
   });
