@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"babel-node server.js\" \"npm run client\"",
+    "start": "concurrently \"server.js\" \"npm run client\"",
     "startReactRender": "babel-node server.js",
     "client": "node scripts/start-client.js"
   },
