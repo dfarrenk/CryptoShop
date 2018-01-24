@@ -93,8 +93,8 @@ app.post("/api/user", function(req, res) {
 	req.newData.username = req.user.username;
 	// req.newData.field = req.user.field;
 	db.User.findOneAndUpdate(query, req.newData, function(err, doc){
-	    if (err) return res.send(500, { error: err });
-	    return res.send("succesfully saved");
+		if (err) return res.send(500, { error: err });
+		return res.send("succesfully saved");
 	});
 });
 

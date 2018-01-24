@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"nodemon server.js\" \"npm run client\"",
+    "start": "concurrently \"babel-node server.js\" \"npm run client\"",
+    "startReactRender": "babel-node server.js",
     "client": "node scripts/start-client.js"
   },
   "repository": {
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/dfarrenk/project-3#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "base64-url": "^2.1.0",
     "bcrypt": "^1.0.3",
     "blockchain.info": "^2.11.0",
