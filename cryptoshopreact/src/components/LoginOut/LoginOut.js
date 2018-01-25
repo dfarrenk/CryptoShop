@@ -71,7 +71,6 @@ class Login extends Component {
 
 	validationHandler = (error, fields) => {
 		const errorhandler = new ErrorHandler();
-		console.log(error);
 		errorhandler
 			.getError(error)
 			.errorHandling()

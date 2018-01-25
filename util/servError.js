@@ -12,8 +12,7 @@ module.exports = function(res, err, errmsg) {
       case 10:
          return res.status(410).json({ message: "requested link expired" });
       case 204:
-         console.log(err);
-         return res.status(204).json({ message: "no such user found in database" });
+         return res.status(204).send(); // 204 will not send anything back
       case 11000:
          return res.status(409).json({ message: errmsg });
       default:

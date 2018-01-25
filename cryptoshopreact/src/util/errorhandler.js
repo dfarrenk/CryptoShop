@@ -34,9 +34,7 @@ class ErrorHandler {
    servErr(code, err) {
       switch (code) {
          case 204:
-            return this.errMsg(err, "Please make sure you put in all the correct information for our server.", code );
-         // case 400:
-         //    return this.errMsg(err, "");
+            return this.errMsg("user cannot be found in the database", "Please make sure you put in all the correct information for our server.", code );
          case 401:
             return this.errMsg(err, "Please make sure you enter the correct password.", code);
          case 403:
