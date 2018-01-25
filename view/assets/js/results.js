@@ -3,12 +3,7 @@ $(document).on("click", ".buyItNow", function() {
   var data = $(event.target).attr("value");
   console.log("Clicked:"+data);
   $("#buyItNowModal").show();
-  $.get({
-    url: "/getAddress" + data
-  }).catch(function(err, res) {
-    if (err) throw err;
-  });
-
+  
   //price
   $("#modalPrice").text($(event.target).parent().find("p").text());
   //image
