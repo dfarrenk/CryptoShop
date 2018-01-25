@@ -8,16 +8,17 @@ var db = require("./models");
 var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
 const _ = require("lodash");
-const CookieParser = require("cookie-parser");
 const ExpSess = require("express-session");
+// const MongoStore = require("connect-mongo")(ExpSess);
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
-	server_config: serConf,
-	session_config: sessConf,
-	https_config: httpsConf,
-	forceSSL_config: fsslConf
-} = require("./config/config.js")("dev");
+   server_config: serConf,
+   session_config: sessConf,
+   https_config: httpsConf,
+   forceSSL_config: fsslConf,
+   store_config: storeConf
+} = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
 const http = require("http");
@@ -28,38 +29,44 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-// const static = Join(__dirname, "./cryptoshopreact/public");
-// app.use(express.static(static));
-// app.use("*", express.static(static));
-
-app.use(Passport.initialize());
-app.use(ExpSess(sessConf));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.set("forceSSLOptions", fsslConf);
-app.use(ForceSSL);
-
-app.all("*", require("./controllers")); // all router
+const static = Join(__dirname, "./view");
+app.use(express.static(static));
+app.use("*", express.static(static));
 
 // Connect to the Mongo DB
 var MONGODB_URI = mongoURL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
+app.use(Passport.initialize());
+app.use(ExpSess(sessConf));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.set("forceSSLOptions", fsslConf);
+
+// app.use(ForceSSL);
+
+app.all("*", require("./controllers")); // all router
+
 server.listen(PORT, function(err) {
-	console.log("Server started at: %s", server.address().port);
+   console.log("Server started at: %s", server.address().port);
 });
 
 server_s.listen(PORTs, function(err) {
-	console.log("Https server running on port %s", server_s.address().port);
+   console.log("Https server running on port %s", server_s.address().port);
 });
 
 app.get("/", (req, res) => {
-	console.log("/");
+   <<<<<<< HEAD
+   console.log("/");
+   =======
+   console.log("/");
+   res.sendFile(Join(__dirname, "./view/homepage.html"));
+   >>>>>>> 8284d7018e10a8440e17d9b5cd9125ca81687d19
 });
 
 app.get("/txid/:TXID", (req, res) => {
-	res.send(blockexplorer.getTx(req.params.TXID));
+   res.send(blockexplorer.getTx(req.params.TXID));
 });
 
 /*
@@ -71,32 +78,65 @@ app.get("/txid/:TXID", (req, res) => {
 */
 
 app.get("/login", (req, res) => {
-	// console.log(req.session);
-	console.log("get");
-	// res.clearCookie("jwt-token");
-	console.log(req.path);
-	// res.send("/login");
-	res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
-	// res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
+   // console.log(req.session);
+   console.log("get");
+   // res.clearCookie("jwt-token");
+   console.log(req.path);
+   console.log(req.session.id);
+   // res.send("/login");
+   res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
+   // res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
+});
+
+app.post("/api/user", function(req, res) {
+   console.log(req);
+   //var query = {'username':req.user.username};
+   //var query - ('_id': req.user._id);
+   req.newData.username = req.user.username;
+   // req.newData.field = req.user.field;
+   db.User.findOneAndUpdate(query, req.newData, function(err, doc) {
+      if (err) return res.send(500, { error: err });
+      return res.send("succesfully saved");
+   });
 });
 
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
-	db.User.find({})
-	.then(function(dbUser) {
-		res.json(dbUser);
-	})
-	.catch(function(err) {
-		res.json(err);
-	});
+   <<<<<<< HEAD
+   db.User.find({})
+   .then(function(dbUser) {
+    res.json(dbUser);
+ })
+   .catch(function(err) {
+    res.json(err);
+ });
+   =======
+   db.User.find({})
+   .then(function(dbUser) {
+      res.json(dbUser);
+   })
+   .catch(function(err) {
+      res.json(err);
+   });
+   >>>>>>> 8284d7018e10a8440e17d9b5cd9125ca81687d19
 });
 
 //Test route to add a User
 app.get("/api/user/testUser", function(req, res) {
-	console.log("herer");
-	let testUser = { name: "testUser", password: "1234", email: "testUser@gmail.com" };
-	db.User.create(testUser).then(function(res) {
-		console.log(`User inserted`);
-		res.status(200).json(res);
-	});
+   console.log("herer");
+   let testUser = { name: "testUser", password: "1234", email: "testUser@gmail.com" };
+   db.User.create(testUser).then(function(res) {
+      console.log(`User inserted`);
+      res.status(200).json(res);
+   });
+});
+
+app.get("/search/:id", function(req, res) {
+   let searchTerm = req.params.id;
+   res.status(200).send("/searchPage.html?item=" + searchTerm);
+});
+
+
+app.put("/api/user", function(req, res) {
+   console.log(req.body);
 });

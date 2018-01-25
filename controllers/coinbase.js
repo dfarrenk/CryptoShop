@@ -6,36 +6,67 @@ module.exports = function() {
 	//this route should create a new coinbase bitcoin address, and send this back to client side
 	//where script will create a payment button using generated address. Funds will go directly
 	//to primary BTC coinbase wallet.
-	routes.post("/getAddress", (req, res)=>{
+	routes.get("/getAddress", (req, res)=>{
 		console.log("getTransaction route fires!");
 		
 		client.getAccount('primary', function(err, account) {
 			//it looks strange, but we have to keep it before we coinbase will activate API-key
 			if (err){
 				console.error("Error:" + err.message);
-				err.message == "API Key disabled" && console.log("\x1b[32mEverything is fine, we have to wait 48 hours since 1/18/18 for API key activation\x1b[0m");
-				res.send("API disabled: test passed!");
+				res.send(err.message);
 			}else{
-				account.createAddress(function(err, addr) {					
-					accounts.forEach(function(acct) {
-						console.log(acct.name + ': ' + acct.balance.amount + ' ' + acct.balance.currency);
-						acct.getTransactions(null, function(err, txns) {
-							txns.forEach(function(txn) {
-								console.log('txn: ' + txn.id);
-							});
-						});
-					});
-					console.log("The new address is" +addr);
-					res.send(addr);
+				account.createAddress(null, function(err, rObject) {					
+
+					console.log("The new address is" +rObject.address);
+					res.send(rObject.address);
 				});
 			}
 		});
 	});
 
-	// this is not necessary for us
-	// client.createAccount({'name': 'New Wallet'}, function(err, acct) {
-	// 	console.log(acct.name + ': ' + acct.balance.amount + ' ' + acct.balance.currency);
-	// });
+	routes.get("/test", (req,res)=>{
+		
+		/*
+		const parametrs = {
+			"amount": "10.00", 
+			"currency": "USD", 
+			"name": "Order #123",
+			"description": "Sample order",
+			"metadata": {
+				"customer_id": "id_1005",
+				"customer_name": "Satoshi Nakamoto"
+				}
+			}
+
+		client.createOrder(parametrs, function(error, order) {
+				if(error){
+					throw(error);
+				}
+				console.log(order);
+		});
+		*/
+
+		client.getAccount('primary', function(err, account) {
+			//it looks strange, but we have to keep it before we coinbase will activate API-key
+			if (err){
+				console.error("Error:" + err.message);
+				res.send(err.message);
+			}else{				
+				account.getTransactions(null,function(err, txs) {
+					let objectToDisplay = [];
+					txs.map((data)=>{
+						objectToDisplay.push({
+							"id":data.id,
+							"amount": data.amount.amount,
+							"createdAt": data.created_at,
+							"status": data.status
+						});
+					});
+					res.send(objectToDisplay);
+				});
+			}
+		});
+	});
 
 	return routes;
 }
