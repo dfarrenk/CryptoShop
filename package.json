@@ -39,7 +39,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "request": "^2.83.0",
-    "twilio": "^3.11.0"
+    "twilio": "^3.11.0",
+    "xmlhttp-request": "^0.4.1"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
