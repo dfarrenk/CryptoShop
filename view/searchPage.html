@@ -24,7 +24,7 @@
         Menu
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>
+        <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
         <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
         <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
         <a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>
@@ -101,17 +101,17 @@
 
 
 
-        <!-- Card model will get looped over to dynamically create in handlebars-->
-        <div class="row text-center" id="productDisplay">
-          <div class="jumbotron jumbotron-fluid m-auto" id="hideMeOnSearch">
-            <div class="container">
-              <h1 class="display-4">Search Results Will be Displayed here</h1>
-              <p class="lead">Start by using the search box above!</p>
+          <!-- Card model will get looped over to dynamically create in handlebars-->
+          <div class="row text-center" id="productDisplay">
+            <div class="jumbotron jumbotron-fluid m-auto" id="hideMeOnSearch">
+              <div class="container">
+                <h1 class="display-4">Search Results Will be Displayed here</h1>
+                <p class="lead">Start by using the search box above!</p>
+              </div>
             </div>
+            <!-- Ebay search results -->
+            <!-- Walmart Search Results -->
           </div>
-          <!-- Ebay search results -->
-          <!-- Walmart Search Results -->
-        </div>
 
 
 
@@ -146,39 +146,33 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" >
+          <div class="modal-body">
             <h2 id="modalName">Title</h2>
             <img src="" alt="of item" id="modalId">
             <p id="modalPrice">Price: </p>
-            <a class="coinbase-widget"
-            id="coinbase_widget"
-            data-address=""
-            data-amount=""
-            data-code="35454657-0e2f-5a5c-8665-2c37c6826bcc"
-            data-currency="USD"
-            data-crypto_currency="BTC"
-            href="">Buy with Coinbase</a>
-            
+            <a class="coinbase-widget" id="coinbase_widget" data-address="" data-amount="" data-code="35454657-0e2f-5a5c-8665-2c37c6826bcc" data-currency="USD" data-crypto_currency="BTC" href="">Buy with Coinbase</a>
+
             <script type='text/javascript' id='coinbase_widget_loader' class='coinbase-widget-async-loader'>
-              document.currentScript.src ='';
+              document.currentScript.src = '';
               (function() {
                 function asyncLoad() {
                   var s = document.createElement('script');
                   s.type = 'text/javascript';
                   s.async = true;
                   var theUrl = 'https://buy.coinbase.com/static/widget.js';
-                  s.src = theUrl+ (theUrl.indexOf("?") >= 0 ? '&' : '?') + 'ref=' + encodeURIComponent(window.location.href);
+                  s.src = theUrl + (theUrl.indexOf("?") >= 0 ? '&' : '?') + 'ref=' + encodeURIComponent(window.location.href);
                   var embedder = document.getElementById('coinbase_widget_loader');
                   embedder.parentNode.insertBefore(s, embedder);
                 }
                 if (window.attachEvent) {
                   window.attachEvent('onload', asyncLoad);
-                } else {
+                }
+                else {
                   window.addEventListener('load', asyncLoad, false);
                 }
               })();
             </script>
-            
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary">Save changes</button>

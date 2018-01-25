@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NavNewUser from './components/navNewUser/navNewUser.js';
 import ReceiveBitcoin from './components/ReceiveBitcoin/receive.js';
+
+import Realtime from './components/RealTimePrices/realtime.js';
 // import './App.css';
 
 class App extends Component {
@@ -13,6 +15,7 @@ class App extends Component {
       <p className="App-intro">
       To get started, edit <code>src/App.js</code> and save to reload.
       </p>
+      <Realtime timeout="10000"></Realtime>
       <ReceiveBitcoin/>
       </div>
       );
