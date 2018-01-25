@@ -26,31 +26,11 @@ module.exports = function() {
 
 	routes.get("/test", (req,res)=>{
 		
-		/*
-		const parametrs = {
-			"amount": "10.00", 
-			"currency": "USD", 
-			"name": "Order #123",
-			"description": "Sample order",
-			"metadata": {
-				"customer_id": "id_1005",
-				"customer_name": "Satoshi Nakamoto"
-				}
-			}
-
-		client.createOrder(parametrs, function(error, order) {
-				if(error){
-					throw(error);
-				}
-				console.log(order);
-		});
-		*/
-
 		client.getAccount('primary', function(err, account) {
 			//it looks strange, but we have to keep it before we coinbase will activate API-key
 			if (err){
 				console.error("Error:" + err.message);
-				res.send(err.message);
+				res.send(err);
 			}else{				
 				account.getTransactions(null,function(err, txs) {
 					let objectToDisplay = [];
