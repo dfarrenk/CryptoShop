@@ -21,8 +21,10 @@ module.exports = function() {
 	routes.get("/test", (req, res)=>{
 		let temp =null;
 
-		temp = coinbase.getAddress();
-		res.status(200).send(temp)
+		coinbase.getAddress((address)=>{
+
+			res.send(address)
+		});
 	})
 
 	return routes;
