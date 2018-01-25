@@ -72,7 +72,8 @@ module.exports = function() {
 		});
 	}
 	routes.get("/test/:id/:price", (req, res)=>{
-		console.log("test route runs");
+		console.log("Test route fires");
+		console.log("Buy item: "+ req.params.id + ", quantity: 1, price:" + req.params.price)
 		var soapOptions = {
 			uri: 'https://api.sandbox.ebay.com/ws/api.dll',
 			headers: {
@@ -87,7 +88,7 @@ module.exports = function() {
 			if(err){
 				console.log(err);
 			}
-			console.log(response);
+			res.send(response.statusCode);
 		})
 
 	});
