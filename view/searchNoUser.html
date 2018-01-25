@@ -17,23 +17,22 @@
 
   <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
     <a class="navbar-brand" href="homepage.html">
-        <img src=" ./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
-      </a>
+      <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
+    </a>
     <div class="dropdown d-lg-none">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
         <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
-        <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
-        <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
+        <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
         <a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>
       </div>
     </div>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
-      <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
+      <button id="searchBtn" class="btn my-2 my-sm-0" type="submit">Search</button>
     </form>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto text-center">
@@ -93,23 +92,26 @@
             <!--<li class="nav-item">-->
             <!--  <a class="btn nav-link" data-target=".showAmazon" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showAmazon">Amazon</a>-->
             <!--</li>-->
-            <li class="nav-item">
-              <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>
-            </li>
+            <!--<li class="nav-item">-->
+            <!--  <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>-->
+            <!--</li>-->
           </ul>
         </div>
 
 
 
 
+
         <!-- Card model will get looped over to dynamically create in handlebars-->
-        <div class="row text-center" id="productDisplay">
-          <div class="jumbotron jumbotron-fluid m-auto" id="hideMeOnSearch">
+        <div class="loader"></div>
+        <div class="row text-center" id="productMaster">
+          <div class="jumbotron jumbotron-fluid" id="hideMeOnSearch">
             <div class="container">
               <h1 class="display-4">Search Results Will be Displayed here</h1>
               <p class="lead">Start by using the search box above!</p>
             </div>
           </div>
+          <div class="row text-center" id="productDisplay"></div>
           <!-- Ebay search results -->
           <!-- Walmart Search Results -->
         </div>
@@ -122,9 +124,9 @@
           <div class="row text-center justify-content-center">
             <nav class="navbar sticky-bottom navbar-light">
               <a class="navbar-brand">
-              <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
-              <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
-            </a>
+                  <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
+                  <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
+                </a>
             </nav>
           </div>
         </div>
@@ -142,16 +144,20 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"></h5>
+          <h5 class="modal-title">You want to order</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <h3 id="modalName">Title</h3>
+          <img src="" alt="of item" id="modalImg">
+          <p id="modalPrice">Price: </p>
+          <button id="paymentBtn">Payment</button>
+          <div id="paymentInfo"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" id="placeOrderBtn">Make purchase</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -172,6 +178,9 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
+
+  <!-- script for payment -->
+  <script src="./assets/js/purchase.js"></script>
 </body>
 
 </html>
