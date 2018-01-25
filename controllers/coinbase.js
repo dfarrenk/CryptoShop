@@ -1,5 +1,5 @@
 const routes = require("express").Router();
-//const client = require("../config/coinbase.js");
+const client = require("../config/coinbase.js");
 console.log("Coinbase controller: \x1b[32mloaded!\x1b[0m");
 
 module.exports = function() {
