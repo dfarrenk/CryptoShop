@@ -12,17 +12,15 @@ class ErrorHandler {
    }
 
    errorHandling() {
+      const { code, err, field } = this
       let errorType = {};
 
-      try {
-         const { code, err } = this;
+      if (code) {
          errorType = this.servErr(code, err);
-      } catch (e) {
-         const { field, err } = this;
+      } else {
          errorType = this.valErr(field, err);
-      } finally {
-         return Promise.resolve(errorType); // return object consist of set parts
-      }
+      } 
+      return Promise.resolve(errorType); // return object consist of set parts
    }
 
    valErr(field, errmsg) {
@@ -32,10 +30,10 @@ class ErrorHandler {
 
    servErr(code, err) {
       switch (code) {
-         case 204:
-            return this.errMsg(err, "Please make sure you put in all the correct information for our server.", code );
+         // case 400:
+         //    return this.errMsg(err, "");
          case 400:
-            return this.errMsg(err, "");
+            return this.errMsg(err, "Please make sure you put in all the correct information for our server.", code );
          case 401:
             return this.errMsg(err, "Please make sure you enter the correct password.", code);
          case 403:
@@ -65,18 +63,16 @@ class ErrorHandler {
       let message, field;
 
       switch (true) {
-         case: len === 1: // vanilla error message
-            messsage = `Error Code: ${options[0]}, ${err}. ${msg}`;
+         case len === 1: // vanilla error message
+            message = `Error Code: ${options[0]}, ${err}. ${msg}`;
          	return { field, message };
-         case: len === 2: 
-         	message = `Error Code: ${option[0]}, ${err} in our ${option[1]}. ${msg}`;
+         case len === 2: 
+         	message = `Error Code: ${options[0]}, ${err} in our ${options[1]}. ${msg}`;
          	return { field, message };
-         case: len >= 3:
-         	message = ``
+         // case: len >= 3:
+         // 	message = ``
       }
-
-
-
    }
-
 }
+
+export default ErrorHandler;

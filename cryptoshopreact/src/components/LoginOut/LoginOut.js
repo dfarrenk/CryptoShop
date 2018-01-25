@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { login, register, reset } from "../../util/auth";
+import ErrorHandler from "../../util/errorhandler";
 import fields from "./authconfig.json";
 import "./style.css";
 
@@ -53,43 +54,24 @@ class Login extends Component {
 	};
 
 	validationHandler = (error, fields) => {
-		const errMsg = (e, keyword) => {
-			let errname = null;
+		const errorhandler = new ErrorHandler();
+		errorhandler
+			.getError(error)
+			.errorHandling()
+			.then(errType => {
+				let { field, message } = errType;
 
-			e.match(/email/) && (errname = "email");
-			e.match(/user?(name|)/) && (errname = "username");
-			e.match(/password/) && (errname = "password");
-			e.match(/passconfirm/) && (errname = "passconfirm");
-
-			fields[errname].err = `${keyword} ${errname}`;
-			this.setState({ fields: fields });
-		};
-
-		if (error.response) {
-			return this.serverError(error.response);
-		}
-
-		/////////////////////// need to clear crresponding input field to display error //////////////////////////////
-
-		const e = error;
-		switch (true) {
-			case !!e.match(/missing/):
-				errMsg(e, "missing");
-				break;
-			case !!e.match(/invalid/):
-				errMsg(e, "invalid");
-				break;
-			case !!e.match(/mismatched/):
-				errMsg(e, "mismatched");
-				break;
-			default:
-				console.log("wrong place");
-		}
-	};
-
-	serverError = error => {
-		const { data: e, status } = error;
-		console.log(e.message);
+				if (!field) { // this is where we decided what to do with server error
+					fields.username.err = message;
+					field = "username";
+				} else {
+					fields[field].err = message;
+				}
+				this.setState({ 
+					[field]: "",
+					fields: fields 
+				});
+			});
 	};
 
 	responseHandler = response => {
@@ -99,28 +81,34 @@ class Login extends Component {
 		}
 	};
 
+	clearFields = (resetname, value) => {
+		for (let elem in fields) {
+			delete fields[elem].err;
+		}
+
+		this.setState({
+			username: "",
+			password: "",
+			passconfirm: "",
+			email: "",
+			[resetname]: value
+		});
+	}
+
 	renFooter() {
 		const { isLogin, resetPass } = this.state;
 		const msg = isLogin ? "New User?" : "Already Registered?";
-
-		const fetchOptions = {
-			method: "PUT", // or "PUT"
-			headers: new Headers({
-				"Content-Type": "application/text"
-			})
-		};
-
 		return (
 			<p key="footer" className="--anchor">
 				{
 					isLogin
 					? [ 
-						<a key="forgotpass" onClick={() => this.setState({ resetPass: !resetPass })}>Forgot Your Password?</a>, 
+						<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>Forgot Your Password?</a>, 
 						<span key="backslash"> / </span>
 						]
 					: ""
 				}
-				<a key="userchoice" onClick={() => this.setState({ isLogin: !isLogin })}>{msg}</a>
+				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>{msg}</a>
 			</p>
 		);
 	}
@@ -188,7 +176,7 @@ class Login extends Component {
 							this.renResetPass(),
 							<input key="submitReset" type="submit" value="Confirm" />,
 							<p key="footer" className="--anchor">
-								<a onClick={() => this.setState({ resetPass: !resetPass })}>Never Mind</a>
+								<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
 							</p>
 						]
 				}

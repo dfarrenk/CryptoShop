@@ -3,6 +3,7 @@ const infoRoute = require("express").Router();
 const _ = require("lodash");
 
 const Auth = require("../lib/authcallback.js");
+const ServErr = require("../util/servError.js");
 const signToken = require("../lib/signToken.js");
 const CRUD = require("../lib/CRUD.js");
 
@@ -12,7 +13,6 @@ module.exports = function() {
 
    infoRoute.put("/api/*", Auth);
 
-   // need to move to a different router 
    infoRoute.put("/api/user", function(req, res) {
       console.log(req.body); // client handles invalid input
       console.log(res.locals);
@@ -20,7 +20,7 @@ module.exports = function() {
 
 		if (locals.error) {
 			const { code, message } = locals.error;
-			return res.status(code).send(message);
+			return res.status(code).json({ message });
 		}
 		
 		const { _id: uid } = req.user;
@@ -36,7 +36,9 @@ module.exports = function() {
                newRef: refId
             });
          })
-         .catch(console.log.bind(console));
+         .catch(err => {
+            return ServErr(res, err);
+         });
    });
 
 

@@ -2,6 +2,7 @@ const DEBUG = true;
 
 const authRoute = require("express").Router();
 const Auth = require("../lib/authcallback.js");
+const ServErr = require("../util/servError.js");
 const CRUD = require("../lib/CRUD.js");
 const hash = require("../lib/encryptor.js");
 const signToken = require("../lib/signToken.js");
@@ -22,25 +23,23 @@ module.exports = function() {
          .read(searchField)
          .then(user => {
             if (!user) {
-               return res.status(204).json({ message: "no such user found" });
+               throw 0;
             }
             data = user;
             return hash.compare(password, user);
          })
          .then(isMatched => {
             if (!isMatched) {
-               return res.status(401).json({ message: "passwords did not match" });
+               throw 1;
             }
             return signToken(req, data, expiredIn);
          })
          .then(refId => {
-            res.status(202).json({ message: "ok", token: req.session.token });
+            console.log(refId);
+            return res.status(202).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-            console.log("This is login error: %s", err);
-            res.status(500).send(
-               "Internval Server Error. Please note that our engineer is working hard to recover it."
-            );
+         	ServErr(res, err);
          });
    });
 
@@ -58,13 +57,13 @@ module.exports = function() {
          })
          .then(refId => {
             mail({ user, token: refId }, 0);
-            res.status(201).json({ message: "ok", token: req.session.token });
+            return res.status(201).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-            console.log("This is register error: %s", err);
-            const error = err.code === 11000 ? Object.assign({}, { message: err.errmsg }) : err;
-
-            res.status(409).json(error);
+				if (err.code) {
+					return ServErr(res, 11000, err.errmsg);
+				} 
+				ServErr(res, err);
          });
    });
 
