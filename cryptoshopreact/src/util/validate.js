@@ -1,5 +1,5 @@
 class Validator {
-	Setprops(args) {
+	setFields(args) {
 		for (let elem in args) {
 			this[elem] = args[elem];
 		}
@@ -24,13 +24,13 @@ class Validator {
 		console.log(invalid);
 		for (let elem in invalid) {
 			if (invalid[elem]) {
-				return invalid[elem];
+				return { field: elem, message: invalid[elem] }; 
 			}
 		}
 	}
 
 	isBlank(prop, name) {
-		return prop ? null : `missing ${name}`;
+		return prop ? null : `missing ${name}`; 
 	}
 
 	isInvalidFormat(prop, name) {
