@@ -2,8 +2,6 @@ var Join = require("path").join;
 var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
-// var Bitpay = require("bitpay-api");
-// var bitpay = new Bitpay();
 var mongoose = require("mongoose");
 var db = require("./models");
 
