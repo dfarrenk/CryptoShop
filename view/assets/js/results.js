@@ -1,15 +1,9 @@
 // AJAX Get request to pull item ID from listings for crypto purchase on backend
 $(document).on("click", ".buyItNow", function() {
   var data = $(event.target).attr("value");
-<<<<<<< HEAD
   console.log("Clicked:"+data);
   $("#buyItNowModal").modal();
-  
-=======
-  console.log("Clicked:" + data);
-  $("#buyItNowModal").modal();
 
->>>>>>> 5b8df98ff770936149a5c13fa10d2e257be51ed1
   //price
   $("#modalPrice").text($(event.target).parent().find("p").text());
   //image
@@ -61,9 +55,9 @@ $(function() {
 
   function searchToObject() {
     var pairs = window.location.search.substring(1).split("&"),
-      obj = {},
-      pair,
-      i;
+    obj = {},
+    pair,
+    i;
 
     for (i in pairs) {
       if (pairs[i] === "") continue;
@@ -82,10 +76,10 @@ $(function() {
     let searchQuery = $("#searchBar").val().trim();
 
     $.get("/search/" + searchQuery)
-      .done(function(res) {
-        console.log(res);
-        location.assign(res).done(function() {});
-      });
+    .done(function(res) {
+      console.log(res);
+      location.assign(res).done(function() {});
+    });
   });
 
   //Function to make Ebay API call and Display Results
@@ -123,17 +117,17 @@ $(function() {
         }
         for (var i = 0; i < 10; i++) {
           var newCard =
-            $("<div class='col collapse multi-collapse showEbay' style='min-width: 14rem; max-width: 16rem; margin: 2%;'>" +
-              "<div class='card card-size'>" +
-              "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
-              "<div class='card-body'>" +
-              "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
-              "<p class='card-text price'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
-              "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-              "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
-              "</div>" +
-              "</div>" +
-              "</div>");
+          $("<div class='col collapse multi-collapse showEbay' style='min-width: 14rem; max-width: 16rem; margin: 2%;'>" +
+            "<div class='card card-size'>" +
+            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+            "<div class='card-body'>" +
+            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
+            "<p class='card-text price'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
+            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
           $("#productDisplay").append(newCard);
           resolve();
         }
