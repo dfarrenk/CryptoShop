@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+`<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -150,10 +150,11 @@
             <h2 id="modalName">Title</h2>
             <img src="" alt="of item" id="modalImg">
             <p id="modalPrice">Price: </p>
-            <button id="payment">Payment</button>
+            <button id="paymentBtn">Payment</button>
+            <div id="paymentInfo"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" id="placeOrderBtn">Make purchase</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -176,18 +177,7 @@
     </script>
 
     <!-- script for payment -->
-    <script>
-      $("#payment").on("click", (event)=>{
-        $.get({
-          url: "/getAddress"
-        }).catch(function(err, res) {
-          if (err) throw err;
-        }).then(addressBTC =>{
-          $(event.currentTarget).parent().append("<p>Please, send exactly  to following address: <span>"+addressBTC+"</span></p>")
-        });
-      })
-
-    </script>
+    <script src="./assets/js/purchase.js"></script>
   </body>
 
   </html>
