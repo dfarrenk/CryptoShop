@@ -1,12 +1,15 @@
 const DEBUG = true;
 
-const Passport = require("../config/jwt");
 const authRoute = require("express").Router();
-const CRUD = require("../lib/CRUD");
-const hash = require("../lib/encryptor");
-const signToken = require("../lib/signToken");
-const mail = require("../lib/sendgrid");
+const Auth = require("../lib/authcallback.js");
+const ServErr = require("../util/servError.js");
+const CRUD = require("../lib/CRUD.js");
+const hash = require("../lib/encryptor.js");
+const signToken = require("../lib/signToken.js");
+const mail = require("../lib/sendgrid.js");
 const _ = require("lodash");
+
+const { "token-timeout": expiredIn } = require("../config/config.json");
 
 module.exports = function() {
 
@@ -14,36 +17,29 @@ module.exports = function() {
       DEBUG && console.log(req.body);
       const { username, password, email } = req.body;
       const searchField = email ? { email } : { username };
+      let data = undefined;
 
       CRUD
          .read(searchField)
          .then(user => {
             if (!user) {
-               return res.status(401).json({ message: "no such user found" });
+               throw 0;
             }
-
-            hash
-               .compare(password, user)
-               .then(isMatched => {
-                  if (isMatched) {
-                     signToken(req, user, 5 * 60).then(() => {
-                        DEBUG && console.log("this is fresh air", req.sessionID);
-
-                        res.status(200).json({ message: "ok", token: req.session.token });
-                     }).catch(console.log.bind(console)); // sign token with private key && store in session
-                  }
-                  else {
-                     res.status(401).json({ message: "passwords did not match" });
-                  }
-               })
-               .catch(err => {
-                  DEBUG && console.log(err);
-                  res
-                     .status(500)
-                     .send(
-                        "Internval Server Error. Please note that our engineer is working hard to recover it."
-                     );
-               });
+            data = user;
+            return hash.compare(password, user);
+         })
+         .then(isMatched => {
+            if (!isMatched) {
+               throw 1;
+            }
+            return signToken(req, data, expiredIn);
+         })
+         .then(refId => {
+            console.log(refId);
+            return res.status(202).json({ message: "ok", token: req.session.token });
+         })
+         .catch(err => {
+         	ServErr(res, err);
          });
    });
 
@@ -54,44 +50,40 @@ module.exports = function() {
       hash
          .create(password, username)
          .then(({ salt, hash, publickey }) => {
-            return CRUD.create({
-               username,
-               email,
-               salt,
-               publickey,
-               password: hash
-            });
+            return CRUD.create({ username, email, salt, publickey, password: hash });
          })
          .then(user => {
-            // timeout should be passed from a config.json which stores lots of stuff
-            signToken(req, user, 5 * 60).then(refId => {
-               DEBUG && console.log("djfadjfla");
-               console.log(req.hostname);
-               console.log(req.originalUrl);
-
-               //////////////////////
-               mail({ user, token: refId }, 0);
-               res.status(200).json({ message: "ok", token: req.session.token });
-            }).catch(console.log.bind(console));
+            return signToken(req, user, expiredIn)
+         })
+         .then(refId => {
+            mail({ user, token: refId }, 0);
+            return res.status(201).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-            DEBUG && console.log("is this where the null is? %s", err);
-            res.status(401).send(err); // process mongo related error
+				if (err.code) {
+					return ServErr(res, 11000, err.errmsg);
+				} 
+				ServErr(res, err);
          });
    });
 
-   authRoute.get("/user", Passport.authenticate("jwt", { session: false }), function(
-      req,
-      res
-   ) {
-      // not getting get request from react
+   authRoute.get("/user", Auth);
+
+   authRoute.get("/user", function(req, res) {
       DEBUG && console.log("======================================");
-      DEBUG && console.log(req.sessionID);
-      DEBUG && console.log(req.user);
+      DEBUG && console.log(req.session);
+      DEBUG && console.log(req.hostname);
+      DEBUG && console.log(req.ips);
+
+      const { locals } = res;
+
+      if (locals.error) {
+         const { code, message } = locals.error;
+         return res.status(code).send(message);
+      }
 
       const { user, session } = req;
       const userInfo = session[user._id];
-
       res.status(200).json(userInfo);
    });
 

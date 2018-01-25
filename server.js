@@ -9,7 +9,6 @@ var blockexplorer = require("blockchain.info/blockexplorer"); //another way to g
 
 const _ = require("lodash");
 const ExpSess = require("express-session");
-// const MongoStore = require("connect-mongo")(ExpSess);
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
@@ -122,7 +121,3 @@ app.get("/search/:id", function(req, res) {
    res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
 
-
-app.put("/api/user", function(req, res) {
-   console.log(req.body);
-});
