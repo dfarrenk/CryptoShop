@@ -57,12 +57,8 @@ server_s.listen(PORTs, function(err) {
 });
 
 app.get("/", (req, res) => {
-   <<<<<<< HEAD
-   console.log("/");
-   =======
    console.log("/");
    res.sendFile(Join(__dirname, "./view/homepage.html"));
-   >>>>>>> 8284d7018e10a8440e17d9b5cd9125ca81687d19
 });
 
 app.get("/txid/:TXID", (req, res) => {
@@ -102,15 +98,6 @@ app.post("/api/user", function(req, res) {
 
 //Test route for getting Users from MongoDB. It will pull all user documents from the 'users' collection in the 'crypto' database.
 app.get("/api/user", function(req, res) {
-   <<<<<<< HEAD
-   db.User.find({})
-   .then(function(dbUser) {
-    res.json(dbUser);
- })
-   .catch(function(err) {
-    res.json(err);
- });
-   =======
    db.User.find({})
    .then(function(dbUser) {
       res.json(dbUser);
@@ -118,7 +105,6 @@ app.get("/api/user", function(req, res) {
    .catch(function(err) {
       res.json(err);
    });
-   >>>>>>> 8284d7018e10a8440e17d9b5cd9125ca81687d19
 });
 
 //Test route to add a User
