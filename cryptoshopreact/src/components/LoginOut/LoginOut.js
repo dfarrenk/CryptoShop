@@ -89,7 +89,6 @@ class Login extends Component {
 
 	serverError = error => {
 		const { data: e, status } = error;
-
 		console.log(e.message);
 	};
 

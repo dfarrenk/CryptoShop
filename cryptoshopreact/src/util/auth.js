@@ -13,7 +13,7 @@ const login = fields => {
 			delete data.username;
 		}
 
-		const invalid = validator.Setprops(data).validate();
+		const invalid = validator.setFields(data).validate();
 		if (invalid) {
 			console.log(invalid);
 			return reject(invalid);
@@ -29,7 +29,7 @@ const register = fields => {
 		const validator = new Validator();
 		const data = { username, email, password, passconfirm };
 
-		const invalid = validator.Setprops(data).validate();
+		const invalid = validator.setFields(data).validate();
 		if (invalid) {
 			console.log(invalid);
 			return reject(invalid);
@@ -46,7 +46,7 @@ const reset = fields => {
 		const validator = new Validator();
 		const data = { username, email };
 
-		const invalid = validator.Setprops(data).validate();
+		const invalid = validator.setFields(data).validate();
 		if (invalid) {
 			console.log(invalid);
 			return reject(invalid);
