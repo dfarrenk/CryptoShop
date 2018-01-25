@@ -23,7 +23,7 @@ module.exports = function() {
          .read(searchField)
          .then(user => {
             if (!user) {
-               throw 0;
+               throw 204;
             }
             data = user;
             return hash.compare(password, user);
@@ -46,14 +46,17 @@ module.exports = function() {
    authRoute.post("/register", function(req, res) {
       DEBUG && console.log(req.body);
       const { username, password, email } = req.body;
+      let user = undefined;
 
       hash
          .create(password, username)
          .then(({ salt, hash, publickey }) => {
             return CRUD.create({ username, email, salt, publickey, password: hash });
          })
-         .then(user => {
-            return signToken(req, user, expiredIn)
+         .then(data => {
+         	user = data;
+         	console.log("this is wierd", data);
+            return signToken(req, data, expiredIn)
          })
          .then(refId => {
             mail({ user, token: refId }, 0);

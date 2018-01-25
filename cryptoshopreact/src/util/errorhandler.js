@@ -4,6 +4,9 @@ class ErrorHandler {
       if (err.response) {
          this.err = err.response.data.message;
          this.code = err.response.status; // this should be error code
+      } else if (err.status) {
+      	this.err = err.data.message;
+         this.code = err.status; // this should be error code
       } else {
          this.err = err.message;
          this.field = err.field;
@@ -30,10 +33,10 @@ class ErrorHandler {
 
    servErr(code, err) {
       switch (code) {
+         case 204:
+            return this.errMsg(err, "Please make sure you put in all the correct information for our server.", code );
          // case 400:
          //    return this.errMsg(err, "");
-         case 400:
-            return this.errMsg(err, "Please make sure you put in all the correct information for our server.", code );
          case 401:
             return this.errMsg(err, "Please make sure you enter the correct password.", code);
          case 403:
