@@ -1,5 +1,6 @@
 const routes = require("express").Router();
 const request = require("request"); 
+const parseXmlString = require('xml2js').parseString;
 console.log("eBay controller: \x1b[32mloaded!\x1b[0m");
 
 module.exports = function() {
@@ -88,7 +89,12 @@ module.exports = function() {
 			if(err){
 				console.log(err);
 			}
-			res.send(response.statusCode);
+			parseXmlString(response.body, function (err, result) {
+				console.dir(result.PlaceOfferResponse);
+				res.send(result.PlaceOfferResponse.Ack);
+			});
+
+			
 		})
 
 	});
