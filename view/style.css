@@ -92,14 +92,11 @@ body {
   background: #4068ab;
 }
 
-.nav-link:visited {
-  background: #4068ab;
-}
-
 .dropdown-toggle {
   color: white;
   background-color: #4067ab;
 }
+
 
 #hideMeOnSearch {
   margin: auto;
