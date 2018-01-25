@@ -50,7 +50,7 @@ module.exports = function() {
 			//it looks strange, but we have to keep it before we coinbase will activate API-key
 			if (err){
 				console.error("Error:" + err.message);
-				res.send(err.message);
+				res.send(err);
 			}else{				
 				account.getTransactions(null,function(err, txs) {
 					let objectToDisplay = [];
