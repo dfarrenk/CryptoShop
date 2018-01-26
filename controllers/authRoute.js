@@ -39,7 +39,7 @@ module.exports = function() {
             return res.status(202).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-         	ServErr(res, err);
+            ServErr(res, err);
          });
    });
 
@@ -54,8 +54,8 @@ module.exports = function() {
             return CRUD.create({ username, email, salt, publickey, password: hash });
          })
          .then(data => {
-         	user = data;
-         	console.log("this is wierd", data);
+            user = data;
+            console.log("this is wierd", data);
             return signToken(req, data, expiredIn)
          })
          .then(refId => {
@@ -63,15 +63,15 @@ module.exports = function() {
             return res.status(201).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-				if (err.code) {
-					return ServErr(res, 11000, err.errmsg);
-				} 
-				ServErr(res, err);
+            if (err.code) {
+               return ServErr(res, 11000, err.errmsg);
+            }
+            ServErr(res, err);
          });
    });
 
    authRoute.post("/logout", Auth, function(req, res) {
-		const { locals } = res;
+      const { locals } = res;
 
       if (locals.error) {
          const { code, message } = locals.error;
@@ -79,11 +79,11 @@ module.exports = function() {
       }
 
       const { user, session } = req;
-		const { _id } = user;
+      const { _id } = user;
 
-		delete req.session.user;
-		delete req.session[_id];
-		res.status(200).send("/");
+      delete req.session.user;
+      delete req.session[_id];
+      res.status(200).send("/");
    });
 
    authRoute.get("/user", Auth, function(req, res) {
