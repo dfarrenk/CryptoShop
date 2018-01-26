@@ -33,15 +33,31 @@ class Login extends Component {
 
 		if (resetPass) {
 			reset(this.state)
-				.then(this.responseHandler)
+				.then(res => { 
+						if (res.status === 204) {
+							console.log(res);
+							throw res;
+						}
+						this.responseHandler(res);
+					})
 				.catch(err => this.validationHandler(err, fields));
 		} else {
 			isLogin
 			? login(this.state)
-					.then(this.responseHandler)
+					.then(res => { 
+						if (res.status === 204) {
+							throw res;
+						}
+						this.responseHandler(res);
+					})
 					.catch(err => this.validationHandler(err, fields))
 			: register(this.state)
-					.then(this.responseHandler)
+					.then(res => { 
+						if (res.status === 204) {
+							throw res;
+						}
+						this.responseHandler(res);
+					})
 					.catch(err => this.validationHandler(err, fields));
 		}
 

@@ -70,8 +70,8 @@ const jwt_config = {
 
 const store_config = {
    url: server_config.mongoURL,
-   ttl: 14 * 24 * 1 * 60 * 60,
-   touchAfter: 30 * 60
+   ttl: sessmax,
+   touchAfter: resave
 };
 
 // console.log(MongoStore);
@@ -80,7 +80,7 @@ const session_config = {
    secret: devMode ? "session secret" : process.env.SESS_SECRET,
    resave: false,
    saveUninitialized: false,
-   name: "id",
+   name: "ssid",
    authenticated: false,
    token: null,
    genid: GenUUIDAndEmit,

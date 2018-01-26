@@ -41,6 +41,5 @@ module.exports = function() {
          });
    });
 
-
    return infoRoute;
 }
