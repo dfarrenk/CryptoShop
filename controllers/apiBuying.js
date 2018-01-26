@@ -16,7 +16,14 @@ const { "token-timeout": expiredIn } = require("../config/config.json");
 //TODO: eBay will send the item to customer 下 卞 巃 籠 嚨 櫳 瓏
 
 module.exports = function() {
-	
+	routes.get("/getAddress", (req, res)=>{
+		console.log("/getAddress fires!");
+		coinbase.getAddress((address)=>{
+			res.send(address)
+		})
+	})
+
+
 	routes.post("/buyItem/", (req, res)=>{
 		console.log("buyItem route fires!");
 		let 下 = {
@@ -32,9 +39,9 @@ module.exports = function() {
 			}));
 	}); 
 
-	routes.get("/test", (req, res)=>{
+	routes.get("/test:address", (req, res)=>{
 		let temp =null;
-		coinbase.getAddress((address)=>{
+		coinbase.checkTransaction((address)=>{
 			res.send(address);
 			const { _id, username } = req.user;
 			const Userinfo = req.session[_id];
