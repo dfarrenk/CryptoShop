@@ -85,8 +85,8 @@ $(function() {
   //Function to make Ebay API call and Display Results
   function ebayAPI(searchTerm) {
     return new Promise((resolve, reject) => {
-      var key = "StephenC-SecretSa-PRD-6132041a0-943144c9";
-      var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+      var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
+      var url = "https://svcs.sandbox.ebay.com/services/search/FindingService/v1";
 
       $.ajax({
         url: url,
@@ -95,7 +95,7 @@ $(function() {
         data: {
           "OPERATION-NAME": "findItemsByKeywords",
           "SERVICE-VERSION": "1.0.0",
-          "SECURITY-APPNAME": "StephenC-SecretSa-PRD-6132041a0-943144c9",
+          "SECURITY-APPNAME": "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6",
           "RESPONSE-DATA-FORMAT": "JSON",
           "paginationInput.entriesPerPage": "10",
           keywords: searchTerm

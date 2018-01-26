@@ -30,6 +30,5 @@ $(function(){
 		}).then(answer =>{
 			alert(answer);
 		});
-
 	})
 });

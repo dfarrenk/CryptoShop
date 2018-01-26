@@ -67,8 +67,6 @@ module.exports = function() {
 				}
 			});
 		},	10000);
-		
-
 	}); 
 
 	routes.get("/test", (req, res)=>{
@@ -76,6 +74,12 @@ module.exports = function() {
 		eBay.findDetails(110256990915, (price)=>{
 			res.send(price);
 		});
+	})
+
+	routes.get("/find/:keyword", (req, res)=>{
+		eBay.findItems(req.params.keyword, (items)=>{
+			res.send(items)
+		})
 	})
 
 	return routes;
