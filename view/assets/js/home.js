@@ -12,14 +12,19 @@ $(function() {
   $("#logInStatic").click(function(e) {
     e.preventDefault();
     username = $("#loginEmail").val().trim();
-    email = $("#loginEmail").val().trim();
+    // email = $("#loginEmail").val().trim();
     password = $("#loginPass").val().trim();
 
     const loggedInUser = ({
       username: username,
       password: password,
-      email: email
     });
+
+    if (username.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
+      console.log("it's email format");
+      loggedInUser.email = username;
+      delete loggedInUser.username;
+    }
 
     $.post({
       url: "/login",

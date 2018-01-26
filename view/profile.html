@@ -91,7 +91,7 @@
               <a class="nav-link active" href="#showName" role="tab" data-toggle="tab" aria-selected="true">Name & Address Info</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#userAndPass" role="tab" data-toggle="tab">Username & Password</a>
+              <a class="nav-link" href="#userAndPass" role="tab" data-toggle="tab">Reset Password</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#recentTransactions" role="tab" data-toggle="tab">Recent Transactions</a>
@@ -198,25 +198,37 @@
                       </form>
                     </div>
                   </div>
-
                 </div>
               </div>
+              <!-- Reset Password -->
               <div role="tabpanel" class="tab-pane fade" id="userAndPass">
-                <div class="col-sm-12 col-md-8 m-auto">
-                  <div class="card">
-                    <div class="card-body">
-                      <form>
-                        <div class="form-group">
-                          <label for="editEmail">Email address</label>
-                          <input type="email" class="form-control" id="editEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                          <label for="editPass">Password</label>
-                          <input type="password" class="form-control" id="editPass" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="emailPassSave">Save</button>
-                        <button type="button" class="btn btn-danger">Cancel</button>
-                      </form>
+                <div class="row">
+                  <div class="col m-auto">
+                    <div class="card">
+                      <div class="card-body">
+                        <form>
+                          <div class="form-group">
+                            <label for="editEmail">New Email address</label>
+                            <input readonly="readonly" type="email" class="form-control" id="editEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                          </div>
+                          <button type="submit" class="btn btn-primary saveInfo">Save</button>
+                          <button type="button" class="btn btn-info" id="editEmailBtn">Edit</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col m-auto">
+                    <div class="card">
+                      <div class="card-body">
+                        <form>
+                          <div class="form-group">
+                            <label for="editPass">New Password</label>
+                            <input readonly="readonly" type="password" class="form-control" id="editPass" placeholder="Password">
+                          </div>
+                          <button type="submit" class="btn btn-primary saveInfo">Save</button>
+                          <button type="button" class="btn btn-info" id="editPassBtn">Edit</button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -367,6 +379,30 @@
         <!-- /div row -->
       </div>
       <!-- /container-fluid -->
+
+      <!-- Pass Confirmation Modal -->
+      <div class="modal" tabindex="-1" role="dialog" id="passConfirm">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center">Please Enter Your Exisisting Password to Confirm Changes</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="passConfirmation">Password</label>
+                  <input type="password" class="form-control" id="passConfirmation" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="passConfirmSave">Save</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
