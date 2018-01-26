@@ -48,13 +48,14 @@ module.exports = function() {
 			coinbase.checkTransaction(下.btcAddress, (transaction)=>{
 				if(transaction[0].status =="completed"){
 					clearInterval(transactionIntervalCheck);
-					res.status(200).send(CRUD.updatePush(_id, { "orders":下 })
-						.then(data => {
-							return signToken(req, data, expiredIn);
-						}).catch(err => {
-							throw err.message
-						})
-						);
+					CRUD.updatePush(_id, { "orders":下 })
+					.then(data => {
+						res.status(200).send("Ok!");
+						return signToken(req, data, expiredIn);
+					}).catch(err => {
+						throw err.message
+					})
+					
 				}
 
 				counter15Min--;
