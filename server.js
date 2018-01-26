@@ -16,7 +16,8 @@ const {
    session_config: sessConf,
    https_config: httpsConf,
    forceSSL_config: fsslConf,
-   store_config: storeConf
+   store_config: storeConf,
+   memoryStore
 } = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
 
@@ -52,6 +53,9 @@ server.listen(PORT, function(err) {
 });
 
 server_s.listen(PORTs, function(err) {
+   // trigger garbage collector on server starts
+   memoryStore.garbageCollector();
+
    console.log("Https server running on port %s", server_s.address().port);
 });
 

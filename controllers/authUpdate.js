@@ -5,7 +5,7 @@ const _ = require("lodash");
 
 const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
-const ServErr = require("../util/ServError.js");
+const ServErr = require("../util/servError.js");
 const signToken = require("../lib/signToken.js");
 const hash = require("../lib/encryptor.js");
 const mail = require("../lib/sendgrid.js");
@@ -23,7 +23,7 @@ module.exports = function() {
       _.forIn(memoryStore, function(val, key) {
          if (_.has(val.history, refId)) {
             isInSessHistory = memoryStore[key];
-         }
+         };
       });
 
       const user = memoryStore[refId] || isInSessHistory;
@@ -63,7 +63,7 @@ module.exports = function() {
       const { _id: uid, username: _user } = memoryStore.temp[refId];
 
       if (username !== _user) {
-         return ServErr(res, 0);
+         return ServErr(res, 204);
       }
 
       hash
@@ -95,7 +95,7 @@ module.exports = function() {
             console.log("I forgot my password");
 
             if (!user) {
-               throw 0;
+               throw 204;
             }
             const { _id, username } = user;
             const refId = Uid(24);
@@ -130,7 +130,7 @@ module.exports = function() {
          .read({ email })
          .then(user => {
             if (user.username !== curuser) {
-               throw 0;
+               throw 204;
             }
             return CRUD.update(user._id, { email, emailverified: false })
          })
