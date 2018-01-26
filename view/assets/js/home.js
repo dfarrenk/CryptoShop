@@ -38,4 +38,6 @@ $(function() {
     }).catch(console.log.bind(console));
   }
 
+
+
 }); // Document Ready End
