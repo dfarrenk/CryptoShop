@@ -66,4 +66,14 @@ $(function() {
   });
 
 
+  $("#signOutStatic").click(function(e) {
+    e.preventDefault();
+
+    $.post({
+      url: "/logout"
+    }).then(function(res) {
+      console.log(res);
+    });
+  });
+
 }); // Document Ready End
