@@ -125,3 +125,4 @@ app.get("/search/:id", function(req, res) {
    res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
 
+// module.exports = app;
