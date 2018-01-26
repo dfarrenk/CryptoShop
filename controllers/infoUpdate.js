@@ -11,9 +11,7 @@ const { "token-timeout": expiredIn } = require("../config/config.json");
 
 module.exports = function() {
 
-   infoRoute.put("/api/*", Auth);
-
-   infoRoute.put("/api/user", function(req, res) {
+   infoRoute.put("/api/user", Auth, function(req, res) {
       console.log(req.body); // client handles invalid input
       console.log(res.locals);
       const { locals } = res;

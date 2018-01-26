@@ -70,9 +70,22 @@ module.exports = function() {
          });
    });
 
-   authRoute.get("/user", Auth);
+   authRoute.post("/logout", Auth, function(req, res) {
+		const { locals } = res;
 
-   authRoute.get("/user", function(req, res) {
+      if (locals.error) {
+         const { code, message } = locals.error;
+         return res.status(code).send(message);
+      }
+
+      const { user, session } = req;
+      const userInfo = session[user._id];
+		delete req.session.user;
+		delete req.session[_id];
+		res.status(200).send("signed out");
+   });
+
+   authRoute.get("/user", Auth, function(req, res) {
       DEBUG && console.log("======================================");
       DEBUG && console.log(req.session);
       DEBUG && console.log(req.hostname);
