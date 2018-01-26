@@ -79,10 +79,11 @@ module.exports = function() {
       }
 
       const { user, session } = req;
-      const userInfo = session[user._id];
+		const { _id } = user;
+
 		delete req.session.user;
 		delete req.session[_id];
-		res.status(200).send("signed out");
+		res.status(200).send("/");
    });
 
    authRoute.get("/user", Auth, function(req, res) {

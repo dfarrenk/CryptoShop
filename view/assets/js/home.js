@@ -66,14 +66,14 @@ $(function() {
   });
 
 
-  $("#signOutStatic").click(function(e) {
+  $(".signOutStatic").click(function(e) {
     e.preventDefault();
-
+    console.log("posting");
     $.post({
       url: "/logout"
     }).then(function(res) {
       console.log(res);
+      location.assign(res);
     });
   });
-
 }); // Document Ready End
