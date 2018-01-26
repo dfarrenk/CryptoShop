@@ -102,7 +102,13 @@ $(function() {
       data: userInfoUpdate
     }).then(function(res) {
       console.log(res);
+      $("#editEmail").text("");
+      $("#editPass").text("");
+      $("#passConfirm").modal("hide");
+    }).catch(function(err) {
+      console.log(err);
     });
+
   });
 
 
