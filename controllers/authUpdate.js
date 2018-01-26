@@ -115,21 +115,24 @@ module.exports = function() {
    /////////////////////
 
    authUpdate.put("/user/changeEmail", Auth, function(req, res) {
-      const { email } = req.body;
+      const { email, password } = req.body;
       const { username: curuser } = req.session[req.user._id];
-
-      if (locals.error) {
-         const { code, message } = locals.error;
-         return res.status(code).json({ message });
-      }
+      let user = undefined;
 
       CRUD
          .read({ email })
-         .then(user => {
+         .then(data => {
             if (user.username !== curuser) {
                throw 204;
             }
-            return CRUD.update(user._id, { email, emailverified: false })
+            user = data;
+            return hash.compare(original, data);
+         })
+         .then(isMatched => {
+            if (!isMatched) {
+               throw 1;
+            }
+            return CRUD.update(user._id, { email, emailverified: false });
          })
          .then(data => {
             return signToken(req, data, expiredIn);
@@ -147,15 +150,10 @@ module.exports = function() {
       const { password: original, newpassword: password } = req.body;
       const { _id } = req.session[req.user._id];
 
-      if (locals.error) {
-         const { code, message } = locals.error;
-         return res.status(code).json({ message });
-      }
-
       CRUD
          .read({ _id })
          .then(user => {
-            return hash.compare(original, user)
+            return hash.compare(original, user);
          })
          .then(isMatched => {
             if (!isMatched) {

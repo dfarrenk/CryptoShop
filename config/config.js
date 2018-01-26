@@ -20,10 +20,9 @@ function ExtractFromSession(req) {
       if (!authenticated) {
          throw new Error("no token signed");
       }
-
+    
       const { token, key } = user;
       const decoded = Jwt.verify(token, key); // decode with private key first
-
       return decoded.token;
    } catch (err) {
       console.log("this is token err");
@@ -31,9 +30,8 @@ function ExtractFromSession(req) {
 
       delete req.session.user;
       req.session.authenticated = false;
-      return null;
+      return err.message;
    }
-   return null;
 }
 
 function GenUUIDAndEmit(req) {
