@@ -10,7 +10,7 @@ const strategy = new JwtStrategy(config, function(jwt_payload, next) {
    console.log(memoryStore);
 
    const user = memoryStore[jwt_payload.$id];
-
+	
    if (!user) {
       return next(null, false, { code: 401, message: "unauthorized" });
    }

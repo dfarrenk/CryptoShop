@@ -116,29 +116,32 @@ module.exports = function() {
 
    authUpdate.put("/user/changeEmail", Auth, function(req, res) {
       const { email, password } = req.body;
-      const { username: curuser } = req.session[req.user._id];
+      const { _id } = req.user;
       let user = undefined;
 
       CRUD
-         .read({ email })
+         .read({ _id }) 
          .then(data => {
-            if (user.username !== curuser) {
-               throw 204;
-            }
             user = data;
-            return hash.compare(original, data);
+            return hash.compare(password, user);
          })
          .then(isMatched => {
             if (!isMatched) {
                throw 1;
-            }
+            }; 
+            return CRUD.read({ email }); 
+         })
+         .then(data => {
+            if (data) {
+               throw 204;
+            };
             return CRUD.update(user._id, { email, emailverified: false });
          })
          .then(data => {
             return signToken(req, data, expiredIn);
          })
          .then(refId => {
-            mail({ data, token: refId }, 0);
+            mail({ user, token: refId }, 0);
             res.status(200).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
@@ -147,13 +150,16 @@ module.exports = function() {
    });
 
    authUpdate.put("/user/changePass", Auth, function(req, res) {
+      console.log(req.body);
       const { password: original, newpassword: password } = req.body;
-      const { _id } = req.session[req.user._id];
+      const { _id } = req.user;
+      let user = undefined;
 
       CRUD
          .read({ _id })
-         .then(user => {
-            return hash.compare(original, user);
+         .then(data => {
+            user = data;
+            return hash.compare(original, data);
          })
          .then(isMatched => {
             if (!isMatched) {
@@ -162,12 +168,14 @@ module.exports = function() {
             return hash.create(password, user.username);
          })
          .then(({ salt, hash, publickey }) => {
-            return CRUD.update(_id, { salt, hash, publickey });
+            return CRUD.update(_id, { salt, password: hash, publickey });
          })
          .then(data => {
             return signToken(req, data, expiredIn);
          })
          .then(refId => {
+            const { username, email } = req.session[_id];
+
             mail({ user: { username, password, email } }, 2);
             res.status(200).json({
                message: "awesome",
