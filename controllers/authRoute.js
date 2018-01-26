@@ -71,12 +71,6 @@ module.exports = function() {
    });
 
    authRoute.post("/logout", Auth, function(req, res) {
-      const { locals } = res;
-
-      if (locals.error) {
-         const { code, message } = locals.error;
-         return res.status(code).send(message);
-      }
 
       const { user, session } = req;
       const { _id } = user;
@@ -88,16 +82,8 @@ module.exports = function() {
 
    authRoute.get("/user", Auth, function(req, res) {
       DEBUG && console.log("======================================");
-      DEBUG && console.log(req.session);
       DEBUG && console.log(req.hostname);
       DEBUG && console.log(req.ips);
-
-      const { locals } = res;
-
-      if (locals.error) {
-         const { code, message } = locals.error;
-         return res.status(code).send(message);
-      }
 
       const { user, session } = req;
       const userInfo = session[user._id];
