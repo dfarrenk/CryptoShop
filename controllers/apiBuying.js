@@ -1,6 +1,6 @@
 const routes = require("express").Router();
 console.log("apiBying controller: \x1b[32mloaded!\x1b[0m");
-const eBay = require("../lib/eBay.js");
+const eBay = require("../lib/eBay.js")();
 const coinbase = require("../lib/coinbase.js")();
 const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
@@ -48,17 +48,18 @@ module.exports = function() {
 			coinbase.checkTransaction(下.btcAddress, (transaction)=>{
 				if(transaction[0].status =="completed"){
 					clearInterval(transactionIntervalCheck);
-					eBay.buyItem();
-					CRUD.updatePush(_id, { "orders":下 })
-					.then(data => {
-						res.status(200).send("Ok!");
-						return signToken(req, data, expiredIn);
-					}).catch(err => {
-						throw err.message
-					})
-					
+					eBay.findDetails(下.btcAddress, (price)=>{
+						eBay.buyItem(下.ebayId, price, (status)=>{
+							CRUD.updatePush(_id, { "orders":下 })
+							.then(data => {
+								res.send(status);
+								return signToken(req, data, expiredIn);
+							}).catch(err => {
+								throw err.message
+							});
+						});						
+					});
 				}
-
 				counter15Min--;
 				if(!counter15Min){
 					clearInterval(transactionIntervalCheck);
@@ -70,9 +71,11 @@ module.exports = function() {
 
 	}); 
 
-	routes.get("/test/:address", (req, res)=>{
+	routes.get("/test", (req, res)=>{
 		let temp =null;
-		
+		eBay.findDetails(110256990915, (price)=>{
+			res.send(price);
+		});
 	})
 
 	return routes;
