@@ -26,7 +26,6 @@ module.exports = function() {
 	})
 
 	//5)
-
 	routes.post("/buyItem/", Auth, (req, res)=>{
 		console.log("buyItem route fires! ");
 
@@ -48,7 +47,7 @@ module.exports = function() {
 			coinbase.checkTransaction(下.btcAddress, (transaction)=>{
 				if(transaction[0].status =="completed"){
 					clearInterval(transactionIntervalCheck);
-					eBay.findDetails(下.btcAddress, (price)=>{
+					eBay.findDetails(下.ebayId, (price)=>{
 						eBay.buyItem(下.ebayId, price, (status)=>{
 							CRUD.updatePush(_id, { "orders":下 })
 							.then(data => {
@@ -78,7 +77,6 @@ module.exports = function() {
 
 	routes.get("/find/:keyword", (req, res)=>{
 		eBay.findItems(req.params.keyword, (items)=>{
-			console.log(items.body);
 			res.send(JSON.parse(items.body).itemSummaries)
 		})
 	})

@@ -10,6 +10,7 @@ $(document).on("click", ".buyItNow", function() {
   $("#modalImg").attr("src", $(event.target).parent().parent().find("img").attr("src"));
   //title
   $("#modalName").text($(event.target).parent().find(".card-title").text());
+  $("#placeOrderBtn").attr("data-id", $(event.target).attr("data-id"))
 });
 
 
@@ -115,8 +116,8 @@ $(function() {
             "<div class='card-body'>" +
             "<h6 class='card-title'>" + result[i].title + "</h6>" +
             "<p class='card-text price'>" + "$" + result[i].price.value + "</p>" +
-            "<a class='card-text' href='" + result[i].itemHref + "' target='_blank'>View on eBay</a>" +
-            "<button class='btn btn-primary buyItNow' type='button' value='" + result[i].itemId + "'> Buy It Now </button>" +
+            "<a class='card-text' href='" + result[i].itemWebUrl + "' target='_blank'>View on eBay</a>" +
+            "<button class='btn btn-primary buyItNow' type='button' data-id='" + result[i].itemId.slice(3, 15) + "'> Buy It Now </button>" +
             "</div>" +
             "</div>" +
             "</div>");

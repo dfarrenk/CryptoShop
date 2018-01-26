@@ -14,11 +14,11 @@ $(function(){
 				`);
 		});
 	})
-	$("#placeOrderBtn").on("click", ()=>{
+	$("#placeOrderBtn").on("click", (event)=>{
 		$.post({
-			url:"/buyItem/",
+			url:"/buyItem",
 			data:{
-				"ebayId": 162622940728,
+				"ebayId": $(event.currentTarget).attr("data-id"),
 				"btcAddress": "13WJ6nxHKtJWTA5A9GWNmhi6d1FyPidZDK",
 				"mailAddress": "\"wallace road"
 			}, 
