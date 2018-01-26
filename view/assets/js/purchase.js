@@ -18,7 +18,7 @@ $(function(){
 		$.post({
 			url:"/buyItem/",
 			data:{
-				"ebayId": "5a52f4115afaaa0834292420",
+				"ebayId": 162622940728,
 				"btcAddress": "13WJ6nxHKtJWTA5A9GWNmhi6d1FyPidZDK",
 				"mailAddress": "\"wallace road"
 			}, 
