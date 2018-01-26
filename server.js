@@ -61,7 +61,7 @@ server_s.listen(PORTs, function(err) {
 
 app.get("/", (req, res) => {
    console.log("/");
-   res.sendFile(Join(__dirname, "./view/homepage.html"));
+   res.status(200).sendFile(Join(__dirname, "./view/homepage.html"));
 });
 
 app.get("/txid/:TXID", (req, res) => {
