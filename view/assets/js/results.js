@@ -86,27 +86,13 @@ $(function() {
   function ebayAPI(searchTerm) {
     return new Promise((resolve, reject) => {
       var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
-      var url = "https://svcs.sandbox.ebay.com/services/search/FindingService/v1";
+      var url = "https://localhost:4443/find/"+searchTerm;
 
-      $.ajax({
-        url: url,
-        method: "GET",
-        dataType: "jsonp",
-        data: {
-          "OPERATION-NAME": "findItemsByKeywords",
-          "SERVICE-VERSION": "1.0.0",
-          "SECURITY-APPNAME": "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6",
-          "RESPONSE-DATA-FORMAT": "JSON",
-          "paginationInput.entriesPerPage": "10",
-          keywords: searchTerm
-        }
-
-      }).done(function(result) {
+      $.get(url).done(function(result) {
         console.log(result);
 
-        var short = result.findItemsByKeywordsResponse[0].searchResult[0];
         try {
-          short.item[0];
+          result[0].itemId;
         }
         catch (err) {
           if (err) {
@@ -116,15 +102,21 @@ $(function() {
           }
         }
         for (var i = 0; i < 10; i++) {
+          let imageUrl;
+          if(result[i].image){
+            imageUrl = result[i].image.imageUrl;
+          }else{
+            imageUrl = "http://via.placeholder.com/350x150";
+          }
           var newCard =
           $("<div class='col collapse multi-collapse showEbay' style='min-width: 14rem; max-width: 16rem; margin: 2%;'>" +
             "<div class='card card-size'>" +
-            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+            "<img class'card-img-top' src='" + imageUrl + "'>" +
             "<div class='card-body'>" +
-            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
-            "<p class='card-text price'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
-            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
-            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
+            "<h6 class='card-title'>" + result[i].title + "</h6>" +
+            "<p class='card-text price'>" + "$" + result[i].price.value + "</p>" +
+            "<a class='card-text' href='" + result[i].itemHref + "' target='_blank'>View on eBay</a>" +
+            "<button class='btn btn-primary buyItNow' type='button' value='" + result[i].itemId + "'> Buy It Now </button>" +
             "</div>" +
             "</div>" +
             "</div>");

@@ -78,7 +78,8 @@ module.exports = function() {
 
 	routes.get("/find/:keyword", (req, res)=>{
 		eBay.findItems(req.params.keyword, (items)=>{
-			res.send(items)
+			console.log(items.body);
+			res.send(JSON.parse(items.body).itemSummaries)
 		})
 	})
 
