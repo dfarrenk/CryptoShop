@@ -27,6 +27,7 @@
         <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
         <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
         <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
+        <a class="nav-link" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
         <a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>
       </div>
     </div>
@@ -85,110 +86,173 @@
     <div id="page-content-wrapper">
       <div class="container-fluid">
         <div class="col">
-          <ul class="nav justify-content-center">
-            <li class="btn">Name & Address Info</li>
-            <!--<li class="btn">Billing Details</li>-->
+          <ul class="nav nav-tabs justify-content-center" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#showName" role="tab" data-toggle="tab" aria-selected="true">Name & Address Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#userAndPass" role="tab" data-toggle="tab">Username & Password</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#recentTransactions" role="tab" data-toggle="tab">Recent Transactions</a>
+            </li>
           </ul>
         </div>
 
 
         <!-- Row to hold user's data -->
         <div class="row">
+          <div class="container">
+            <!-- Cards displaying name and address info -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade show active" id="showName">
+                <div class="col-8 m-auto">
+                  <div class="card">
+                    <div class="card-body">
+                      <form>
+                        <div class="form-group col">
+                          <label for="firstName">First Name</label>
+                          <input readonly="readonly" type="text" class="form-control" id="firstName" placeholder="First Name">
+                        </div>
+                        <div class="form-group col">
+                          <label for="lastName">Last Name</label>
+                          <input readonly="readonly" type="text" class="form-control" id="lastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAddress">Address</label>
+                          <input readonly="readonly" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAddress2">Address 2</label>
+                          <input readonly="readonly" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input readonly="readonly" type="text" class="form-control" id="inputCity">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <select id="inputState" class="form-control">
+                                <option selected>Choose...</option>
+                              	<option value="AL">Alabama</option>
+                              	<option value="AK">Alaska</option>
+                              	<option value="AZ">Arizona</option>
+                              	<option value="AR">Arkansas</option>
+                              	<option value="CA">California</option>
+                              	<option value="CO">Colorado</option>
+                              	<option value="CT">Connecticut</option>
+                              	<option value="DE">Delaware</option>
+                              	<option value="DC">District Of Columbia</option>
+                              	<option value="FL">Florida</option>
+                              	<option value="GA">Georgia</option>
+                              	<option value="HI">Hawaii</option>
+                              	<option value="ID">Idaho</option>
+                              	<option value="IL">Illinois</option>
+                              	<option value="IN">Indiana</option>
+                              	<option value="IA">Iowa</option>
+                              	<option value="KS">Kansas</option>
+                              	<option value="KY">Kentucky</option>
+                              	<option value="LA">Louisiana</option>
+                              	<option value="ME">Maine</option>
+                              	<option value="MD">Maryland</option>
+                              	<option value="MA">Massachusetts</option>
+                              	<option value="MI">Michigan</option>
+                              	<option value="MN">Minnesota</option>
+                              	<option value="MS">Mississippi</option>
+                              	<option value="MO">Missouri</option>
+                              	<option value="MT">Montana</option>
+                              	<option value="NE">Nebraska</option>
+                              	<option value="NV">Nevada</option>
+                              	<option value="NH">New Hampshire</option>
+                              	<option value="NJ">New Jersey</option>
+                              	<option value="NM">New Mexico</option>
+                              	<option value="NY">New York</option>
+                              	<option value="NC">North Carolina</option>
+                              	<option value="ND">North Dakota</option>
+                              	<option value="OH">Ohio</option>
+                              	<option value="OK">Oklahoma</option>
+                              	<option value="OR">Oregon</option>
+                              	<option value="PA">Pennsylvania</option>
+                              	<option value="RI">Rhode Island</option>
+                              	<option value="SC">South Carolina</option>
+                              	<option value="SD">South Dakota</option>
+                              	<option value="TN">Tennessee</option>
+                              	<option value="TX">Texas</option>
+                              	<option value="UT">Utah</option>
+                              	<option value="VT">Vermont</option>
+                              	<option value="VA">Virginia</option>
+                              	<option value="WA">Washington</option>
+                              	<option value="WV">West Virginia</option>
+                              	<option value="WI">Wisconsin</option>
+                              	<option value="WY">Wyoming</option>
+                              </select>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" id="saveUserUpdates">Save Updates</button>
+                        <button type="button" class="btn btn-info" id="editUsernameValues">Edit Values</button>
+                      </form>
+                    </div>
+                  </div>
 
-          <!-- Cards displaying name and address info -->
-          <div class="col-sm-11 showName" style="margin: 2%;">
-            <div class="card">
-              <div class="card-body">
-                <form>
-                  <div class="form-group col">
-                    <label for="firstName">First Name</label>
-                    <input readonly="readonly" type="text" class="form-control" id="firstName" placeholder="First Name">
-                  </div>
-                  <div class="form-group col">
-                    <label for="lastName">Last Name</label>
-                    <input readonly="readonly" type="text" class="form-control" id="lastName" placeholder="Last Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input readonly="readonly" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress2">Address 2</label>
-                    <input readonly="readonly" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputCity">City</label>
-                      <input readonly="readonly" type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputState">State</label>
-                      <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                      	<option value="AL">Alabama</option>
-                      	<option value="AK">Alaska</option>
-                      	<option value="AZ">Arizona</option>
-                      	<option value="AR">Arkansas</option>
-                      	<option value="CA">California</option>
-                      	<option value="CO">Colorado</option>
-                      	<option value="CT">Connecticut</option>
-                      	<option value="DE">Delaware</option>
-                      	<option value="DC">District Of Columbia</option>
-                      	<option value="FL">Florida</option>
-                      	<option value="GA">Georgia</option>
-                      	<option value="HI">Hawaii</option>
-                      	<option value="ID">Idaho</option>
-                      	<option value="IL">Illinois</option>
-                      	<option value="IN">Indiana</option>
-                      	<option value="IA">Iowa</option>
-                      	<option value="KS">Kansas</option>
-                      	<option value="KY">Kentucky</option>
-                      	<option value="LA">Louisiana</option>
-                      	<option value="ME">Maine</option>
-                      	<option value="MD">Maryland</option>
-                      	<option value="MA">Massachusetts</option>
-                      	<option value="MI">Michigan</option>
-                      	<option value="MN">Minnesota</option>
-                      	<option value="MS">Mississippi</option>
-                      	<option value="MO">Missouri</option>
-                      	<option value="MT">Montana</option>
-                      	<option value="NE">Nebraska</option>
-                      	<option value="NV">Nevada</option>
-                      	<option value="NH">New Hampshire</option>
-                      	<option value="NJ">New Jersey</option>
-                      	<option value="NM">New Mexico</option>
-                      	<option value="NY">New York</option>
-                      	<option value="NC">North Carolina</option>
-                      	<option value="ND">North Dakota</option>
-                      	<option value="OH">Ohio</option>
-                      	<option value="OK">Oklahoma</option>
-                      	<option value="OR">Oregon</option>
-                      	<option value="PA">Pennsylvania</option>
-                      	<option value="RI">Rhode Island</option>
-                      	<option value="SC">South Carolina</option>
-                      	<option value="SD">South Dakota</option>
-                      	<option value="TN">Tennessee</option>
-                      	<option value="TX">Texas</option>
-                      	<option value="UT">Utah</option>
-                      	<option value="VT">Vermont</option>
-                      	<option value="VA">Virginia</option>
-                      	<option value="WA">Washington</option>
-                      	<option value="WV">West Virginia</option>
-                      	<option value="WI">Wisconsin</option>
-                      	<option value="WY">Wyoming</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="inputZip">Zip</label>
-                      <input type="text" class="form-control" id="inputZip">
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="userAndPass">
+                <div class="col-sm-12 col-md-6 m-auto">
+                  <div class="card">
+                    <div class="card-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="editEmail">Email address</label>
+                          <input type="email" class="form-control" id="editEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                          <label for="editPass">Password</label>
+                          <input type="password" class="form-control" id="editPass" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="emailPassSave">Save</button>
+                        <button type="button" class="btn btn-danger">Cancel</button>
+                      </form>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-success" id="saveUserUpdates">Save Updates</button>
-                  <button type="button" class="btn btn-info" id="editUsernameValues">Edit Values</button>
-                </form>
+                </div>
+              </div>
+
+              <!-- Recent Transactions -->
+              <div role="tabpanel" class="tab-pane fade" id="recentTransactions">
+                <div class="col m-auto">
+                  <div class="card">
+                    <h4 class="card-header text-center">Your Recent Purchases</h4>
+                    <div class="card-body">
+                      <table class="table table-hover table-striped">
+                        <thead>
+                          <tr class="table-light">
+                            <th scope="col">IMAGE</th>
+                            <th scope="col">TITLE</th>
+                            <th scope="col">$ PRICE</th>
+                            <th scope="col">Bitcoin Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <td><img src="" />ebay</td>
+                          <td>Title of item purchased</td>
+                          <td>USD price of item</td>
+                          <td>Bitcoin price of item</td>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            <!-- End Container -->
           </div>
+
+
 
 
           <!-- Billing Details -->
