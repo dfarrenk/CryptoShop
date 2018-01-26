@@ -65,14 +65,15 @@ $(function() {
     }).catch(console.log.bind(console));
   });
 
-  $("#signOutStatic").click(function(e) {
-    e.preventDefault();
 
+  $(".signOutStatic").click(function(e) {
+    e.preventDefault();
+    console.log("posting");
     $.post({
       url: "/logout"
     }).then(function(res) {
       console.log(res);
+      location.assign(res);
     });
   });
-
 }); // Document Ready End

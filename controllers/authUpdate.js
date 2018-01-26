@@ -114,10 +114,7 @@ module.exports = function() {
    // privilege routes //
    /////////////////////
 
-   authUpdate.put("/user/*", Auth);
-
-
-   authUpdate.put("/user/changeEmail", function(req, res) {
+   authUpdate.put("/user/changeEmail", Auth, function(req, res) {
       const { email } = req.body;
       const { username: curuser } = req.session[req.user._id];
 
@@ -146,7 +143,7 @@ module.exports = function() {
          });
    });
 
-   authUpdate.put("/user/changePass", function(req, res) {
+   authUpdate.put("/user/changePass", Auth, function(req, res) {
       const { password: original, newpassword: password } = req.body;
       const { _id } = req.session[req.user._id];
 
