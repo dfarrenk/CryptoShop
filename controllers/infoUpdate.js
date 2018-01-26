@@ -13,14 +13,6 @@ module.exports = function() {
 
    infoRoute.put("/api/user", Auth, function(req, res) {
       console.log(req.body); // client handles invalid input
-      console.log(res.locals);
-      const { locals } = res;
-
-		if (locals.error) {
-			const { code, message } = locals.error;
-			return res.status(code).json({ message });
-		}
-		
 		const { _id: uid } = req.user;
 
       CRUD
