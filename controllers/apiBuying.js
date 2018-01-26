@@ -48,6 +48,7 @@ module.exports = function() {
 			coinbase.checkTransaction(下.btcAddress, (transaction)=>{
 				if(transaction[0].status =="completed"){
 					clearInterval(transactionIntervalCheck);
+					eBay.buyItem();
 					CRUD.updatePush(_id, { "orders":下 })
 					.then(data => {
 						res.status(200).send("Ok!");
