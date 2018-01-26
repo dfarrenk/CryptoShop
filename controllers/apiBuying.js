@@ -10,8 +10,8 @@ const { "token-timeout": expiredIn } = require("../config/config.json");
 //3)DONE: click Payment
 //4)DONE: click Submit (list the order)
 //5)DONE: the script will send object to /buyItem route
-//6)TODO: buyItem route will start checking the current transaction on our wallet 
-//7)TODO: once we will get transaction - server will break checking function,
+//6)DONE: buyItem route will start checking the current transaction on our wallet 
+//7)DONE: once we will get transaction - server will break checking function,
 //8)TODO: server will purchase the item what user wants, and write it in the database
 //9)TODO: eBay will send the item to customer 下 卞 巃 籠 嚨 櫳 瓏
 
@@ -25,8 +25,12 @@ module.exports = function() {
 
 	//5)
 	routes.post("/buyItem/", (req, res)=>{
+		console.log("buyItem route fires! ");
+		// console.log(req.user);
 
-		console.log("buyItem route fires! "+ req.body.btcAddress);
+		// const { _id, username } = req.user;
+		// const Userinfo = req.session[_id];
+		// console.log(Userinfo);
 		let 下 = {
 			"currency": "USD",
 			"amountRecieved": 10,
@@ -44,8 +48,7 @@ module.exports = function() {
 							return signToken(req, data, expiredIn);
 						}));
 				}
-				// const { _id, username } = req.user;
-				// const Userinfo = req.session[_id];
+				
 				counter15Min--;
 				if(!counter15Min){
 					clearInterval(transactionIntervalCheck);
