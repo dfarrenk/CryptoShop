@@ -23,7 +23,7 @@ module.exports = function() {
       _.forIn(memoryStore, function(val, key) {
          if (_.has(val.history, refId)) {
             isInSessHistory = memoryStore[key];
-         }
+         };
       });
 
       const user = memoryStore[refId] || isInSessHistory;
