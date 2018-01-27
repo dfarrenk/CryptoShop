@@ -29,9 +29,9 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-const static = Join(__dirname, "./view");
-app.use(express.static(static));
-app.use("*", express.static(static));
+const staticPath = Join(__dirname, "./view");
+app.use(express.static(staticPath));
+app.use("*", express.static(staticPath));
 
 // Connect to the Mongo DB
 var MONGODB_URI = mongoURL;
@@ -125,4 +125,4 @@ app.get("/search/:id", function(req, res) {
    res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
 
-// module.exports = app;
+module.exports = app;
