@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
+    "test:watchAll": "jest --watchAll",
     "start": "concurrently \"node server.js\" \"npm run client\"",
     "startReactRender": "babel-node server.js",
     "client": "node scripts/start-client.js"
@@ -47,9 +48,15 @@
     "uid-safe": "^2.1.5"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^22.1.0",
+    "babel-preset-env": "^1.6.1",
     "concurrently": "^3.5.1",
+    "jest": "^22.1.4",
     "morgan": "^1.9.0",
-    "nodemon": "^1.14.11"
+    "nodemon": "^1.14.11",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
   },
   "proxy": "https://localhost:443"
 }
