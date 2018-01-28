@@ -10,7 +10,7 @@ $(function(){
 			.parent()
 			.find("#paymentInfo")
 			.html(`
-				<p>Please, send exactly X-bitcoin to following address: <span>`+addressBTC+`</span> and click "Make purchase"</p>
+				<p>Please, send exactly X-bitcoin to following address: <span id="btcAddress">`+addressBTC+`</span> and click "Make purchase"</p>
 				`);
 		});
 	})
@@ -19,7 +19,7 @@ $(function(){
 			url:"/buyItem",
 			data:{
 				"ebayId": $(event.currentTarget).attr("data-id"),
-				"btcAddress": "13WJ6nxHKtJWTA5A9GWNmhi6d1FyPidZDK",
+				"btcAddress": $("#btcAddress").text(),
 				"mailAddress": "\"wallace road"
 			}, 
 			header:{
@@ -28,7 +28,7 @@ $(function(){
 		}).catch(function(err, res) {
 			if (err) throw err;
 		}).then(answer =>{
-			alert(answer);
+			console.log(answer);
 		});
 	})
 });

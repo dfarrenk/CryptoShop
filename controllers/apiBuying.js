@@ -6,7 +6,7 @@ const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
 const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
-
+const DEBUG = true;
 //1)DONE: user go to search page
 //2)DONE: select item
 //3)DONE: click Payment
@@ -27,30 +27,36 @@ module.exports = function() {
 
 	//5)
 	routes.post("/buyItem/", Auth, (req, res)=>{
-		console.log("buyItem route fires! ");
+		console.log("\x1b[32mDEBUG: \x1b[0mbuyItem route fires! ");
 
 		const { _id, username } = req.user;
 		const Userinfo = req.session[_id];
 		console.log(Userinfo);
-
-		let 下 = {
-			"currency": "USD",
-			"amountRecieved": 10,
-			"btcAddress":req.body.btcAddress,
-			"mailAddress": req.body.mailAddress,
-			"ebayId":req.body.ebayId
-		};
-		console.log()
+		if(req.body.btcAddress.length >="25" && (req.body.btcAddress[0]=="1" || req.body.btcAddress[0]=="0" || req.body.btcAddress[0]=="b")){
+			let 下 = {
+				"currency": "USD",
+				"amountRecieved": 10,
+				"btcAddress":req.body.btcAddress,
+				"mailAddress": req.body.mailAddress,
+				"ebayId":req.body.ebayId
+			};
+			console.log()
 		//8) check transaction every 10 seconds, 
 		let counter15Min = 90;
 		let transactionIntervalCheck = setInterval(()=>{
+			DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mcheck transaction (interval 10 seconds): start");
 			coinbase.checkTransaction(下.btcAddress, (transaction)=>{
-				if(transaction[0].status =="completed"){
+				DEBUG && console.log(transaction);
+				if(transaction[0] && transaction[0].status =="completed"){
+					DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mTransaction status: completed");
 					clearInterval(transactionIntervalCheck);
 					eBay.findDetails(下.ebayId, (price)=>{
+						DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mFind details about item");
 						eBay.buyItem(下.ebayId, price, (status)=>{
+							DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mtatus of purchase from buyItem(): "+ status);
 							CRUD.updatePush(_id, { "orders":下 })
 							.then(data => {
+								DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
 								res.send(status);
 								return signToken(req, data, expiredIn);
 							}).catch(err => {
@@ -59,6 +65,7 @@ module.exports = function() {
 						});						
 					});
 				}
+				//we have to create a client-side counter also
 				counter15Min--;
 				if(!counter15Min){
 					clearInterval(transactionIntervalCheck);
@@ -66,7 +73,12 @@ module.exports = function() {
 				}
 			});
 		},	10000);
-	}); 
+	}else{
+		//send error to user because we got wrong BTC address,  (we have to change status code to appropriate TODO)
+		res.status(200).send("incorrect bitcoin address");
+	};
+
+}); 
 
 	routes.get("/test", (req, res)=>{
 		let temp =null;

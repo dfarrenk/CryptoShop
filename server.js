@@ -57,6 +57,7 @@ server_s.listen(PORTs, function(err) {
    memoryStore.garbageCollector();
 
    console.log("Https server running on port %s", server_s.address().port);
+   console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
 });
 
 app.get("/", (req, res) => {
