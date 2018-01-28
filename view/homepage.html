@@ -2,296 +2,278 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>The CryptoShop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" type="text/css" href="sidebar.css">
+   <meta charset="UTF-8">
+   <title>The CryptoShop</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="stylesheet" type="text/css" href="sidebar.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+   <script src="/assets/umd/client-auth.js"></script>
+   <script src="util/validate.js"></script>
 </head>
 
 <body>
-
-  <!-- Bootstrap Nav-->
-
-  <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
-    <a class="navbar-brand" href="homepage.html">
+   <!-- Bootstrap Nav-->
+   <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
+      <a class="navbar-brand" href="homepage.html">
         <img src=" ./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
       </a>
-    <div class="dropdown d-lg-none">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
-        <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
-        <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
-        <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
-        <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
+      <div class="dropdown d-lg-none">
+         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+         </button>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
+            <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
+            <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
+            <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
+            <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
+         </div>
       </div>
-    </div>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
-      <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Search Categories
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catElectronics" value="293">Electronics</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catClothing" value="11450">Clothing</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catHousehold" value="11700">Household</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catWatches" value="14324">Watches</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catAutos" value="6001">Automobiles</a>
-        </div>
+      <form class="form-inline">
+         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+         <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
+         <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Search Categories
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catElectronics" value="293">Electronics</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catClothing" value="11450">Clothing</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catHousehold" value="11700">Household</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catWatches" value="14324">Watches</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catAutos" value="6001">Automobiles</a>
+            </div>
+         </div>
+      </form>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav ml-auto text-center">
+            <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
+            <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
+            <a class="nav-link btn" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
+            <a class="nav-link btn" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>
+            <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
+         </ul>
       </div>
-    </form>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
-        <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
-        <a class="nav-link btn" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
-        <a class="nav-link btn" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>
-        <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
-      </ul>
-    </div>
-  </nav>
-
-  <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
-
-  <!-- Page Wrapper-->
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <div class="card sidebar-card" style="width: 15.6rem;">
-        <div class="card-header text-center">
-          Xchange Rates per 1 coin
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Bitcoin: $10,813 </li>
-          <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
-          <li class="list-group-item">Ethereum: $967.62</li>
-          <li class="list-group-item">Dash: $766.66</li>
-          <li class="list-group-item">Byteball Bytes: $723.21</li>
-          <li class="list-group-item">Litecoin: $175.17</li>
-        </ul>
+   </nav>
+   <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
+   <!-- Page Wrapper-->
+   <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+         <div class="card sidebar-card" style="width: 15.6rem;">
+            <div class="card-header text-center">
+               Xchange Rates per 1 coin
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item">Bitcoin: $10,813 </li>
+               <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
+               <li class="list-group-item">Ethereum: $967.62</li>
+               <li class="list-group-item">Dash: $766.66</li>
+               <li class="list-group-item">Byteball Bytes: $723.21</li>
+               <li class="list-group-item">Litecoin: $175.17</li>
+            </ul>
+         </div>
+         <!--<div class="card sidebar-card" id="searchHistory" style="width: 15.6rem;">-->
+         <!--  <div class="card-header text-center">-->
+         <!--    Recent Searches-->
+         <!--  </div>-->
+         <!--  <ul class="list-group list-group-flush">-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--  </ul>-->
+         <!--</div>-->
       </div>
-
-      <!--<div class="card sidebar-card" id="searchHistory" style="width: 15.6rem;">-->
-      <!--  <div class="card-header text-center">-->
-      <!--    Recent Searches-->
-      <!--  </div>-->
-      <!--  <ul class="list-group list-group-flush">-->
-      <!--    <li class="list-group-item">Your search Here</li>-->
-      <!--    <li class="list-group-item">Your search Here</li>-->
-      <!--    <li class="list-group-item">Your search Here</li>-->
-      <!--    <li class="list-group-item">Your search Here</li>-->
-      <!--    <li class="list-group-item">Your search Here</li>-->
-      <!--  </ul>-->
-      <!--</div>-->
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <div class="col" id="cover">
-          <div class="text-center">
-            <div class="card-body">
-              <h1 class="card-title">Welcome to the cryptoShop!</h1>
-              <p class="card-text" style="font-size: 1.2em;">Find the item you want, and purchase it with your favorite cryptoCurrency using bitpay!</p>
+      <!-- /#sidebar-wrapper -->
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+         <div class="container-fluid">
+            <div class="col" id="cover">
+               <div class="text-center">
+                  <div class="card-body">
+                     <h1 class="card-title">Welcome to the cryptoShop!</h1>
+                     <p class="card-text" style="font-size: 1.2em;">Find the item you want, and purchase it with your favorite cryptoCurrency using bitpay!</p>
+                  </div>
+               </div>
             </div>
-          </div>
-        </div>
-        <!--Participating Companies -->
-        <div class="row">
-          <div class="col text-center shopBuy">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/1200px-EBay_logo.svg.png" style="width: 5em;" />
-            <img src="https://images-na.ssl-images-amazon.com/images/G/01/twitch/amazon._CB273230536_.png" style="width: 5em;" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Best_Buy_Logo.svg/1200px-Best_Buy_Logo.svg.png" style="width: 5em;" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Etsy_logo_lg_rgb.png" style="width: 5em;" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2000px-Walmart_logo.svg.png" style="width: 7em;" />
-          </div>
-        </div>
-
-        <!-- Bitpay is secure -->
-        <div class="container">
-          <div class="row text-center">
-            <div class="col-sm-12 col-md-5">
-              <img src="https://i.pinimg.com/originals/95/f9/77/95f9772b91e8352d6ec2031e6f9d7839.png" style="width: 20em; text-align: center;" />
+            <!--Participating Companies -->
+            <div class="row">
+               <div class="col text-center shopBuy">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/1200px-EBay_logo.svg.png" style="width: 5em;" />
+                  <img src="https://images-na.ssl-images-amazon.com/images/G/01/twitch/amazon._CB273230536_.png" style="width: 5em;" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Best_Buy_Logo.svg/1200px-Best_Buy_Logo.svg.png" style="width: 5em;" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Etsy_logo_lg_rgb.png" style="width: 5em;" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2000px-Walmart_logo.svg.png" style="width: 7em;" />
+               </div>
             </div>
-            <div class="col-sm-12 col-md-7">
-              <h2 style="margin: 5%;">Cryptocurrency payments:<br> Safe, Secure, and Fast!</h2>
-              <p style="font-size: 1.1em;">While shopping with us, you can be sure your data is safe. We have gone through great measures to make our site secure, fast, and user-friendly.</p>
+            <!-- Bitpay is secure -->
+            <div class="container">
+               <div class="row text-center">
+                  <div class="col-sm-12 col-md-5">
+                     <img src="https://i.pinimg.com/originals/95/f9/77/95f9772b91e8352d6ec2031e6f9d7839.png" style="width: 20em; text-align: center;" />
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                     <h2 style="margin: 5%;">Cryptocurrency payments:<br> Safe, Secure, and Fast!</h2>
+                     <p style="font-size: 1.1em;">While shopping with us, you can be sure your data is safe. We have gone through great measures to make our site secure, fast, and user-friendly.</p>
+                  </div>
+               </div>
+               <!-- Bitcoin exchange -->
+               <div class="row text-center">
+                  <div class="col-sm-12 col-md-7">
+                     <img src="https://bitpay.com/images/bitpay-logo-inverse.png" style="width: 10em;" />
+                     <p style="font-size: 1.1em;">With bitpay built in, we make it painless when exchanging your bitcoin into the currency of your country.</p>
+                  </div>
+                  <div class="col-sm-12 col-md 5">
+                     <img src="http://btcbank.finance/img/exchange.png" style="width:15em;" />
+                  </div>
+               </div>
             </div>
-          </div>
-
-
-          <!-- Bitcoin exchange -->
-
-          <div class="row text-center">
-            <div class="col-sm-12 col-md-7">
-              <img src="https://bitpay.com/images/bitpay-logo-inverse.png" style="width: 10em;" />
-              <p style="font-size: 1.1em;">With bitpay built in, we make it painless when exchanging your bitcoin into the currency of your country.</p>
-            </div>
-            <div class="col-sm-12 col-md 5">
-              <img src="http://btcbank.finance/img/exchange.png" style="width:15em;" />
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Footer -->
-        <div class="container-fluid fixed-bottom" id="footer">
-          <div class="row text-center justify-content-center">
-            <nav class="navbar sticky-bottom navbar-light">
-              <a class="navbar-brand">
+            <!-- Footer -->
+            <div class="container-fluid fixed-bottom" id="footer">
+               <div class="row text-center justify-content-center">
+                  <nav class="navbar sticky-bottom navbar-light">
+                     <a class="navbar-brand">
               <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
               <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
               </a>
-            </nav>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-    <!-- /#page-content-wrapper -->
-
-  </div>
-  <!-- /#wrapper -->
-
-
-
-  <!-- Log In Modal Ready for React-->
-  <div class="modal fade" id="loginModalReact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="root">
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Log In Modal-->
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Existing Users, Log In</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="text" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter Email or Username">
+                  </nav>
+               </div>
             </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="loginPass" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary" id="logInStatic">Log In</button>
-            <a style="float: right;" href="#signUpModal" data-toggle="modal" data-dismiss="modal"><small>Register</small></a>
-          </form>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Sign Up Modal-->
-  <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">New Users, Sign Up Below</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="signUpUsername">Username</label>
-                <input type="text" class="form-control" id="signUpUsername" placeholder="Username">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="signUpEmail">Email</label>
-                <input type="text" class="form-control" id="signUpEmail" placeholder="Email">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="signUpPass">Password</label>
-                <input type="password" class="form-control" id="signUpPass" placeholder="Password">
-              </div>
+      <!-- /#page-content-wrapper -->
+   </div>
+   <!-- /#wrapper -->
+   <!-- Log In Modal Ready for React-->
+   <div class="modal fade" id="loginModalReact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
             </div>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                  <small id="privacyHelp">I agree to the cryptoShop <a data-toggle="modal" data-target="#privacyPolicy" href="#">Privacy Policy</a></small>
-                </label>
-              </div>
+            <div class="modal-body">
+               <div class="root">
+               </div>
             </div>
-            <button type="submit" id="registerStatic" class="btn btn-primary">Register</button>
-            <a data-toggle="modal" href="#loginModal" data-dismiss="modal" style="float: right;"><small>Already Registered?</small></a>
-          </form>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Privacy Policy Modal -->
-  <div class="modal fade" id="privacyPolicy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">the CryptoShop Privacy Policy:</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-            ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
-            delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui
-            facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc
-            putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+   </div>
+   <!-- Log In Modal-->
+   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Existing Users, Log In</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body" id="root">
+               <form>
+                  <div class="form-group">
+                     <label for="exampleInputEmail1">Email address</label>
+                     <input type="text" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter Email or Username">
+                  </div>
+                  <div class="form-group">
+                     <label for="exampleInputPassword1">Password</label>
+                     <input type="password" class="form-control" id="loginPass" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="logInStatic">Log In</button>
+                  <a style="float: right;" href="#signUpModal" data-toggle="modal" data-dismiss="modal"><small>Register</small></a>
+               </form>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
+   <!-- Sign Up Modal-->
+   <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">New Users, Sign Up Below</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form>
+                  <div class="form-row">
+                     <div class="form-group col-md-6">
+                        <label for="signUpUsername">Username</label>
+                        <input type="text" class="form-control" id="signUpUsername" placeholder="Username">
+                     </div>
+                     <div class="form-group col-md-6">
+                        <label for="signUpEmail">Email</label>
+                        <input type="text" class="form-control" id="signUpEmail" placeholder="Email">
+                     </div>
+                     <div class="form-group col-md-6">
+                        <label for="signUpPass">Password</label>
+                        <input type="password" class="form-control" id="signUpPass" placeholder="Password">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                           <small id="privacyHelp">I agree to the cryptoShop <a data-toggle="modal" data-target="#privacyPolicy" href="#">Privacy Policy</a></small>
+                        </label>
+                     </div>
+                  </div>
+                  <button type="submit" id="registerStatic" class="btn btn-primary">Register</button>
+                  <a data-toggle="modal" href="#loginModal" data-dismiss="modal" style="float: right;"><small>Already Registered?</small></a>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Privacy Policy Modal -->
+   <div class="modal fade" id="privacyPolicy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">the CryptoShop Privacy Policy:</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin=" anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+   <script src="./assets/js/profile.js"></script>
+   <script src="./assets/js/results.js"></script>
+   <script src="./assets/js/home.js"></script>
+   <!-- Menu Toggle Script -->
+   <script>
+     $(".menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+     });
 
+     ReactDOM.render(
+       React.createElement(UserAuth),
+       document.getElementById("root")
+    );
 
-  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin=" anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script src="./assets/js/profile.js"></script>
-  <script src="./assets/js/results.js"></script>
-  <script src="./assets/js/home.js"></script>
-
-  <!-- Menu Toggle Script -->
-  <script>
-    $(".menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
+    const validator = new Validator(); // testing ways to implement utils
+   </script>
 </body>
 
 </html>

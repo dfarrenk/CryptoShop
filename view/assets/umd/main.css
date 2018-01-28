@@ -1,0 +1,67 @@
+/*!
+ * client-auth v1.0.0
+ * MIT Licensed
+ */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.\--center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.\--center>form {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 15rem;
+  padding: 1rem;
+}
+
+.\--center>form input {
+  margin-bottom: 0.5rem;
+}
+
+.\--center>form input[type="submit"] {
+  margin-top: 0.25rem;
+  min-height: 28px;
+}
+
+.\--center>form .\--anchor {
+  margin-top: 0.75rem;
+  text-align: right;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}input.err::-webkit-input-placeholder {
+   color: red;
+}
+
+input.err:-ms-input-placeholder {
+   color: red;
+}
+
+input.err::-ms-input-placeholder {
+   color: red;
+}
+
+input.err::placeholder {
+   color: red;
+}
