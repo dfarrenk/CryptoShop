@@ -1,3 +1,4 @@
+const DEBUG = true;
 const _ = require("lodash");
 
 class MemoryStore {
@@ -13,47 +14,51 @@ class MemoryStore {
    }
 
    get getCleaners() {
-   	return Object.keys(this.cleaner);
+      return Object.keys(this.cleaner);
    }
 
    garbageCollector() {
-   	console.log("start collecting");
-   	setInterval(() => {
-			const session = this.getUsers;
-			const cleaners = this.getCleaners;
-			console.log("looking for garbage");
-			console.log(session);
-			session.forEach((elem) => {
-				console.log(this[elem]);
-				!this[elem].isActive && delete this[elem];
-			});
-			
-			console.log(this);
-   	}, 60 * 60 * 1000);
+      DEBUG && console.log("start collecting");
+      setInterval(() => {
+         const sessions = this.getUsers;
+         const cleaners = this.getCleaners;
+         DEBUG && console.log("looking for garbage");
+         DEBUG && console.log(sessions);
+         
+         sessions.forEach((elem) => {
+            DEBUG && console.log(this[elem]);
+            !this[elem].isActive && delete this[elem];
+         });
+         DEBUG && console.log(this);
+      }, 60 * 60 * 1000);
    }
 
    set setMaxAge(refId) {
-      const cleanerObj = {};
+      const cleanerObj = { inid: null };
       cleanerObj.maxAge = function(memoryStore) {
-         console.log("set to clean");
-         setTimeout(() => {
-            let currefId = refId;
+         DEBUG && console.log("set to clean");
+         return setTimeout(() => {
+            let histories, currefId = refId;
 
             _.forIn(memoryStore, function(val, key) {
                if (_.has(val.history, refId)) {
                   currefId = key;
+                  histories = val.history;
                };
             });
 
-            console.log("cleaning");
+            DEBUG && console.log("cleaning");
             delete memoryStore[currefId];
-            delete memoryStore.cleaner[refId];
-            console.log(memoryStore);
+            _.forIn(histories, function(val, key) {
+               clearTimeout(memoryStore.cleaner[key].inid);
+               delete memoryStore.cleaner[key];
+            });
+            DEBUG && console.log(memoryStore);
          }, 12 * 60 * 60 * 1000); // the user info will only live maximum of 12 hours in memory
       };
 
       this.cleaner[refId] = cleanerObj;
-      this.cleaner[refId].maxAge(this);
+      this.cleaner[refId].inid = this.cleaner[refId].maxAge(this);
    }
 
    // user session contains state and timeout, upon first time the user 
@@ -83,8 +88,7 @@ class MemoryStore {
       const [tempObj, refId] = params;
 
       tempObj.timeout = function(memoryStore) {
-         console.log("timeout set");
-
+         DEBUG && console.log("timeout set");
          setTimeout(() => {
             delete memoryStore.temp[refId];
          }, 30 * 60 * 1000); // 30 min timeout

@@ -1,3 +1,4 @@
+"use strict";
 const DEBUG = true;
 
 const authRoute = require("express").Router();
@@ -17,25 +18,25 @@ module.exports = function() {
       DEBUG && console.log(req.body);
       const { username, password, email } = req.body;
       const searchField = email ? { email } : { username };
-      let data = undefined;
+      let user = undefined;
 
       CRUD
          .read(searchField)
-         .then(user => {
-            if (!user) {
+         .then(data => {
+            if (!data) {
                throw 204;
             }
-            data = user;
-            return hash.compare(password, user);
+            user = data;
+            return hash.compare(password, data);
          })
          .then(isMatched => {
             if (!isMatched) {
                throw 1;
             }
-            return signToken(req, data, expiredIn);
+            return signToken(req, user, expiredIn);
          })
          .then(refId => {
-            console.log(refId);
+            DEBUG && console.log(refId);
             return res.status(202).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
@@ -55,7 +56,6 @@ module.exports = function() {
          })
          .then(data => {
             user = data;
-            console.log("this is wierd", data);
             return signToken(req, data, expiredIn)
          })
          .then(refId => {
@@ -71,7 +71,6 @@ module.exports = function() {
    });
 
    authRoute.post("/logout", Auth, function(req, res) {
-
       const { user, session } = req;
       const { _id } = user;
 
@@ -83,7 +82,6 @@ module.exports = function() {
    authRoute.get("/user", Auth, function(req, res) {
       DEBUG && console.log("======================================");
       DEBUG && console.log(req.hostname);
-      DEBUG && console.log(req.ips);
 
       const { user, session } = req;
       const userInfo = session[user._id];

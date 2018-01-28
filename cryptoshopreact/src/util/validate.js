@@ -33,9 +33,13 @@ class Validator {
 		return prop ? null : `missing ${name}`; 
 	}
 
-	isInvalidFormat(prop, name) {
-		// this can be more flexible
+	isInvalidFormat(prop, name) { // this can be more flexible
+		// if (!!prop.match(/[<>\\"')(`]/g)) { // prevent injection attack, will need similar validation on server 
+		// 	return "input must not contain the characters such as: '\"()`<>";
+		// }
 		switch (name) {
+			case "username":
+				return !prop.match(/[<>\\"')(`]/g) ? null : "username must not contain following characters: '\"()`<>";
 			case "email":
 				return !!prop.match(/(.*?@[a-z]+\.[a-z]+)+$/g) ? null : "invalid email";
 			case "password": // only matching length now
