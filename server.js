@@ -4,6 +4,7 @@ var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
 var db = require("./models");
+var exphbs = require("express-handlebars");
 
 var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
@@ -28,6 +29,11 @@ const server = http.createServer(app);
 const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
+
+//Handlebars
+// app.use(express.static("public"));
+// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+// app.set('view engine', 'handlebars');
 
 const staticPath = Join(__dirname, "./view");
 app.use(express.static(staticPath));
