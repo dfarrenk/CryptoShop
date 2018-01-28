@@ -6,7 +6,7 @@ const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
 const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
-const DEBUG = true;
+const DEBUG = process.env.NODE_ENV == "development";
 //1)DONE: user go to search page
 //2)DONE: select item
 //3)DONE: click Payment
