@@ -34,7 +34,8 @@ class Login extends Component {
 		if (resetPass) {
 			reset(this.state)
 				.then(res => { 
-						if (res.status === 204) {
+						const { status } = res;
+						if (status === 204 || status === 304) {
 							console.log(res);
 							throw res;
 						}
@@ -45,7 +46,8 @@ class Login extends Component {
 			isLogin
 			? login(this.state)
 					.then(res => { 
-						if (res.status === 204) {
+						const { status } = res;
+						if (status === 204 || status === 304) {
 							throw res;
 						}
 						this.responseHandler(res);
@@ -53,7 +55,8 @@ class Login extends Component {
 					.catch(err => this.validationHandler(err, fields))
 			: register(this.state)
 					.then(res => { 
-						if (res.status === 204) {
+						const { status } = res;
+						if (status === 204 || status === 304) {
 							throw res;
 						}
 						this.responseHandler(res);
@@ -92,7 +95,7 @@ class Login extends Component {
 
 	responseHandler = response => {
 		console.log(response);
-		if (response.status === 200) {
+		if (response.status < 400) {
 			window.location.assign("/"); 
 		}
 	};

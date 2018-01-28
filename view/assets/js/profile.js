@@ -99,10 +99,14 @@ $(function() {
     $.ajax({
       method: "PUT",
       url,
+      dataType: "json",
       data: userInfoUpdate
     }).then(function(res) {
+      if (!res) {
+        throw res;
+      }
       console.log(res);
-    });
+    }).catch(console.log.bind(console));
   });
 
 
