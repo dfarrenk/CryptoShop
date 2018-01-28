@@ -106,7 +106,7 @@ $(function() {
         throw res;
       }
       console.log(res);
-    }).catch(console.log.bind(console));
+
   });
 
 
