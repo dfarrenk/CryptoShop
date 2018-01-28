@@ -32,9 +32,9 @@ const server_s = https.createServer(certificate, app);
 
 
 //Handlebars
-// app.use(express.static("public"));
-// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-// app.set('view engine', 'handlebars');
+app.use(express.static("public"));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 const staticPath = Join(__dirname, "view");
 app.use(express.static(staticPath));
 app.use("*", express.static(staticPath));
