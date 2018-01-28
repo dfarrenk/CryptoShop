@@ -29,8 +29,7 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-const staticPath = Join(__dirname, "./view");
-// const reactPath = Join(__dirname, "./userauth");
+const staticPath = Join(__dirname, "view");
 app.use(express.static(staticPath));
 app.use("*", express.static(staticPath));
 
