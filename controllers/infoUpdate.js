@@ -1,3 +1,6 @@
+"use strict";
+const DEBUG = true;
+
 const Join = require("path").join;
 const infoRoute = require("express").Router();
 const _ = require("lodash");
@@ -12,7 +15,7 @@ const { "token-timeout": expiredIn } = require("../config/config.json");
 module.exports = function() {
 
    infoRoute.put("/api/user", Auth, function(req, res) {
-      console.log(req.body); // client handles invalid input
+      DEBUG && console.log(req.body); // client handles invalid input
 		const { _id: uid } = req.user;
 
       CRUD

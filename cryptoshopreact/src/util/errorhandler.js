@@ -5,7 +5,7 @@ class ErrorHandler {
          this.err = err.response.data.message;
          this.code = err.response.status; // this should be error code
       } else if (err.status) {
-      	this.err = err.data.message;
+         this.err = err.data.message;
          this.code = err.status; // this should be error code
       } else {
          this.err = err.message;
@@ -22,7 +22,7 @@ class ErrorHandler {
          errorType = this.servErr(code, err);
       } else {
          errorType = this.valErr(field, err);
-      } 
+      }
       return Promise.resolve(errorType); // return object consist of set parts
    }
 
@@ -34,13 +34,15 @@ class ErrorHandler {
    servErr(code, err) {
       switch (code) {
          case 204:
-            return this.errMsg("user cannot be found in the database", "Please make sure you put in all the correct information for our server.", code );
+            return this.errMsg("user cannot be found in the database", "Please make sure you put in all the correct information for our server.", code);
+         case 304:
+         	return this.errMsh(err, "", code);
          case 401:
             return this.errMsg(err, "Please make sure you enter the correct password.", code);
          case 403:
             return this.errMsg(err, "Please login or register an account before making any purchase.", code);
          case 404:
-         	return this.errMsg(err, "The page you are looking for doesn't exist", code);
+            return this.errMsg(err, "The page you are looking for doesn't exist", code);
          case 409:
             return this.errMsg(err, "An account with the same username or email has already been registered.", code, "database");
          case 410:
@@ -63,16 +65,13 @@ class ErrorHandler {
       const len = options.length;
       let message, field;
 
-      switch (true) {
-         case len === 1: // vanilla error message
-            message = `Error Code: ${options[0]}, ${err}. ${msg}`;
-         	return { field, message };
-         case len === 2: 
-         	message = `Error Code: ${options[0]}, ${err} in our ${options[1]}. ${msg}`;
-         	return { field, message };
-         // case: len >= 3:
-         // 	message = ``
+      if (len < 2) {
+         message = `Error Code: ${options[0]}, ${err}. ${msg}`;
+         return { field, message };
       }
+
+      message = `Error Code: ${options[0]}, ${err} in our ${options[1]}. ${msg}`;
+      return { field, message };
    }
 }
 

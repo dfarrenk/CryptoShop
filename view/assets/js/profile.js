@@ -99,15 +99,13 @@ $(function() {
     $.ajax({
       method: "PUT",
       url,
+      dataType: "json",
       data: userInfoUpdate
     }).then(function(res) {
+      if (!res) {
+        throw res;
+      }
       console.log(res);
-      $("#editEmail").text("");
-      $("#editPass").text("");
-      $("#passConfirm").modal("hide");
-    }).catch(function(err) {
-      console.log(err);
-    });
 
   });
 
