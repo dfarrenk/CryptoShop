@@ -86,8 +86,25 @@ $(function() {
   //Function to make Ebay API call and Display Results
   function ebayAPI(searchTerm) {
     return new Promise((resolve, reject) => {
+
       var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
-      var url = "https://localhost:4443/find/"+searchTerm;
+      var url = "https://"+window.location.hostname+"/find/"+searchTerm;
+      //commented code for production mode
+      // var key = "ShaunBen-studentP-PRD-c132041a0-6a4708b8";
+      // var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+
+      // $.ajax({
+      //   url: url,
+      //   method: "GET",
+      //   dataType: "jsonp",
+      //   data: {
+      //     "OPERATION-NAME": "findItemsByKeywords",
+      //     "SERVICE-VERSION": "1.0.0",
+      //     "SECURITY-APPNAME": "ShaunBen-studentP-PRD-c132041a0-6a4708b8",
+      //     "RESPONSE-DATA-FORMAT": "JSON",
+      //     "paginationInput.entriesPerPage": "10",
+      //     keywords: searchTerm
+      //   }
 
       $.get(url).done(function(result) {
         console.log(result);
@@ -121,6 +138,74 @@ $(function() {
             "</div>" +
             "</div>" +
             "</div>");
+          $("#productDisplay").append(newCard);
+          resolve();
+        }
+      });
+    });
+  }
+
+  // Create an ajax call to get items by specified category
+
+  $(".categorySearch").click(function(catSearch) {
+    catSearch = $(this).attr("value");
+    console.log(catSearch);
+    $("#productDisplay").empty();
+    eBayCategorySearch(catSearch).then(function() {
+      $(".showEbay").collapse();
+    });
+
+  });
+
+  function eBayCategorySearch(catSearch) {
+    return new Promise((resolve, reject) => {
+      var key = "ShaunBen-studentP-PRD-c132041a0-6a4708b8";
+      var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+
+      $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "jsonp",
+        data: {
+          "OPERATION-NAME": "findItemsByCategory",
+          "SERVICE-VERSION": "1.0.0",
+          "SECURITY-APPNAME": "ShaunBen-studentP-PRD-c132041a0-6a4708b8",
+          "RESPONSE-DATA-FORMAT": "JSON",
+          "paginationInput.entriesPerPage": "10",
+          "Access-Control-Allow-Origin": "*",
+          "categoryId": catSearch
+        }
+
+      }).done(function(result) {
+        console.log(result);
+
+
+        var short = result.findItemsByCategoryResponse[0].searchResult[0];
+        try {
+          short.item[0];
+        }
+        catch (err) {
+          if (err) {
+            console.log(err);
+            $("#productDisplay").html("<h3 class='text-center'>No goods found</h3>");
+            return 1;
+          }
+        }
+        // $("#productDisplay").empty();
+        for (var i = 0; i < 10; i++) {
+          var newCard =
+          $("<div class='col collapse multi-collapse showEbay' style='min-width: 12rem; max-width: 16rem; margin: 2%;'>" +
+            "<div class='card card-size'>" +
+            "<img class'card-img-top' src='" + short.item[i].galleryURL[0] + "'>" +
+            "<div class='card-body'>" +
+            "<h6 class='card-title'>" + short.item[i].title[0] + "</h6>" +
+            "<p class='card-text price'>" + "$" + short.item[i].sellingStatus[0].currentPrice[0].__value__ + "</p>" +
+            "<a class='card-text' href='" + short.item[i].viewItemURL[0] + "' target='_blank'>View on eBay</a>" +
+            "<button class='btn btn-primary buyItNow' type='button' value='" + short.item[i].itemId[0] + "'> Buy It Now </button>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
+
           $("#productDisplay").append(newCard);
           resolve();
         }

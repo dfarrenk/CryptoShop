@@ -13,6 +13,8 @@ module.exports = function(res, err, errmsg) {
          return res.status(410).json({ message: "requested link expired" });
       case 204:
          return res.status(204).send(); // 204 will not send anything back
+      case 304:
+         return res.status(304).json({ message: `this ${errmsg} has already been use by the user` });
       case 11000:
          return res.status(409).json({ message: errmsg });
       default:

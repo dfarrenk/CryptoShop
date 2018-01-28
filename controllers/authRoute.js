@@ -1,3 +1,4 @@
+"use strict";
 const DEBUG = true;
 
 const authRoute = require("express").Router();
@@ -17,29 +18,29 @@ module.exports = function() {
       DEBUG && console.log(req.body);
       const { username, password, email } = req.body;
       const searchField = email ? { email } : { username };
-      let data = undefined;
+      let user = undefined;
 
       CRUD
          .read(searchField)
-         .then(user => {
-            if (!user) {
+         .then(data => {
+            if (!data) {
                throw 204;
             }
-            data = user;
-            return hash.compare(password, user);
+            user = data;
+            return hash.compare(password, data);
          })
          .then(isMatched => {
             if (!isMatched) {
                throw 1;
             }
-            return signToken(req, data, expiredIn);
+            return signToken(req, user, expiredIn);
          })
          .then(refId => {
-            console.log(refId);
+            DEBUG && console.log(refId);
             return res.status(202).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-         	ServErr(res, err);
+            ServErr(res, err);
          });
    });
 
@@ -54,8 +55,7 @@ module.exports = function() {
             return CRUD.create({ username, email, salt, publickey, password: hash });
          })
          .then(data => {
-         	user = data;
-         	console.log("this is wierd", data);
+            user = data;
             return signToken(req, data, expiredIn)
          })
          .then(refId => {
@@ -63,27 +63,25 @@ module.exports = function() {
             return res.status(201).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
-				if (err.code) {
-					return ServErr(res, 11000, err.errmsg);
-				} 
-				ServErr(res, err);
+            if (err.code) {
+               return ServErr(res, 11000, err.errmsg);
+            }
+            ServErr(res, err);
          });
    });
 
-   authRoute.get("/user", Auth);
+   authRoute.post("/logout", Auth, function(req, res) {
+      const { user, session } = req;
+      const { _id } = user;
 
-   authRoute.get("/user", function(req, res) {
+      delete req.session.user;
+      delete req.session[_id];
+      res.status(200).send("/");
+   });
+
+   authRoute.get("/user", Auth, function(req, res) {
       DEBUG && console.log("======================================");
-      DEBUG && console.log(req.session);
       DEBUG && console.log(req.hostname);
-      DEBUG && console.log(req.ips);
-
-      const { locals } = res;
-
-      if (locals.error) {
-         const { code, message } = locals.error;
-         return res.status(code).send(message);
-      }
 
       const { user, session } = req;
       const userInfo = session[user._id];

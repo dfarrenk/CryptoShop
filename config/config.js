@@ -1,3 +1,6 @@
+"use strict";
+const DEBUG = true;
+
 const PassportJwt = require("passport-jwt");
 const Fs = require("fs");
 const ExtractJwt = PassportJwt.ExtractJwt;
@@ -7,14 +10,19 @@ const MongoStore = require("./store_config");
 const memoryStore = require("./memoryStore.js");
 const EventEmitter = require("events");
 const emitter = new EventEmitter();
-const { "sess-resave-interval": resave, "sess-maxage": sessmax, devMode } = require("./config.json");
+const {
+   "sess-resave-interval": resave,
+   "sess-maxage": sessmax,
+   "remove-interval": removint,
+   devMode
+} = require("./config.json");
 
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 function ExtractFromSession(req) {
-   console.log(req.session);
+   DEBUG && console.log(req.session);
    const { authenticated, user } = req.session;
    try {
       if (!authenticated) {
@@ -23,17 +31,15 @@ function ExtractFromSession(req) {
 
       const { token, key } = user;
       const decoded = Jwt.verify(token, key); // decode with private key first
-
       return decoded.token;
    } catch (err) {
-      console.log("this is token err");
+      DEBUG && console.log("this is token err");
       console.error(err);
 
       delete req.session.user;
       req.session.authenticated = false;
-      return null;
+      return err.message;
    }
-   return null;
 }
 
 function GenUUIDAndEmit(req) {
@@ -70,11 +76,12 @@ const jwt_config = {
 
 const store_config = {
    url: server_config.mongoURL,
-   ttl: sessmax,
-   touchAfter: resave
+   ttl: sessmax, // set to 24 hrs
+   touchAfter: resave,
+   autoRemove: "interval",
+   autoRemoveInterval: removint
 };
 
-// console.log(MongoStore);
 const session_config = {
    store: new MongoStore(store_config),
    secret: devMode ? "session secret" : process.env.SESS_SECRET,
