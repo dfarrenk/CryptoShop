@@ -94,12 +94,24 @@ let UserSchema = new Schema({
             amountRecieved: {
                 type: Number,
                 required: true
+            },
+            btcAddress:{
+                type: String,
+                required: true
+            },
+            mailAddress:{
+                type: String,
+                required: true
+            },
+            ebayId:{
+                type: Number,
+                required: true
             }
         }]
-}, {
-    timestamps: { createdAt: 'created_at' }
-    
-});
+    }, {
+        timestamps: { createdAt: 'created_at' }
+        
+    });
 
 let User = mongoose.model("User", UserSchema);
 module.exports = User;

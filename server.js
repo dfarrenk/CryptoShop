@@ -4,6 +4,7 @@ var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
 var db = require("./models");
+var exphbs = require("express-handlebars");
 
 var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
@@ -29,9 +30,14 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-const static = Join(__dirname, "./view");
-app.use(express.static(static));
-app.use("*", express.static(static));
+
+//Handlebars
+app.use(express.static("public"));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+const staticPath = Join(__dirname, "view");
+app.use(express.static(staticPath));
+app.use("*", express.static(staticPath));
 
 // Connect to the Mongo DB
 var MONGODB_URI = mongoURL;
@@ -57,11 +63,12 @@ server_s.listen(PORTs, function(err) {
    memoryStore.garbageCollector();
 
    console.log("Https server running on port %s", server_s.address().port);
+   console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
 });
 
 app.get("/", (req, res) => {
    console.log("/");
-   res.sendFile(Join(__dirname, "./view/homepage.html"));
+   res.status(200).sendFile(Join(__dirname, "./view/homepage.html"));
 });
 
 app.get("/txid/:TXID", (req, res) => {
@@ -125,3 +132,4 @@ app.get("/search/:id", function(req, res) {
    res.status(200).send("/searchPage.html?item=" + searchTerm);
 });
 
+module.exports = app;

@@ -1,3 +1,6 @@
+"use strict";
+const DEBUG = true;
+
 const Join = require("path").join;
 const Uid = require("uid-safe").sync;
 const authUpdate = require("express").Router();
@@ -16,7 +19,7 @@ const { "token-timeout": expiredIn } = require("../config/config.json");
 module.exports = function() {
 
    authUpdate.get("/user/verification", function(req, res, next) {
-      console.log("this is verification");
+      DEBUG && console.log("this is verification");
       const refId = req.query["t"];
       let isInSessHistory = false;
 
@@ -56,7 +59,7 @@ module.exports = function() {
    });
 
    authUpdate.put("/user/resetPass", function(req, res) {
-      console.log(memoryStore);
+      DEBUG && console.log(memoryStore);
 
       const { username, password } = req.body;
       const refId = req.query["t"];
@@ -92,7 +95,7 @@ module.exports = function() {
       CRUD
          .read(req.body)
          .then(user => {
-            console.log("I forgot my password");
+            DEBUG && console.log("I forgot my password");
 
             if (!user) {
                throw 204;
@@ -116,7 +119,7 @@ module.exports = function() {
 
    authUpdate.put("/user/changeEmail", Auth, function(req, res) {
       const { email, password } = req.body;
-      const { _id } = req.user;
+      const { _id, username: curuser } = req.user;
       let user = undefined;
 
       CRUD
@@ -129,11 +132,14 @@ module.exports = function() {
             if (!isMatched) {
                throw 1;
             }; 
-            return CRUD.read({ email }); 
+            return CRUD.read({ email }); // check if email is already in use without receiving dupkey error
          })
          .then(data => {
             if (data) {
-               throw 204;
+               // if the same as existing (it happens), unchanged
+               // if used by another user, 409 conflict 
+               const { username } = data;
+               throw username === curuser ? 304 : 9;
             };
             return CRUD.update(user._id, { email, emailverified: false });
          })
@@ -145,12 +151,15 @@ module.exports = function() {
             res.status(200).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
+            if (err === 304) {
+               return ServErr(res, err, "email");
+            } 
             return ServErr(res, err);
          });
    });
 
    authUpdate.put("/user/changePass", Auth, function(req, res) {
-      console.log(req.body);
+      DEBUG && console.log(req.body);
       const { password: original, newpassword: password } = req.body;
       const { _id } = req.user;
       let user = undefined;

@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
+    "test:watchAll": "jest --watchAll",
     "start": "concurrently \"node server.js\" \"npm run client\"",
     "startReactRender": "babel-node server.js",
     "client": "node scripts/start-client.js"
@@ -33,6 +34,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "express-force-ssl": "^0.3.2",
+    "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "handlebars": "^4.0.11",
     "jsonwebtoken": "^8.1.0",
@@ -41,16 +43,22 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "request": "^2.83.0",
-    "twilio": "^3.11.0",
-    "xml2js": "^0.4.19",
     "sendgrid": "^5.2.3",
-    "uid-safe": "^2.1.5"
+    "twilio": "^3.11.0",
+    "uid-safe": "^2.1.5",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^22.1.0",
+    "babel-preset-env": "^1.6.1",
     "concurrently": "^3.5.1",
+    "jest": "^22.1.4",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
-    "nwb": "^0.21.2"
+    "nwb": "^0.21.2",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
   },
   "proxy": "https://localhost:443"
 }
