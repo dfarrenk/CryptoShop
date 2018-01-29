@@ -3,5 +3,5 @@
    "sess-resave-interval": 1800,
    "sess-maxage": 86400,
    "remove-interval": 360,
-   "devMode": true
+   "devMode": false
 }

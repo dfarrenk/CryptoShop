@@ -1,7 +1,7 @@
 // AJAX Get request to pull item ID from listings for crypto purchase on backend
 $(document).on("click", ".buyItNow", function() {
   var data = $(event.target).attr("value");
-  console.log("Clicked:"+data);
+  DEBUG && console.log("Clicked:"+data);
   $("#buyItNowModal").modal();
 
   //price

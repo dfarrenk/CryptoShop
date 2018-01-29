@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 
 const Passport = require("passport");
 const PassportJwt = require("passport-jwt");

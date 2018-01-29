@@ -17539,11 +17539,16 @@ var Login = function (_Component) {
 			var _this$state = _this.state,
 			    isLogin = _this$state.isLogin,
 			    resetPass = _this$state.resetPass,
+			    checkbox = _this$state.checkbox,
 			    fields = _this$state.fields;
 
 
 			for (var elem in fields) {
 				delete fields[elem].err;
+			}
+
+			if (!isLogin && !checkbox) {
+				return _this.props.result("error", "please confirm you have read and agreed to our terms");
 			}
 
 			switch (true) {
@@ -17643,6 +17648,7 @@ var Login = function (_Component) {
 			email: "",
 			fields: __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a,
 			isLogin: true,
+			checkbox: false,
 			resetPass: false
 		};
 		return _this;
@@ -17678,11 +17684,11 @@ var Login = function (_Component) {
 				{ key: "forgotpass", onClick: function onClick() {
 						return _this2.clearFields("resetPass", !resetPass);
 					} },
-				"Forgot Your Password?"
+				"Forgot Your Password?\xA0"
 			), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"span",
 				{ key: "backslash" },
-				" / "
+				"/\xA0"
 			)] : "",
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"a",
@@ -17695,22 +17701,28 @@ var Login = function (_Component) {
 	};
 
 	Login.prototype.renCheckbox = function renCheckbox() {
+		var _this3 = this;
+
+		var checkbox = this.state.checkbox;
+
+
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			"div",
 			{ className: "form-check" },
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-check-input", type: "checkbox", id: "gridCheck" }),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-check-input", type: "checkbox", id: "gridCheck", value: checkbox }),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"label",
-				{ className: "form-check-label", "for": "gridCheck" },
+				{ className: "form-check-label", htmlFor: "gridCheck" },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					"small",
-					{ id: "privacyHelp" },
-					"I agree to the cryptoShop",
-					" ",
+					{ id: "privacyHelp", onClick: function onClick() {
+							_this3.setState({ checkbox: !checkbox });
+						} },
+					"I agree to the cryptoShop\xA0",
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 						"a",
 						{ "data-toggle": "modal", "data-target": "#privacyPolicy", href: "" },
-						"Privacy Policy"
+						"Privacy Policy\xA0"
 					)
 				)
 			)
@@ -17743,7 +17755,7 @@ var Login = function (_Component) {
 	};
 
 	Login.prototype.render = function render() {
-		var _this3 = this;
+		var _this4 = this;
 
 		var _state4 = this.state,
 		    isLogin = _state4.isLogin,
@@ -17751,7 +17763,7 @@ var Login = function (_Component) {
 
 		var name = isLogin ? "Login" : "Register";
 		var footer = this.renFooter();
-		console.log(this.props.flag);
+
 		if (resetPass) {
 			name = "Confirm";
 			footer = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -17760,7 +17772,7 @@ var Login = function (_Component) {
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					"a",
 					{ onClick: function onClick() {
-							return _this3.clearFields("resetPass", !resetPass);
+							return _this4.clearFields("resetPass", !resetPass);
 						} },
 					"Never Mind..."
 				)
@@ -17771,7 +17783,7 @@ var Login = function (_Component) {
 			fields: this.renderBody(),
 			submit: this.submitHandler,
 			input: this.inputHandler,
-			optional: this.renCheckbox(),
+			optional: isLogin ? "" : this.renCheckbox(),
 			name: name,
 			footer: footer,
 			states: this.state

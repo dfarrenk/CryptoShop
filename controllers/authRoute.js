@@ -1,6 +1,5 @@
 "use strict";
-const DEBUG = true;
-
+const DEBUG = false;
 const authRoute = require("express").Router();
 const Auth = require("../lib/authcallback.js");
 const ServErr = require("../util/servError.js");
@@ -79,14 +78,7 @@ module.exports = function() {
       res.status(200).send("/");
    });
 
-   authRoute.get("/user", Auth, function(req, res) {
-      DEBUG && console.log("======================================");
-      DEBUG && console.log(req.hostname);
-
-      const { user, session } = req;
-      const userInfo = session[user._id];
-      res.status(200).json(userInfo);
-   });
-
    return authRoute;
 };
+
+console.log("UserAuth controller: \x1b[32mloaded!\x1b[0m");
