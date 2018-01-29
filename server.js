@@ -30,7 +30,6 @@ const https = require("https");
 const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
-
 //Handlebars
 app.use(express.static("public"));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));

@@ -118,7 +118,7 @@ module.exports = function() {
    /////////////////////
 
    authUpdate.put("/user/changeEmail", Auth, function(req, res) {
-      const { email, password } = req.body;
+      const { email, originalpass: password } = req.body;
       const { _id, username: curuser } = req.user;
       let user = undefined;
 
@@ -160,7 +160,7 @@ module.exports = function() {
 
    authUpdate.put("/user/changePass", Auth, function(req, res) {
       DEBUG && console.log(req.body);
-      const { password: original, newpassword: password } = req.body;
+      const { originalpass: original, password } = req.body;
       const { _id } = req.user;
       let user = undefined;
 
