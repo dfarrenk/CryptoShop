@@ -31,6 +31,11 @@ module.exports = function() {
 
 		const { _id, username } = req.user;
 		const Userinfo = req.session[_id];
+		
+		if (!Userinfo.emailverfied) {
+			return res.status(401).send("Email is not verified, please verified your email address");
+		}
+
 		console.log(Userinfo);
 		if(req.body.btcAddress.length >="25" && (req.body.btcAddress[0]=="1" || req.body.btcAddress[0]=="0" || req.body.btcAddress[0]=="b")){
 			let 下 = {
