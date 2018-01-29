@@ -1,10 +1,11 @@
+const DEBUG = false;
 const Join = require("path").join;
 const htmlRoute = require("express").Router();
 
 module.exports = function() {
    
    htmlRoute.get("/", (req, res) => {
-      console.log("/");
+      DEBUG && console.log("/");
       res.status(200).sendFile(Join(__dirname, "../view/homepage.html"));
    });
 
@@ -15,6 +16,8 @@ module.exports = function() {
 
    return htmlRoute;
 }
+
+console.log("eBay controller: \x1b[32mloaded!\x1b[0m");
 
 // htmlRoute.get("/login", (req, res) => {
 //    // console.log(req.session);

@@ -1,6 +1,5 @@
 "use strict";
-const DEBUG = true;
-
+const DEBUG = false;
 const Join = require("path").join;
 const Uid = require("uid-safe").sync;
 const authUpdate = require("express").Router();
@@ -112,7 +111,6 @@ module.exports = function() {
          });
    });
 
-
    //////////////////////
    // privilege routes //
    /////////////////////
@@ -136,8 +134,6 @@ module.exports = function() {
          })
          .then(data => {
             if (data) {
-               // if the same as existing (it happens), unchanged
-               // if used by another user, 409 conflict 
                const { username } = data;
                throw username === curuser ? 304 : 9;
             };
@@ -198,3 +194,5 @@ module.exports = function() {
 
    return authUpdate;
 };
+
+console.log("AuthUpdate controller: \x1b[32mloaded!\x1b[0m");
