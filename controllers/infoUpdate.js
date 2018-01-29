@@ -16,22 +16,32 @@ module.exports = function() {
 
    infoRoute.put("/api/user", Auth, function(req, res) {
       DEBUG && console.log(req.body); // client handles invalid input
-		const { _id: uid } = req.user;
+      const { _id: uid } = req.user;
 
       CRUD
-         .update(uid, req.body)
-         .then(data => {
-            return signToken(req, data, expiredIn);
-         })
-         .then(refId => {
-            res.status(200).json({
-               message: "awesome",
-               newRef: refId
-            });
-         })
-         .catch(err => {
-            return ServErr(res, err);
+      .update(uid, req.body)
+      .then(data => {
+         return signToken(req, data, expiredIn);
+      })
+      .then(refId => {
+         res.status(200).json({
+            message: "awesome",
+            newRef: refId
          });
+      })
+      .catch(err => {
+         return ServErr(res, err);
+      });
+   });
+   //route for access user's purchases
+   infoRoute.get("/api/myOrders", Auth, function(req, res) {
+      DEBUG && console.log("\x1b[32mDEBUG: \x1b[0m/api/myOrders");
+      const { _id: uid } = req.user;
+      CRUD.read({
+         _id: uid
+      }).then(info=>{
+         res.status(200).send(info.orders);
+      });
    });
 
    return infoRoute;

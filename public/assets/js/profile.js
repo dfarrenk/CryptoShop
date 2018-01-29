@@ -110,9 +110,9 @@ $(function() {
       .catch(function(err) {
         if (err === undefined) {
           return console.log("This is a 304");
-        }
-        console.log(err)
-      })
+       }
+       console.log(err)
+    })
    });
 
 
@@ -135,10 +135,21 @@ $(function() {
    //   $("#inputBillingAddress2").attr("readonly", true);
    //   $("#inputBillingCity").attr("readonly", true);
    // });
+   var url = "https://"+window.location.hostname+":4443/api/myOrders";
+   $.get(url).done(function(result) {
+      console.log("orders list received!");
+      console.log(result);
+      for (var i = result.length - 1; i >= 0; i--) {
 
+         $("#purchases").prepend(`<tr>
+          <td><img src="" />ebay img</td>
+          <td>${result[i].ebayId}</td>
+          <td>${result[i].amountRecieved}</td>
+          <td>${result[i].amountRecieved/12000}</td>
+          </tr>`);
 
-
-
+      }
+   });
 
 
 });

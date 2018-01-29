@@ -142,11 +142,14 @@
   <script src="https://unpkg.com/react@15.6.1/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.js"></script>
   <script type="text/javascript">
-
-    ReactDOM.render(
-      React.createElement('p', {}, 'Writing some more HTML. Cool stuff!'),
-      document.getElementById('react-target')
-    );  
+  /*global ReactDOM React*/
+    import App from './my-app/src/App.js';
+    
+    alert("Hello World");
+    // ReactDOM.render(
+    //   React.createElement(<App />, 'Writing some more HTML. Cool stuff!'),
+    //   document.getElementById('react-target')
+    // );  
   </script>
 
   <!-- Menu Toggle Script -->
