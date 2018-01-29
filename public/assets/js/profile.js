@@ -101,7 +101,7 @@ $(function() {
    });
 
 
-   var url = "https://" + window.location.hostname + ":4443/api/myOrders";
+   var url = "https://" + window.location.hostname + "/api/myOrders";
    $.get(url).done(function(result) {
       DEBUG && console.log("orders list received!");
       DEBUG && console.log(result);
