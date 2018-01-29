@@ -3,10 +3,7 @@ var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
-// var db = require("./models");
 var exphbs = require("express-handlebars");
-
-// var blockexplorer = require("blockchain.info/blockexplorer"); //another way to get a TXID confirmation
 
 const _ = require("lodash");
 const ExpSess = require("express-session");
@@ -64,5 +61,3 @@ server_s.listen(PORTs, function(err) {
    console.log("Https server running on port %s", server_s.address().port);
    console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
 });
-
-// module.exports = app;
