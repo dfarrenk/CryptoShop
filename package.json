@@ -21,10 +21,6 @@
   },
   "homepage": "https://github.com/dfarrenk/project-3#readme",
   "dependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "base64-url": "^2.1.0",
     "bcrypt": "^1.0.3",
     "blockchain.info": "^2.11.0",
     "body-parser": "^1.18.2",
@@ -49,6 +45,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-jest": "^22.1.0",
     "babel-preset-env": "^1.6.1",
@@ -56,6 +53,7 @@
     "jest": "^22.1.4",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
+    "nwb": "^0.21.2",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },

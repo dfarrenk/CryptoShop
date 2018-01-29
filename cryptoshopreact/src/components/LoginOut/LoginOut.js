@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { login, register, reset } from "../../util/auth";
+import Form from "../Form";
 import ErrorHandler from "../../util/errorhandler";
+import { login, register, reset } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
@@ -14,6 +15,7 @@ class Login extends Component {
 			email: "",
 			fields: fields,
 			isLogin: true,
+			checkbox: false,
 			resetPass: false
 		};
 	}
@@ -21,56 +23,65 @@ class Login extends Component {
 	inputHandler = evt => {
 		const { name, value } = evt.target;
 		this.setState({ [name]: value });
-	};
+	}
 
 	submitHandler = evt => {
 		evt.preventDefault();
-		const { isLogin, resetPass, fields } = this.state;
+		const { isLogin, resetPass, checkbox, fields } = this.state;
 
 		for (let elem in fields) {
 			delete fields[elem].err;
 		}
 
-		if (resetPass) {
-			reset(this.state)
-				.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							console.log(res);
-							throw res;
-						}
-						this.responseHandler(res);
-					})
+		if (!isLogin && !checkbox) {
+			return this.props.result("error", "please confirm you have read and agreed to our terms");
+		}
+
+		switch (true) {
+			case resetPass:
+				reset(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						console.log(res);
+						throw res;
+					}
+					this.responseHandler(res);
+				})
 				.catch(err => this.validationHandler(err, fields));
-		} else {
-			isLogin
-			? login(this.state)
-					.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							throw res;
-						}
-						this.responseHandler(res);
-					})
-					.catch(err => this.validationHandler(err, fields))
-			: register(this.state)
-					.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							throw res;
-						}
-						this.responseHandler(res);
-					})
-					.catch(err => this.validationHandler(err, fields));
+				break;
+			case isLogin:
+				login(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						throw res;
+					}
+					this.responseHandler(res);
+				})
+				.catch(err => this.validationHandler(err, fields));
+				break;
+			case !isLogin:
+				register(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						throw res;
+					}
+					this.responseHandler(res);
+				})
+				.catch(err => this.validationHandler(err, fields));
+				break;
+			default:
+				console.log("hmmn...this is an exception");
 		}
 
 		console.log(this.state);
-
 		this.setState({
 			password: "",
 			passconfirm: ""
 		});
-	};
+	}
 
 	validationHandler = (error, fields) => {
 		const errorhandler = new ErrorHandler();
@@ -80,31 +91,31 @@ class Login extends Component {
 			.then(errType => {
 				let { field, message } = errType;
 
-				if (!field) { // this is where we decided what to do with server error
-					fields.username.err = message;
-					field = "username";
+				if (!field) {
+					this.props.result("error", message);
 				} else {
 					fields[field].err = message;
 				}
-				this.setState({ 
+				this.setState({
 					[field]: "",
-					fields: fields 
+					fields: fields
 				});
 			});
-	};
+	}
 
 	responseHandler = response => {
 		console.log(response);
-		if (response.status < 400) {
-			window.location.assign("/"); 
+		if (response.status < 300) {
+			window.location.assign("/");
 		}
-	};
+	}
 
 	clearFields = (resetname, value) => {
 		for (let elem in fields) {
 			delete fields[elem].err;
 		}
 
+		this.setflag();
 		this.setState({
 			username: "",
 			password: "",
@@ -114,92 +125,97 @@ class Login extends Component {
 		});
 	}
 
+	setflag () {
+		const { isLogin, resetPass } = this.state;
+		if (resetPass) {
+			return this.props.flag("user", "forgot");
+		}
+		if (isLogin) {
+			return this.props.flag("user", "login");
+		}
+		return this.props.flag("user", "register");
+	}
+
 	renFooter() {
 		const { isLogin, resetPass } = this.state;
 		const msg = isLogin ? "New User?" : "Already Registered?";
 		return (
-			<p key="footer" className="--anchor">
-				{
-					isLogin
-					? [ 
-						<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>Forgot Your Password?</a>, 
-						<span key="backslash"> / </span>
+			<p key="footer" className="--anchor float-right">
+				{isLogin
+					? [
+							<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>
+								Forgot Your Password?&nbsp;
+							</a>,
+							<span key="backslash">/&nbsp;</span>
 						]
-					: ""
-				}
-				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>{msg}</a>
+					: ""}
+				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>
+					{msg}
+				</a>
 			</p>
 		);
 	}
 
-	renResetPass() {
-		const { username, email } = this.state.fields;
-		username.val = "please let us know your username";
-		email.val = "and the email you use to register";
-		const resetFields = [username, email];
+	renCheckbox() {
+		const { checkbox } = this.state;
 
-		console.log(resetFields);
-		return this.renderFields(resetFields);
+		return (
+			<div className="form-check">
+				<input className="form-check-input" type="checkbox" id="gridCheck" value={ checkbox } />
+				<label className="form-check-label" htmlFor="gridCheck">
+					<small id="privacyHelp" onClick={ () => { this.setState({ checkbox: !checkbox }) }}>
+						I agree to the cryptoShop&nbsp;
+						<a data-toggle="modal" data-target="#privacyPolicy" href="">
+						Privacy Policy&nbsp;
+						</a>
+					</small>
+				</label>
+			</div>
+		);
 	}
 
-	renLogin() {
-		const { username, password } = this.state.fields;
-		username.val = "username or email";
-		password.val = "password";
-		const loginFields = [username, password];
+	renderBody() {
+		const { isLogin, resetPass, fields } = this.state;
+		const { username, password, email, passconfirm } = fields;
 
-		return this.renderFields(loginFields);
-	}
+		if (resetPass) {
+			username.val = "please let us know your username";
+			email.val = "and the email you use to register";
+			return [username, email];
+		}
+		if (isLogin) {
+			username.val = "username or email";
+			password.val = "password";
+			return [username, password];
+		}
 
-	renRegister() {
-		const { username, password, email, passconfirm } = this.state.fields;
-		const registerFields = [username, email, password, passconfirm];
-
-		return this.renderFields(registerFields);
-	}
-
-	renderFields(args) {
-		const fields = args.map((elem, index) => {
-			return (
-				<div key={index} className="form-group">
-					<label htmlFor={elem.name}>{elem.label}</label>
-					<input
-						type={elem.type}
-						onChange={this.inputHandler}
-						name={elem.name}
-						id={elem.name}
-						placeholder={elem.err || elem.val}
-						className={`form-control ${elem.err && "err"}`}
-						value={this.state[elem.name]}
-					/>
-				</div>
-			);
-		});
-
-		return fields;
+		return [username, email, password, passconfirm];
 	}
 
 	render() {
 		const { isLogin, resetPass } = this.state;
+		let name = isLogin ? "Login" : "Register";
+		let footer = this.renFooter();
+
+		if (resetPass) {
+			name = "Confirm";
+			footer = (
+				<p key="footer" className="--anchor float-right">
+					<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
+				</p>
+			);
+		};
 
 		return (
-			<form onSubmit={this.submitHandler} className="card">
-				{
-					!resetPass
-					? [
-							isLogin ? this.renLogin() : this.renRegister(),
-							<input key="submit" type="submit" value={isLogin ? "Login" : "Register"} />,
-							this.renFooter()
-						]
-					: [
-							this.renResetPass(),
-							<input key="submitReset" type="submit" value="Confirm" />,
-							<p key="footer" className="--anchor">
-								<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
-							</p>
-						]
-				}
-			</form>
+			<Form
+				fields={this.renderBody()}
+				submit={this.submitHandler}
+				input={this.inputHandler}
+				optional={isLogin ? "" : this.renCheckbox()}
+				name={name}
+				footer={footer}
+				states={this.state}
+			/>
 		);
 	}
 }

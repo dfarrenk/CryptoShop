@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Login from "./components/LoginOut";
-import "./index.css";
+import "./App.css";
 
 class Auth extends Component {
   render() {
