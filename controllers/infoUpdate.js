@@ -38,7 +38,7 @@ module.exports = function() {
       DEBUG && console.log("\x1b[32mDEBUG: \x1b[0m/api/myOrders");
       const { _id: uid } = req.user;
       CRUD.read({
-         _id
+         _id: uid
       }).then(info=>{
          res.status(200).send(info.orders);
       });
