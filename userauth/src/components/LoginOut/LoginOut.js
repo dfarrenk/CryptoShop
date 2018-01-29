@@ -160,10 +160,10 @@ class Login extends Component {
 		const { checkbox } = this.state;
 
 		return (
-			<div className="form-check">
-				<input className="form-check-input" type="checkbox" id="gridCheck" value={ checkbox } />
-				<label className="form-check-label" htmlFor="gridCheck">
-					<small id="privacyHelp" onClick={ () => { this.setState({ checkbox: !checkbox }) }}>
+			<div className="form-check" >
+				<input className="form-check-input" type="checkbox" id="gridCheck" onClick={ () => { this.setState({ checkbox: !checkbox }) }}/>
+				<label className="form-check-label" htmlFor="gridCheck" >
+					<small id="privacyHelp">
 						I agree to the cryptoShop&nbsp;
 						<a data-toggle="modal" data-target="#privacyPolicy" href="">
 						Privacy Policy&nbsp;
