@@ -88,7 +88,7 @@ $(function() {
     return new Promise((resolve, reject) => {
 
       var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
-      var url = "https://"+window.location.hostname+":4443/find/"+searchTerm;
+      var url = "https://"+window.location.hostname+":4443/find/"+searchTerm+"/"+$("#dropdown".val());
       //commented code for production mode
       // var key = "ShaunBen-studentP-PRD-c132041a0-6a4708b8";
       // var url = "https://svcs.ebay.com/services/search/FindingService/v1";
@@ -119,7 +119,8 @@ $(function() {
             return 1;
           }
         }
-        for (var i = 0; i < 10; i++) {
+        let len = result.length>10? 10: result.length;
+        for (var i = 0; i < len; i++) {
           let imageUrl;
           if(result[i].image){
             imageUrl = result[i].image.imageUrl;

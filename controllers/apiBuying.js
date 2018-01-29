@@ -87,10 +87,12 @@ module.exports = function() {
 		});
 	})
 
-	routes.get("/find/:keyword", (req, res)=>{
-		eBay.findItems(req.params.keyword, (items)=>{
+	routes.get("/find/:keyword/:category?", (req, res)=>{
+		DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mFind route fires");
+		DEBUG && console.log("\x1b[32mDEBUG: \x1b[0m"+req.params.category);
+		eBay.findItems(req.params.keyword, req.params.category, (items)=>{
 			res.send(JSON.parse(items.body).itemSummaries)
-		})
+		});
 	})
 
 	return routes;
