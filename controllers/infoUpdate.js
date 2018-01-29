@@ -33,10 +33,16 @@ module.exports = function() {
          return ServErr(res, err);
       });
    });
+
    //route for access user's purchases
    infoRoute.get("/api/myOrders", Auth, function(req, res) {
       DEBUG && console.log("\x1b[32mDEBUG: \x1b[0m/api/myOrders");
       const { _id: uid } = req.user;
+		
+		// this way we don't have to query database
+		// const { orders } = req.session[uid];
+		// res.status(200).send(orders);
+
       CRUD.read({
          _id: uid
       }).then(info=>{

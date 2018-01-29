@@ -10,7 +10,4 @@ class AltAuth extends Component {
 
 
 
-
-
-
 }
