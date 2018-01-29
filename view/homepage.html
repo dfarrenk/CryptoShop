@@ -30,7 +30,7 @@
             <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
             <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
             <a class="nav-link" href="#loginModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Log In</a>
-            <a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>
+            <!--<a class="nav-link" href="#signUpModal" data-toggle="modal" style="color: black; font-size: 1.2em;">Sign Up</a>-->
             <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
          </div>
       </div>
@@ -55,7 +55,7 @@
             <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
             <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
             <a class="nav-link btn" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
-            <a class="nav-link btn" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>
+            <!--<a class="nav-link btn" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>-->
             <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
          </ul>
       </div>
@@ -246,7 +246,11 @@
                </button>
             </div>
             <div class="modal-body">
-               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl
+                  ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent
+                  luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus
+                  legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam
+                  littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
                <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                </div>
@@ -262,10 +266,10 @@
    <script src="./assets/js/home.js"></script>
    <!-- Menu Toggle Script -->
    <script>
-     $(".menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-     });
+      $(".menu-toggle").click(function(e) {
+         e.preventDefault();
+         $("#wrapper").toggleClass("toggled");
+      });
 
      ReactDOM.render(
        React.createElement(UserAuth, { switch: "user_auth" }, null),
