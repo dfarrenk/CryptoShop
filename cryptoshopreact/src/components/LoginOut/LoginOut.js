@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { login, register, reset } from "../../util/auth";
 import ErrorHandler from "../../util/errorhandler";
+import Form from "../Form";
 import fields from "./authconfig.json";
 import "./style.css";
 
@@ -148,60 +149,79 @@ class Login extends Component {
 		password.val = "password";
 		const loginFields = [username, password];
 
-		return this.renderFields(loginFields);
+		return loginFields; /*this.renderFields(loginFields);*/
 	}
 
 	renRegister() {
 		const { username, password, email, passconfirm } = this.state.fields;
 		const registerFields = [username, email, password, passconfirm];
 
-		return this.renderFields(registerFields);
+		return registerFields; /*this.renderFields(registerFields);*/
 	}
-
-	renderFields(args) {
-		const fields = args.map((elem, index) => {
-			return (
-				<div key={index} className="form-group">
-					<label htmlFor={elem.name}>{elem.label}</label>
-					<input
-						type={elem.type}
-						onChange={this.inputHandler}
-						name={elem.name}
-						id={elem.name}
-						placeholder={elem.err || elem.val}
-						className={`form-control ${elem.err && "err"}`}
-						value={this.state[elem.name]}
-					/>
-				</div>
-			);
-		});
-
-		return fields;
-	}
-
+	
 	render() {
-		const { isLogin, resetPass } = this.state;
+		const { isLogin } = this.state;
 
 		return (
-			<form onSubmit={this.submitHandler} className="card">
-				{
-					!resetPass
-					? [
-							isLogin ? this.renLogin() : this.renRegister(),
-							<input key="submit" type="submit" value={isLogin ? "Login" : "Register"} />,
-							this.renFooter()
-						]
-					: [
-							this.renResetPass(),
-							<input key="submitReset" type="submit" value="Confirm" />,
-							<p key="footer" className="--anchor">
-								<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
-							</p>
-						]
-				}
-			</form>
-		);
+			<Form 
+				fields={isLogin ? this.renLogin() : this.renRegister()}
+				submit={this.submitHandler}
+				className=""
+				states={{ 
+					username: "",
+					password: "",
+					passconfirm: "",
+					email: "" 
+				}}
+			/>
+		)
 	}
+
+	
+	// renderFields(args) {
+	// 	const fields = args.map((elem, index) => {
+	// 		return (
+	// 			<div key={index} className="form-group">
+	// 				<label htmlFor={elem.name}>{elem.label}</label>
+	// 				<input
+	// 					type={elem.type}
+	// 					onChange={this.inputHandler}
+	// 					name={elem.name}
+	// 					id={elem.name}
+	// 					placeholder={elem.err || elem.val}
+	// 					className={`form-control ${elem.err && "err"}`}
+	// 					value={this.state[elem.name]}
+	// 				/>
+	// 			</div>
+	// 		);
+	// 	});
+
+	// 	return fields;
+	// }
+
+	// render() {
+	// 	const { isLogin, resetPass } = this.state;
+
+	// 	return (
+	// 		<form onSubmit={this.submitHandler} className="card">
+	// 			{
+	// 				!resetPass
+	// 				? [
+	// 						isLogin ? this.renLogin() : this.renRegister(),
+	// 						<input key="submit" type="submit" value={isLogin ? "Login" : "Register"} />,
+	// 						this.renFooter()
+	// 					]
+	// 				: [
+	// 						this.renResetPass(),
+	// 						<input key="submitReset" type="submit" value="Confirm" />,
+	// 						<p key="footer" className="--anchor">
+	// 							<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
+	// 						</p>
+	// 					]
+	// 			}
+	// 		</form>
+	// 	);
+	// }
 }
 
 export default Login;

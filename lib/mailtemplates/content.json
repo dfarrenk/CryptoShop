@@ -1,8 +1,8 @@
 {
    "routes": [
-      "/user/verification?",
-      "/user/changePass?",
-      "/login?"
+      "/user/verification",
+      "/user/changePass",
+      "/login"
    ],
    "subjects": [
       "Click to verify",
