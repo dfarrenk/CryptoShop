@@ -719,7 +719,7 @@ var ErrorHandler = function () {
    };
 
    ErrorHandler.prototype.valErr = function valErr(field, errmsg) {
-      console.log("something's wrong > <");
+      console.log("validation error");
       if (errmsg.match("missing originalpass")) {
          return this.errMsg(field, "missing original password");
       }
@@ -748,13 +748,11 @@ var ErrorHandler = function () {
          case 500:
             return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
          default:
-            console.log("no one should see this");
+            console.log("seriously wrong");
       }
    };
 
    ErrorHandler.prototype.errMsg = function errMsg(err, msg) {
-      // this should be a pure message contructor
-      // options: [ code, origin (server/database), optional msg, naction ]
       if ((arguments.length <= 2 ? 0 : arguments.length - 2) === 0) {
          var _message = msg;
          var _field = err;
@@ -863,16 +861,15 @@ var update = function update(fields) {
 		    passconfirm = fields.passconfirm,
 		    email = fields.email;
 
-		var data = { email: email, originalpass: originalpass, password: password, passconfirm: passconfirm };
+		var data = { email: email, originalpass: originalpass };
 		var url = "/user/changeEmail";
 
 		if (!email) {
 			console.log("it's password mode");
 			url = "/user/changePass";
+			data.password = password;
+			data.passconfirm = passconfirm;
 			delete data.email;
-			console.log(data);
-		} else {
-			delete data.password;
 		}
 
 		var invalid = validator.setFields(data).validate();
@@ -17621,7 +17618,7 @@ var Login = function (_Component) {
 		_this.responseHandler = function (response) {
 			console.log(response);
 			if (response.status < 300) {
-				window.location.assign("/");
+				window.location.assign("/searchPage.html");
 			}
 		};
 
@@ -17709,15 +17706,15 @@ var Login = function (_Component) {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			"div",
 			{ className: "form-check" },
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-check-input", type: "checkbox", id: "gridCheck", value: checkbox }),
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-check-input", type: "checkbox", id: "gridCheck", onClick: function onClick() {
+					_this3.setState({ checkbox: !checkbox });
+				} }),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"label",
 				{ className: "form-check-label", htmlFor: "gridCheck" },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					"small",
-					{ id: "privacyHelp", onClick: function onClick() {
-							_this3.setState({ checkbox: !checkbox });
-						} },
+					{ id: "privacyHelp" },
 					"I agree to the cryptoShop\xA0",
 					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 						"a",
@@ -19011,13 +19008,15 @@ var Validator = function () {
 	};
 
 	Validator.prototype.isInvalidFormat = function isInvalidFormat(prop, name) {
-		// this can be more flexible
-		// if (!!prop.match(/[<>\\"')(`]/g)) { // prevent injection attack, will need similar validation on server 
-		// 	return "input must not contain the characters such as: '\"()`<>";
-		// }
+
+		if (!!prop.match(/[<>\\"')(`]/g)) {
+			// prevent injection attack, will need similar validation on server 
+			return "input must not contain the characters such as: '\"()`<>";
+		}
+
 		switch (name) {
-			case "username":
-				return !prop.match(/[<>\\"')(`]/g) ? null : "username must not contain following characters: '\"()`<>";
+			/*case "username":
+   	return !prop.match(/[<>\\"')(`]/g) ? null : "username must not contain following characters: '\"()`<>";*/
 			case "email":
 				return !!prop.match(/(.*?@[a-z]+\.[a-z]+)+$/g) ? null : "invalid email";
 			case "password":

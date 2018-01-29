@@ -30,6 +30,8 @@ module.exports = function() {
 
       const user = memoryStore[refId] || isInSessHistory;
       if (!user) {
+         console.log(user);
+         console.log(memoryStore);
          return ServErr(res, 10);
       }
 
