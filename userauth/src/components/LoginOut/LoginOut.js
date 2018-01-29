@@ -15,6 +15,7 @@ class Login extends Component {
 			email: "",
 			fields: fields,
 			isLogin: true,
+			checkbox: false,
 			resetPass: false
 		};
 	}
@@ -26,10 +27,14 @@ class Login extends Component {
 
 	submitHandler = evt => {
 		evt.preventDefault();
-		const { isLogin, resetPass, fields } = this.state;
+		const { isLogin, resetPass, checkbox, fields } = this.state;
 
 		for (let elem in fields) {
 			delete fields[elem].err;
+		}
+
+		if (!isLogin && !checkbox) {
+			return this.props.result("error", "please confirm you have read and agreed to our terms");
 		}
 
 		switch (true) {
@@ -87,9 +92,7 @@ class Login extends Component {
 				let { field, message } = errType;
 
 				if (!field) {
-					// this is where we decided what to do with server error
-					fields.username.err = message;
-					field = "username";
+					this.props.result("error", message);
 				} else {
 					fields[field].err = message;
 				}
@@ -112,8 +115,8 @@ class Login extends Component {
 			delete fields[elem].err;
 		}
 
+		this.setflag();
 		this.setState({
-			reset: true,
 			username: "",
 			password: "",
 			passconfirm: "",
@@ -122,23 +125,52 @@ class Login extends Component {
 		});
 	}
 
+	setflag () {
+		const { isLogin, resetPass } = this.state;
+		if (resetPass) {
+			return this.props.flag("user", "forgot");
+		}
+		if (isLogin) {
+			return this.props.flag("user", "login");
+		}
+		return this.props.flag("user", "register");
+	}
+
 	renFooter() {
 		const { isLogin, resetPass } = this.state;
 		const msg = isLogin ? "New User?" : "Already Registered?";
 		return (
-			<p key="footer" className="--anchor">
+			<p key="footer" className="--anchor float-right">
 				{isLogin
 					? [
 							<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>
-								Forgot Your Password?
+								Forgot Your Password?&nbsp;
 							</a>,
-							<span key="backslash"> / </span>
+							<span key="backslash">/&nbsp;</span>
 						]
 					: ""}
 				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>
 					{msg}
 				</a>
 			</p>
+		);
+	}
+
+	renCheckbox() {
+		const { checkbox } = this.state;
+
+		return (
+			<div className="form-check">
+				<input className="form-check-input" type="checkbox" id="gridCheck" value={ checkbox } />
+				<label className="form-check-label" htmlFor="gridCheck">
+					<small id="privacyHelp" onClick={ () => { this.setState({ checkbox: !checkbox }) }}>
+						I agree to the cryptoShop&nbsp;
+						<a data-toggle="modal" data-target="#privacyPolicy" href="">
+						Privacy Policy&nbsp;
+						</a>
+					</small>
+				</label>
+			</div>
 		);
 	}
 
@@ -168,7 +200,7 @@ class Login extends Component {
 		if (resetPass) {
 			name = "Confirm";
 			footer = (
-				<p key="footer" className="--anchor">
+				<p key="footer" className="--anchor float-right">
 					<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
 				</p>
 			);
@@ -179,7 +211,7 @@ class Login extends Component {
 				fields={this.renderBody()}
 				submit={this.submitHandler}
 				input={this.inputHandler}
-				className="card"
+				optional={isLogin ? "" : this.renCheckbox()}
 				name={name}
 				footer={footer}
 				states={this.state}

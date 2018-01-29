@@ -57,13 +57,17 @@ const reset = fields => {
 
 const update = fields => {
 	return new Promise((resolve, reject) => {
-		const { originalpass, password, email } = fields;
-		const data = { email, password: originalpass };
+		const { originalpass, password, passconfirm, email } = fields;
+		const data = { email, originalpass, password, passconfirm };
+		let url = "/user/changeEmail";
 
-		if (password) {
+		if (!email) {
 			console.log("it's password mode");
-			data.newpassword = password;
+			url = "/user/changePass";
 			delete data.email;
+			console.log(data);
+		} else {
+			delete data.password;
 		}
 
 		const invalid = validator.setFields(data).validate();
@@ -71,8 +75,9 @@ const update = fields => {
 			console.log(invalid);
 			return reject(invalid);
 		}
-
-		resolve(axios.post("/user/forgotPass", data));
+	
+		delete data.passconfirm;
+		resolve(axios.put(url, data));
 	});
 }
 

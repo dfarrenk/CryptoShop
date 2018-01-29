@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Form from "../Form";
+// import Err from "../Error";
 import ErrorHandler from "../../util/errorhandler";
 import { update } from "../../util/auth";
 import fields from "./authconfig.json";
@@ -13,6 +14,7 @@ class Emailupdate extends Component {
 			originalpass: "",
 			password: "",
 			passconfirm: "",
+			isEmail: true,
 			fields: fields,
 		};
 	}
@@ -58,13 +60,11 @@ class Emailupdate extends Component {
 				let { field, message } = errType;
 
 				if (!field) {
-					// this is where we decided what to do with server error
-					// fields.username.err = message;
-					// field = "username";
-					// call error object 
+					this.props.result("error", message);
 				} else {
 					fields[field].err = message;
 				}
+
 				this.setState({
 					[field]: "",
 					fields: fields
@@ -74,36 +74,57 @@ class Emailupdate extends Component {
 
 	responseHandler = response => {
 		console.log(response);
-		if (response.status < 300) {
+		if (response.status < 300 && response.status > 100) {
 			window.location.reload(); // true?
 		}
 	}
 
+	clearFields = (resetname, value) => {
+		for (let elem in fields) {
+			delete fields[elem].err;
+		}
+
+		this.setflag();
+		this.setState({
+			email: "",
+			originalpass: "",
+			password: "",
+			passconfirm: "",
+			[resetname]: value
+		});
+	}
+
+	setflag () {
+		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
+	}
+
+	renFooter() {
+		const { isEmail } = this.state;
+		const msg = isEmail ? "Change Password?" : "Change Email?";
+		return (
+			<p key="footer" className="--anchor float-right">
+				<a key="userchoice" onClick={() => this.clearFields("isEmail", !isEmail)}>
+					{msg}
+				</a>
+			</p>
+		);
+	}
+
 	renderBody() {
-		const { email, originalpass, password, passconfirm } = this.state.fields;
-		return [ email, password, passconfirm ];
+		const { isEmail, fields } = this.state;
+		const { email, originalpass, password, passconfirm } = fields;
+		return isEmail ? [ email, originalpass ] : [ originalpass, password, passconfirm ];
 	}
 
 	render() {
-		const { isLogin, resetPass } = this.state;
-		let footer = "fff" /*this.renFooter();*/
-
-		if (resetPass) {
-			footer = (
-				<p key="footer" className="--anchor">
-					<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
-				</p>
-			);
-		};
-
 		return (
 			<Form
+				key="content"
 				fields={this.renderBody()}
 				submit={this.submitHandler}
 				input={this.inputHandler}
-				className="card"
 				name={"Confirm"}
-				footer={"footer"}
+				footer={this.renFooter()}
 				states={this.state}
 			/>
 		);

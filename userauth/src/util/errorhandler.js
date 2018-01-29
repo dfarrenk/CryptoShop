@@ -28,6 +28,12 @@ class ErrorHandler {
 
    valErr(field, errmsg) {
       console.log("something's wrong > <");
+      if (errmsg.match("missing originalpass")) {
+         return this.errMsg(field, "missing original password");
+      }
+      if (errmsg.match("missing passconfirm")) {
+         return this.errMsg(field, "missing password confirmation");
+      }
       return this.errMsg(field, errmsg);
    }
 

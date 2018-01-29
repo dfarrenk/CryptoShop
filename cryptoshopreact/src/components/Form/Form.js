@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./style.css";
 
 class Form extends Component {
-
 	renderFields(args, reset) {
 		const fields = args.map((elem, index) => {
 			return (
@@ -24,15 +23,16 @@ class Form extends Component {
 	}
 
 	render() {
-		const { className, fields, name } = this.props;
+		const { className, fields, name, optional } = this.props;
 
 		return (
 			<form onSubmit={this.props.submit} className={className || ""}>
-				{ this.renderFields(fields) }
-				<input key="submit" type="submit" value={name}/>
-				{ this.props.footer }
+				{this.renderFields(fields)}
+				{optional ? <div className="form-group">{optional}</div> : null}
+				<input key="submit" type="submit" value={name} />
+				{this.props.footer}
 			</form>
-		)
+		);
 	}
 }
 

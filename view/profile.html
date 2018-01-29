@@ -2,522 +2,496 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>The CryptoShop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/sidebar.css">
+   <meta charset="UTF-8">
+   <title>The CryptoShop</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+   <link rel="stylesheet" type="text/css" href="/assets/css/sidebar.css">
+   <link rel="stylesheet" href="/assets/umd/main.css">
+   <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+   <script src="/assets/umd/client-auth.js"></script>
 </head>
 
 <body>
-
-  <!-- Bootstrap Nav-->
-
-  <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
-    <a class="navbar-brand" href="homepage.html">
+   <!-- Bootstrap Nav-->
+   <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
+      <a class="navbar-brand" href="homepage.html">
       <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
     </a>
-    <div class="dropdown d-lg-none">
-      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
-        <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
-        <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
-        <a class="nav-link signOutStatic" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
-        <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
+      <div class="dropdown d-lg-none">
+         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+         </button>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
+            <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
+            <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
+            <a class="nav-link signOutStatic" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
+            <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
+         </div>
       </div>
-    </div>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
-      <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Search Categories
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catElectronics" value="293">Electronics</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catClothing" value="11450">Clothing</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catHousehold" value="11700">Household</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catWatches" value="14324">Watches</a>
-          <a class="dropdown-item nav-link categorySearch" href="#" id="catAutos" value="6001">Automobiles</a>
-        </div>
+      <form class="form-inline">
+         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+         <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
+         <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Search Categories
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catElectronics" value="293">Electronics</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catClothing" value="11450">Clothing</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catHousehold" value="11700">Household</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catWatches" value="14324">Watches</a>
+               <a class="dropdown-item nav-link categorySearch" href="#" id="catAutos" value="6001">Automobiles</a>
+            </div>
+         </div>
+      </form>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav ml-auto text-center">
+            <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
+            <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
+            <a class="nav-link btn" href="profile.html" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Profile</a>
+            <a class="nav-link btn signOutStatic" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
+            <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
+         </ul>
       </div>
-    </form>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
-        <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
-        <a class="nav-link btn" href="profile.html" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Profile</a>
-        <a class="nav-link btn signOutStatic" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
-        <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
-      </ul>
-    </div>
-  </nav>
-
-  <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
-
-  <!-- Page Wrapper-->
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <div class="card sidebar-card" style="width: 15.6rem;">
-        <div class="card-header text-center" style="color: white;">
-          Xchange Rates per 1 coin
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Bitcoin: $10,813 </li>
-          <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
-          <li class="list-group-item">Ethereum: $967.62</li>
-          <li class="list-group-item">Dash: $766.66</li>
-          <li class="list-group-item">Byteball Bytes: $723.21</li>
-          <li class="list-group-item">Litecoin: $175.17</li>
-        </ul>
+   </nav>
+   <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
+   <!-- Page Wrapper-->
+   <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+         <div class="card sidebar-card" style="width: 15.6rem;">
+            <div class="card-header text-center" style="color: white;">
+               Xchange Rates per 1 coin
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item">Bitcoin: $10,813 </li>
+               <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
+               <li class="list-group-item">Ethereum: $967.62</li>
+               <li class="list-group-item">Dash: $766.66</li>
+               <li class="list-group-item">Byteball Bytes: $723.21</li>
+               <li class="list-group-item">Litecoin: $175.17</li>
+            </ul>
+         </div>
+         <!--<div class="card sidebar-card" style="width: 15.6rem;">-->
+         <!--  <div class="card-header text-center" style="color: white;">-->
+         <!--    Recent Searches-->
+         <!--  </div>-->
+         <!--  <ul class="list-group list-group-flush">-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--    <li class="list-group-item">Your search Here</li>-->
+         <!--  </ul>-->
+         <!--</div>-->
       </div>
-
-      <!--<div class="card sidebar-card" style="width: 15.6rem;">-->
-        <!--  <div class="card-header text-center" style="color: white;">-->
-          <!--    Recent Searches-->
-          <!--  </div>-->
-          <!--  <ul class="list-group list-group-flush">-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--  </ul>-->
-            <!--</div>-->
-          </div>
-          <!-- /#sidebar-wrapper -->
-
-          <!-- Page Content -->
-          <div id="page-content-wrapper">
-            <div class="container-fluid">
-              <div class="col">
-                <ul class="nav nav-tabs justify-content-center" role="tablist">
+      <!-- /#sidebar-wrapper -->
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+         <div class="container-fluid">
+            <div class="col">
+               <ul class="nav nav-tabs justify-content-center" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#showName" role="tab" data-toggle="tab" aria-selected="true">Name & Address Info</a>
+                     <a class="nav-link active" href="#showName" role="tab" data-toggle="tab" aria-selected="true">Name & Address Info</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#userAndPass" role="tab" data-toggle="tab">Reset Password</a>
+                     <a class="nav-link" href="#userAndPass" role="tab" data-toggle="tab">Reset Password</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#recentTransactions" role="tab" data-toggle="tab">Recent Transactions</a>
+                     <a class="nav-link" href="#recentTransactions" role="tab" data-toggle="tab">Recent Transactions</a>
                   </li>
-                </ul>
-              </div>
-
-
-              <!-- Row to hold user's data -->
-              <div class="row">
-                <div class="container">
+               </ul>
+            </div>
+            <!-- Row to hold user's data -->
+            <div class="row">
+               <div class="container">
                   <!-- Cards displaying name and address info -->
                   <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade show active" id="showName">
-                      <div class="col-sm-12 m-auto">
-                        <div class="card">
-                          <div class="card-body">
-                            <form>
-                              <div class="form-group col">
-                                <label for="firstName">First Name</label>
-                                <input readonly="readonly" type="text" class="form-control" id="firstName" placeholder="First Name">
+                     <div role="tabpanel" class="tab-pane fade show active" id="showName">
+                        <div class="col-sm-12 m-auto">
+                           <div class="card">
+                              <div class="card-body">
+                                 <form>
+                                    <div class="form-group col">
+                                       <label for="firstName">First Name</label>
+                                       <input readonly="readonly" type="text" class="form-control" id="firstName" placeholder="First Name">
+                                    </div>
+                                    <div class="form-group col">
+                                       <label for="lastName">Last Name</label>
+                                       <input readonly="readonly" type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inputAddress">Address</label>
+                                       <input readonly="readonly" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inputAddress2">Address 2</label>
+                                       <input readonly="readonly" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                    </div>
+                                    <div class="form-row">
+                                       <div class="form-group col-md-6">
+                                          <label for="inputCity">City</label>
+                                          <input readonly="readonly" type="text" class="form-control" id="inputCity">
+                                       </div>
+                                       <div class="form-group col-md-4">
+                                          <label for="inputState">State</label>
+                                          <select id="inputState" class="form-control">
+                                             <option selected>Choose...</option>
+                                             <option value="AL">Alabama</option>
+                                             <option value="AK">Alaska</option>
+                                             <option value="AZ">Arizona</option>
+                                             <option value="AR">Arkansas</option>
+                                             <option value="CA">California</option>
+                                             <option value="CO">Colorado</option>
+                                             <option value="CT">Connecticut</option>
+                                             <option value="DE">Delaware</option>
+                                             <option value="DC">District Of Columbia</option>
+                                             <option value="FL">Florida</option>
+                                             <option value="GA">Georgia</option>
+                                             <option value="HI">Hawaii</option>
+                                             <option value="ID">Idaho</option>
+                                             <option value="IL">Illinois</option>
+                                             <option value="IN">Indiana</option>
+                                             <option value="IA">Iowa</option>
+                                             <option value="KS">Kansas</option>
+                                             <option value="KY">Kentucky</option>
+                                             <option value="LA">Louisiana</option>
+                                             <option value="ME">Maine</option>
+                                             <option value="MD">Maryland</option>
+                                             <option value="MA">Massachusetts</option>
+                                             <option value="MI">Michigan</option>
+                                             <option value="MN">Minnesota</option>
+                                             <option value="MS">Mississippi</option>
+                                             <option value="MO">Missouri</option>
+                                             <option value="MT">Montana</option>
+                                             <option value="NE">Nebraska</option>
+                                             <option value="NV">Nevada</option>
+                                             <option value="NH">New Hampshire</option>
+                                             <option value="NJ">New Jersey</option>
+                                             <option value="NM">New Mexico</option>
+                                             <option value="NY">New York</option>
+                                             <option value="NC">North Carolina</option>
+                                             <option value="ND">North Dakota</option>
+                                             <option value="OH">Ohio</option>
+                                             <option value="OK">Oklahoma</option>
+                                             <option value="OR">Oregon</option>
+                                             <option value="PA">Pennsylvania</option>
+                                             <option value="RI">Rhode Island</option>
+                                             <option value="SC">South Carolina</option>
+                                             <option value="SD">South Dakota</option>
+                                             <option value="TN">Tennessee</option>
+                                             <option value="TX">Texas</option>
+                                             <option value="UT">Utah</option>
+                                             <option value="VT">Vermont</option>
+                                             <option value="VA">Virginia</option>
+                                             <option value="WA">Washington</option>
+                                             <option value="WV">West Virginia</option>
+                                             <option value="WI">Wisconsin</option>
+                                             <option value="WY">Wyoming</option>
+                                          </select>
+                                       </div>
+                                       <div class="form-group col-md-2">
+                                          <label for="inputZip">Zip</label>
+                                          <input type="text" class="form-control" id="inputZip">
+                                       </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success" id="saveUserUpdates">Save Updates</button>
+                                    <button type="button" class="btn btn-info" id="editUsernameValues">Edit Values</button>
+                                 </form>
                               </div>
-                              <div class="form-group col">
-                                <label for="lastName">Last Name</label>
-                                <input readonly="readonly" type="text" class="form-control" id="lastName" placeholder="Last Name">
-                              </div>
-                              <div class="form-group">
-                                <label for="inputAddress">Address</label>
-                                <input readonly="readonly" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                              </div>
-                              <div class="form-group">
-                                <label for="inputAddress2">Address 2</label>
-                                <input readonly="readonly" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="inputCity">City</label>
-                                  <input readonly="readonly" type="text" class="form-control" id="inputCity">
-                                </div>
-                                <div class="form-group col-md-4">
-                                  <label for="inputState">State</label>
-                                  <select id="inputState" class="form-control">
-                                    <option selected>Choose...</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AZ">Arizona</option>
-                                    <option value="AR">Arkansas</option>
-                                    <option value="CA">California</option>
-                                    <option value="CO">Colorado</option>
-                                    <option value="CT">Connecticut</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="DC">District Of Columbia</option>
-                                    <option value="FL">Florida</option>
-                                    <option value="GA">Georgia</option>
-                                    <option value="HI">Hawaii</option>
-                                    <option value="ID">Idaho</option>
-                                    <option value="IL">Illinois</option>
-                                    <option value="IN">Indiana</option>
-                                    <option value="IA">Iowa</option>
-                                    <option value="KS">Kansas</option>
-                                    <option value="KY">Kentucky</option>
-                                    <option value="LA">Louisiana</option>
-                                    <option value="ME">Maine</option>
-                                    <option value="MD">Maryland</option>
-                                    <option value="MA">Massachusetts</option>
-                                    <option value="MI">Michigan</option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="MS">Mississippi</option>
-                                    <option value="MO">Missouri</option>
-                                    <option value="MT">Montana</option>
-                                    <option value="NE">Nebraska</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="NH">New Hampshire</option>
-                                    <option value="NJ">New Jersey</option>
-                                    <option value="NM">New Mexico</option>
-                                    <option value="NY">New York</option>
-                                    <option value="NC">North Carolina</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="OH">Ohio</option>
-                                    <option value="OK">Oklahoma</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="PA">Pennsylvania</option>
-                                    <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="TN">Tennessee</option>
-                                    <option value="TX">Texas</option>
-                                    <option value="UT">Utah</option>
-                                    <option value="VT">Vermont</option>
-                                    <option value="VA">Virginia</option>
-                                    <option value="WA">Washington</option>
-                                    <option value="WV">West Virginia</option>
-                                    <option value="WI">Wisconsin</option>
-                                    <option value="WY">Wyoming</option>
-                                  </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                  <label for="inputZip">Zip</label>
-                                  <input type="text" class="form-control" id="inputZip">
-                                </div>
-                              </div>
-                              <button type="submit" class="btn btn-success" id="saveUserUpdates">Save Updates</button>
-                              <button type="button" class="btn btn-info" id="editUsernameValues">Edit Values</button>
-                            </form>
-                          </div>
+                           </div>
                         </div>
-                      </div>
-                    </div>
-
-                    <!-- Reset Password -->
-                    <div role="tabpanel" class="tab-pane fade" id="userAndPass">
-                      <div class="row">
+                     </div>
+                     <!-- Reset Password -->
+                     <div role="tabpanel" class="tab-pane fade" id="userAndPass">
+                        <div class="row">
+                           <div class="col m-auto">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <form>
+                                       <div class="form-group">
+                                          <label for="editEmail">New Email address</label>
+                                          <input readonly="readonly" type="email" class="form-control" id="editEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                       </div>
+                                       <button type="submit" class="btn btn-primary saveInfo">Save</button>
+                                       <button type="button" class="btn btn-info" id="editEmailBtn">Edit</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col m-auto">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <form>
+                                       <div class="form-group">
+                                          <label for="editPass">New Password</label>
+                                          <input readonly="readonly" type="password" class="form-control" id="editPass" placeholder="Password">
+                                       </div>
+                                       <button type="submit" class="btn btn-primary saveInfo">Save</button>
+                                       <button type="button" class="btn btn-info" id="editPassBtn">Edit</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Recent Transactions -->
+                     <div role="tabpanel" class="tab-pane fade" id="recentTransactions">
                         <div class="col m-auto">
-                          <div class="card">
-                            <div class="card-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="editEmail">New Email address</label>
-                                  <input readonly="readonly" type="email" class="form-control" id="editEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                                </div>
-                                <button type="submit" class="btn btn-primary saveInfo">Save</button>
-                                <button type="button" class="btn btn-info" id="editEmailBtn">Edit</button>
-                              </form>
-                            </div>
-                          </div>
+                           <div class="card">
+                              <h4 class="card-header text-center">Your Recent Purchases</h4>
+                              <div class="card-body">
+                                 <table class="table table-hover table-striped">
+                                    <thead>
+                                       <tr class="table-light">
+                                          <th scope="col">IMAGE</th>
+                                          <th scope="col">TITLE</th>
+                                          <th scope="col">$ PRICE</th>
+                                          <th scope="col">Bitcoin Price</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="purchases">
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td><img src="" /></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
                         </div>
-                        <div class="col m-auto">
-                          <div class="card">
-                            <div class="card-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="editPass">New Password</label>
-                                  <input readonly="readonly" type="password" class="form-control" id="editPass" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-primary saveInfo">Save</button>
-                                <button type="button" class="btn btn-info" id="editPassBtn">Edit</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Recent Transactions -->
-                    <div role="tabpanel" class="tab-pane fade" id="recentTransactions">
-                      <div class="col m-auto">
-                        <div class="card">
-                          <h4 class="card-header text-center">Your Recent Purchases</h4>
-                          <div class="card-body">
-                            <table class="table table-hover table-striped">
-                              <thead>
-                                <tr class="table-light">
-                                  <th scope="col">IMAGE</th>
-                                  <th scope="col">TITLE</th>
-                                  <th scope="col">$ PRICE</th>
-                                  <th scope="col">Bitcoin Price</th>
-                                </tr>
-                              </thead>
-                              <tbody id="purchases">
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                <tr>
-                                  <td><img src="" /></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                     </div>
                   </div>
                   <!-- End Container -->
-                </div>
-
-
-
-
-                <!-- Billing Details -->
-                <!--<div class="col-sm-5 showBilling" style="margin: 2%;">-->
-                  <!--  <div class="card">-->
-                    <!--    <div class="card-body">-->
-                      <!--      <form>-->
-                        <!--        <div class="form-group">-->
-                          <!--          <div class="form-check">-->
-                            <!--            <input class="form-check-input" type="checkbox" id="BillingGridCheck">-->
-                            <!--            <small class="form-check-label" for="BillingGridCheck">-->
-                              <!--              Same as Shipping Address-->
-                              <!--            </small>-->
-                              <!--          </div>-->
-                              <!--        </div>-->
-                              <!--        <div class="form-group col">-->
-                                <!--          <label for="billingFirstName">First Name</label>-->
-                                <!--          <input readonly="readonly" type="text" class="form-control" id="billingFirstName" placeholder="First Name">-->
-                                <!--        </div>-->
-                                <!--        <div class="form-group col">-->
-                                  <!--          <label for="billingLastName">Last Name</label>-->
-                                  <!--          <input readonly="readonly" type="text" class="form-control" id="billingLastName" placeholder="Last Name">-->
-                                  <!--        </div>-->
-                                  <!--        <div class="form-group">-->
-                                    <!--          <label for="inputBillingAddress">Billing Address</label>-->
-                                    <!--          <input readonly="readonly" type="text" class="form-control" id="inputBillingAddress" placeholder="1234 Main St">-->
-                                    <!--        </div>-->
-                                    <!--        <div class="form-group">-->
-                                      <!--          <label for="inputBillingAddress2">Address 2</label>-->
-                                      <!--          <input readonly="readonly" type="text" class="form-control" id="inputBillingAddress2" placeholder="Apartment, studio, or floor">-->
-                                      <!--        </div>-->
-                                      <!--        <div class="form-row">-->
-                                        <!--          <div class="form-group col-md-6">-->
-                                          <!--            <label for="inputBillingCity">City</label>-->
-                                          <!--            <input readonly="readonly" type="text" class="form-control" id="inputBillingCity">-->
-                                          <!--          </div>-->
-                                          <!--          <div class="form-group col-md-4">-->
-                                            <!--            <label for="inputBillingState">State</label>-->
-                                            <!--            <select id="inputBillingState" class="form-control">-->
-                                              <!--              <option selected>Choose...</option>-->
-                                              <!--            	<option value="AL">Alabama</option>-->
-                                              <!--            	<option value="AK">Alaska</option>-->
-                                              <!--            	<option value="AZ">Arizona</option>-->
-                                              <!--            	<option value="AR">Arkansas</option>-->
-                                              <!--            	<option value="CA">California</option>-->
-                                              <!--            	<option value="CO">Colorado</option>-->
-                                              <!--            	<option value="CT">Connecticut</option>-->
-                                              <!--            	<option value="DE">Delaware</option>-->
-                                              <!--            	<option value="DC">District Of Columbia</option>-->
-                                              <!--            	<option value="FL">Florida</option>-->
-                                              <!--            	<option value="GA">Georgia</option>-->
-                                              <!--            	<option value="HI">Hawaii</option>-->
-                                              <!--            	<option value="ID">Idaho</option>-->
-                                              <!--            	<option value="IL">Illinois</option>-->
-                                              <!--            	<option value="IN">Indiana</option>-->
-                                              <!--            	<option value="IA">Iowa</option>-->
-                                              <!--            	<option value="KS">Kansas</option>-->
-                                              <!--            	<option value="KY">Kentucky</option>-->
-                                              <!--            	<option value="LA">Louisiana</option>-->
-                                              <!--            	<option value="ME">Maine</option>-->
-                                              <!--            	<option value="MD">Maryland</option>-->
-                                              <!--            	<option value="MA">Massachusetts</option>-->
-                                              <!--            	<option value="MI">Michigan</option>-->
-                                              <!--            	<option value="MN">Minnesota</option>-->
-                                              <!--            	<option value="MS">Mississippi</option>-->
-                                              <!--            	<option value="MO">Missouri</option>-->
-                                              <!--            	<option value="MT">Montana</option>-->
-                                              <!--            	<option value="NE">Nebraska</option>-->
-                                              <!--            	<option value="NV">Nevada</option>-->
-                                              <!--            	<option value="NH">New Hampshire</option>-->
-                                              <!--            	<option value="NJ">New Jersey</option>-->
-                                              <!--            	<option value="NM">New Mexico</option>-->
-                                              <!--            	<option value="NY">New York</option>-->
-                                              <!--            	<option value="NC">North Carolina</option>-->
-                                              <!--            	<option value="ND">North Dakota</option>-->
-                                              <!--            	<option value="OH">Ohio</option>-->
-                                              <!--            	<option value="OK">Oklahoma</option>-->
-                                              <!--            	<option value="OR">Oregon</option>-->
-                                              <!--            	<option value="PA">Pennsylvania</option>-->
-                                              <!--            	<option value="RI">Rhode Island</option>-->
-                                              <!--            	<option value="SC">South Carolina</option>-->
-                                              <!--            	<option value="SD">South Dakota</option>-->
-                                              <!--            	<option value="TN">Tennessee</option>-->
-                                              <!--            	<option value="TX">Texas</option>-->
-                                              <!--            	<option value="UT">Utah</option>-->
-                                              <!--            	<option value="VT">Vermont</option>-->
-                                              <!--            	<option value="VA">Virginia</option>-->
-                                              <!--            	<option value="WA">Washington</option>-->
-                                              <!--            	<option value="WV">West Virginia</option>-->
-                                              <!--            	<option value="WI">Wisconsin</option>-->
-                                              <!--            	<option value="WY">Wyoming</option>-->
-                                              <!--            </select>-->
-                                              <!--          </div>-->
-                                              <!--          <div class="form-group col-md-2">-->
-                                                <!--            <label for="inputBillingZip">Zip</label>-->
-                                                <!--            <input type="text" class="form-control" id="inputBillingZip">-->
-                                                <!--          </div>-->
-                                                <!--        </div>-->
-                                                <!--        <button type="submit" class="btn btn-success" id="saveBillingUpdates">Save Updates</button>-->
-                                                <!--        <button type="button" class="btn btn-info" id="editBillingValues">Edit Values</button>-->
-                                                <!--      </form>-->
-                                                <!--    </div>-->
-                                                <!--  </div>-->
-                                                <!--</div>-->
-
-
-
-
-
-
-                                              </div>
-                                              <!-- /div row -->
-                                            </div>
-                                            <!-- /container-fluid -->
-
-                                            <!-- Pass Confirmation Modal -->
-                                            <div class="modal" tabindex="-1" role="dialog" id="passConfirm">
-                                              <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                  <div class="modal-header">
-                                                    <h5 class="modal-title text-center">Please Enter Your Exisisting Password to Confirm Changes</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                      <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                  </div>
-                                                  <div class="modal-body">
-                                                    <form>
-                                                      <div class="form-group">
-                                                        <label for="passConfirmation">Password</label>
-                                                        <input type="password" class="form-control" id="passConfirmation" placeholder="Password">
-                                                      </div>
-                                                      <button type="submit" class="btn btn-primary" id="passConfirmSave">Save</button>
-                                                      <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                                                    </form>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-
-
-
-
-                                            <!-- Footer -->
-                                            <div class="container-fluid fixed-bottom" id="footer">
-                                              <div class="row text-center justify-content-center">
-                                                <nav class="navbar sticky-bottom navbar-light">
-                                                  <a class="navbar-brand">
+               </div>
+               <!-- Billing Details -->
+               <!--<div class="col-sm-5 showBilling" style="margin: 2%;">-->
+               <!--  <div class="card">-->
+               <!--    <div class="card-body">-->
+               <!--      <form>-->
+               <!--        <div class="form-group">-->
+               <!--          <div class="form-check">-->
+               <!--            <input class="form-check-input" type="checkbox" id="BillingGridCheck">-->
+               <!--            <small class="form-check-label" for="BillingGridCheck">-->
+               <!--              Same as Shipping Address-->
+               <!--            </small>-->
+               <!--          </div>-->
+               <!--        </div>-->
+               <!--        <div class="form-group col">-->
+               <!--          <label for="billingFirstName">First Name</label>-->
+               <!--          <input readonly="readonly" type="text" class="form-control" id="billingFirstName" placeholder="First Name">-->
+               <!--        </div>-->
+               <!--        <div class="form-group col">-->
+               <!--          <label for="billingLastName">Last Name</label>-->
+               <!--          <input readonly="readonly" type="text" class="form-control" id="billingLastName" placeholder="Last Name">-->
+               <!--        </div>-->
+               <!--        <div class="form-group">-->
+               <!--          <label for="inputBillingAddress">Billing Address</label>-->
+               <!--          <input readonly="readonly" type="text" class="form-control" id="inputBillingAddress" placeholder="1234 Main St">-->
+               <!--        </div>-->
+               <!--        <div class="form-group">-->
+               <!--          <label for="inputBillingAddress2">Address 2</label>-->
+               <!--          <input readonly="readonly" type="text" class="form-control" id="inputBillingAddress2" placeholder="Apartment, studio, or floor">-->
+               <!--        </div>-->
+               <!--        <div class="form-row">-->
+               <!--          <div class="form-group col-md-6">-->
+               <!--            <label for="inputBillingCity">City</label>-->
+               <!--            <input readonly="readonly" type="text" class="form-control" id="inputBillingCity">-->
+               <!--          </div>-->
+               <!--          <div class="form-group col-md-4">-->
+               <!--            <label for="inputBillingState">State</label>-->
+               <!--            <select id="inputBillingState" class="form-control">-->
+               <!--              <option selected>Choose...</option>-->
+               <!--             <option value="AL">Alabama</option>-->
+               <!--             <option value="AK">Alaska</option>-->
+               <!--             <option value="AZ">Arizona</option>-->
+               <!--             <option value="AR">Arkansas</option>-->
+               <!--             <option value="CA">California</option>-->
+               <!--             <option value="CO">Colorado</option>-->
+               <!--             <option value="CT">Connecticut</option>-->
+               <!--             <option value="DE">Delaware</option>-->
+               <!--             <option value="DC">District Of Columbia</option>-->
+               <!--             <option value="FL">Florida</option>-->
+               <!--             <option value="GA">Georgia</option>-->
+               <!--             <option value="HI">Hawaii</option>-->
+               <!--             <option value="ID">Idaho</option>-->
+               <!--             <option value="IL">Illinois</option>-->
+               <!--             <option value="IN">Indiana</option>-->
+               <!--             <option value="IA">Iowa</option>-->
+               <!--             <option value="KS">Kansas</option>-->
+               <!--             <option value="KY">Kentucky</option>-->
+               <!--             <option value="LA">Louisiana</option>-->
+               <!--             <option value="ME">Maine</option>-->
+               <!--             <option value="MD">Maryland</option>-->
+               <!--             <option value="MA">Massachusetts</option>-->
+               <!--             <option value="MI">Michigan</option>-->
+               <!--             <option value="MN">Minnesota</option>-->
+               <!--             <option value="MS">Mississippi</option>-->
+               <!--             <option value="MO">Missouri</option>-->
+               <!--             <option value="MT">Montana</option>-->
+               <!--             <option value="NE">Nebraska</option>-->
+               <!--             <option value="NV">Nevada</option>-->
+               <!--             <option value="NH">New Hampshire</option>-->
+               <!--             <option value="NJ">New Jersey</option>-->
+               <!--             <option value="NM">New Mexico</option>-->
+               <!--             <option value="NY">New York</option>-->
+               <!--             <option value="NC">North Carolina</option>-->
+               <!--             <option value="ND">North Dakota</option>-->
+               <!--             <option value="OH">Ohio</option>-->
+               <!--             <option value="OK">Oklahoma</option>-->
+               <!--             <option value="OR">Oregon</option>-->
+               <!--             <option value="PA">Pennsylvania</option>-->
+               <!--             <option value="RI">Rhode Island</option>-->
+               <!--             <option value="SC">South Carolina</option>-->
+               <!--             <option value="SD">South Dakota</option>-->
+               <!--             <option value="TN">Tennessee</option>-->
+               <!--             <option value="TX">Texas</option>-->
+               <!--             <option value="UT">Utah</option>-->
+               <!--             <option value="VT">Vermont</option>-->
+               <!--             <option value="VA">Virginia</option>-->
+               <!--             <option value="WA">Washington</option>-->
+               <!--             <option value="WV">West Virginia</option>-->
+               <!--             <option value="WI">Wisconsin</option>-->
+               <!--             <option value="WY">Wyoming</option>-->
+               <!--            </select>-->
+               <!--          </div>-->
+               <!--          <div class="form-group col-md-2">-->
+               <!--            <label for="inputBillingZip">Zip</label>-->
+               <!--            <input type="text" class="form-control" id="inputBillingZip">-->
+               <!--          </div>-->
+               <!--        </div>-->
+               <!--        <button type="submit" class="btn btn-success" id="saveBillingUpdates">Save Updates</button>-->
+               <!--        <button type="button" class="btn btn-info" id="editBillingValues">Edit Values</button>-->
+               <!--      </form>-->
+               <!--    </div>-->
+               <!--  </div>-->
+               <!--</div>-->
+            </div>
+            <!-- /div row -->
+         </div>
+         <!-- /container-fluid -->
+         <!-- Pass Confirmation Modal -->
+         <div class="modal" tabindex="-1" role="dialog" id="passConfirm">
+            <div class="modal-dialog" role="document">
+               <div class="modal-content" id="root">
+                  <div class="modal-header">
+                     <h5 class="modal-title text-center">Please Enter Your Exisisting Password to Confirm Changes</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     <form>
+                        <div class="form-group">
+                           <label for="passConfirmation">Password</label>
+                           <input type="password" class="form-control" id="passConfirmation" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="passConfirmSave">Save</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Footer -->
+         <div class="container-fluid fixed-bottom" id="footer">
+            <div class="row text-center justify-content-center">
+               <nav class="navbar sticky-bottom navbar-light">
+                  <a class="navbar-brand">
                                                     <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
                                                     <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
                                                   </a>
-                                                </nav>
-                                              </div>
-                                            </div>
+               </nav>
+            </div>
+         </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+   </div>
+   <!-- /#wrapper -->
+   <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+   <script src="./assets/js/profile.js"></script>
+   <script src="./assets/js/results.js"></script>
+   <script src="./assets/js/home.js"></script>
+   <!-- Menu Toggle Script -->
+   <script>
+   $(".menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+   });
+   ReactDOM.render(
+      React.createElement(UserAuth, { switch: "info_auth" }, null),
+      document.getElementById("root")
+   );
+   </script>
+</body>
 
-
-
-                                          </div>
-                                          <!-- /#page-content-wrapper -->
-
-                                        </div>
-                                        <!-- /#wrapper -->
-
-
-
-                                        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-                                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-                                        <script src="./assets/js/profile.js"></script>
-                                        <script src="./assets/js/results.js"></script>
-                                        <script src="./assets/js/home.js"></script>
-
-                                        <!-- Menu Toggle Script -->
-                                        <script>
-                                          $(".menu-toggle").click(function(e) {
-                                            e.preventDefault();
-                                            $("#wrapper").toggleClass("toggled");
-                                          });
-                                        </script>
-                                      </body>
-
-                                      </html>
+</html>
