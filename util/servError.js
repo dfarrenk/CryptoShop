@@ -23,3 +23,5 @@ module.exports = function(res, err, errmsg) {
          });
    }
 }
+
+console.log("ServerError: \x1b[32mloaded!\x1b[0m");

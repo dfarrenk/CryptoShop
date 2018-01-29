@@ -1,10 +1,5 @@
 $(function() {
 
-  // const loggedInUser = ({
-  //   username: username,
-  //   password: password,
-  //   email: email
-  // });
   let username;
   let email;
   let password;

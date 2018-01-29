@@ -1,4 +1,5 @@
 $(function() {
+   const DEBUG = false;
 
    let userInfo = ({
       firstname: "",
@@ -56,23 +57,6 @@ $(function() {
       $("#editPass").attr("readonly", false);
    });
 
-   // let editUserEmail;
-   // let editUserPass;
-
-   // $("#emailSave").click(function(e) {
-   //   e.preventDefault();
-   //   let editUserEmail = $("#editEmail").val().trim();
-
-   //   $("#passConfirm").modal();
-   // });
-
-   // $("#passSave").click(function(e) {
-   //   e.preventDefault();
-   //   let editUserPass = $("#editPass").val().trim();
-   //   $("#passConfirm").modal();
-   // });
-
-   // let passConfirm;
 
    $(".saveInfo").click(function(e) {
       e.preventDefault();
@@ -95,50 +79,32 @@ $(function() {
          delete userInfoUpdate.newpassword;
          url = "/user/changeEmail";
       }
+      
       console.log(userInfoUpdate);
       $.ajax({
-         method: "PUT",
-         url,
-         dataType: "json",
-         data: userInfoUpdate
-      }).then(function(res) {
-         if (!res) {
-            throw res;
-         }
-         console.log(res);
-      })
-      .catch(function(err) {
-        if (err === undefined) {
-          return console.log("This is a 304");
-       }
-       console.log(err)
-    })
+            method: "PUT",
+            url,
+            dataType: "json",
+            data: userInfoUpdate
+         }).then(function(res) {
+            if (!res) {
+               throw res;
+            }
+            console.log(res);
+         })
+         .catch(function(err) {
+            if (err === undefined) {
+               return console.log("This is a 304");
+            }
+            console.log(err);
+         });
    });
 
 
-
-   // $("#editBillingValues").click(function(e) {
-   //   e.preventDefault();
-   //   $("#billingFirstName").attr("readonly", false);
-   //   $("#billingLastName").attr("readonly", false);
-   //   $("#inputBillingAddress").attr("readonly", false);
-   //   $("#inputBillingAddress2").attr("readonly", false);
-   //   $("#inputBillingCity").attr("readonly", false);
-   // });
-
-
-   // $("#saveBillingUpdates").click(function(e) {
-   //   e.preventDefault();
-   //   $("#billingFirstName").attr("readonly", true);
-   //   $("#billingLastName").attr("readonly", true);
-   //   $("#inputBillingAddress").attr("readonly", true);
-   //   $("#inputBillingAddress2").attr("readonly", true);
-   //   $("#inputBillingCity").attr("readonly", true);
-   // });
-   var url = "https://"+window.location.hostname+":4443/api/myOrders";
+   var url = "https://" + window.location.hostname + ":4443/api/myOrders";
    $.get(url).done(function(result) {
-      console.log("orders list received!");
-      console.log(result);
+      DEBUG && console.log("orders list received!");
+      DEBUG && console.log(result);
       for (var i = result.length - 1; i >= 0; i--) {
 
          $("#purchases").prepend(`<tr>
@@ -147,10 +113,46 @@ $(function() {
           <td>${result[i].amountRecieved}</td>
           <td>${result[i].amountRecieved/12000}</td>
           </tr>`);
-
       }
-   });
-
-
+   }).catch(console.log.bind(console));
 });
+
 //Document Ready End
+
+// $("#editBillingValues").click(function(e) {
+//   e.preventDefault();
+//   $("#billingFirstName").attr("readonly", false);
+//   $("#billingLastName").attr("readonly", false);
+//   $("#inputBillingAddress").attr("readonly", false);
+//   $("#inputBillingAddress2").attr("readonly", false);
+//   $("#inputBillingCity").attr("readonly", false);
+// });
+
+
+// $("#saveBillingUpdates").click(function(e) {
+//   e.preventDefault();
+//   $("#billingFirstName").attr("readonly", true);
+//   $("#billingLastName").attr("readonly", true);
+//   $("#inputBillingAddress").attr("readonly", true);
+//   $("#inputBillingAddress2").attr("readonly", true);
+//   $("#inputBillingCity").attr("readonly", true);
+// });
+
+
+// let editUserEmail;
+// let editUserPass;
+
+// $("#emailSave").click(function(e) {
+//   e.preventDefault();
+//   let editUserEmail = $("#editEmail").val().trim();
+
+//   $("#passConfirm").modal();
+// });
+
+// $("#passSave").click(function(e) {
+//   e.preventDefault();
+//   let editUserPass = $("#editPass").val().trim();
+//   $("#passConfirm").modal();
+// });
+
+// let passConfirm;
