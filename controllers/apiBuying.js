@@ -5,7 +5,7 @@ const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
 const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
-const DEBUG = process.env.NODE_ENV == "development";
+const DEBUG = !(process.env.NODE_ENV == "production");
 //1)DONE: user go to search page
 //2)DONE: select item
 //3)DONE: click Payment
@@ -30,8 +30,7 @@ module.exports = function() {
 
       const { _id, username } = req.user;
       const Userinfo = req.session[_id];
-
-      if (!Userinfo.emailverfied) {
+      if (!Userinfo.emailverified) {
          return res.status(401).send("Email is not verified, please verified your email address");
       }
 
@@ -58,11 +57,11 @@ module.exports = function() {
                      eBay.buyItem(下.ebayId, price, (status) => {
                         DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mtatus of purchase from buyItem(): " + status);
                         CRUD.updatePush(_id, { "orders": 下 })
-                           .then(data => {
-                              DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
-                              res.send(status);
-                              return signToken(req, data, expiredIn);
-                           }).catch(console.log.bind(console));
+                        .then(data => {
+                           DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
+                           res.send(status);
+                           return signToken(req, data, expiredIn);
+                        }).catch(console.log.bind(console));
                      });
                   });
                }
