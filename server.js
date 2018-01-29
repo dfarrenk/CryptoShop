@@ -31,9 +31,9 @@ const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
 //Handlebars
-// app.use(express.static("public"));
-// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-// app.set('view engine', 'handlebars');
+app.use(express.static("public"));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 const staticPath = Join(__dirname, "view");
 app.use(express.static(staticPath));
 app.use("*", express.static(staticPath));
@@ -62,6 +62,7 @@ server_s.listen(PORTs, function(err) {
    memoryStore.garbageCollector();
 
    console.log("Https server running on port %s", server_s.address().port);
+   console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
 });
 
 app.get("/", (req, res) => {
