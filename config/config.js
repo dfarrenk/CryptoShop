@@ -1,5 +1,5 @@
 "use strict";
-const DEBUG = true;
+const DEBUG = false;
 
 const PassportJwt = require("passport-jwt");
 const Fs = require("fs");
@@ -64,7 +64,7 @@ const forceSSL_config = {
 
 const server_config = {
    port: process.env.PORT || 8080,
-   httpsPort: 4443,
+   httpsPort: 443,
    mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
 };
 
