@@ -58,18 +58,17 @@ const reset = fields => {
 const update = fields => {
 	return new Promise((resolve, reject) => {
 		const { originalpass, password, passconfirm, email } = fields;
-		const data = { email, originalpass, password, passconfirm };
+		const data = { email, originalpass };
 		let url = "/user/changeEmail";
 
 		if (!email) {
 			console.log("it's password mode");
 			url = "/user/changePass";
+			data.password = password;
+			data.passconfirm = passconfirm;
 			delete data.email;
-			console.log(data);
-		} else {
-			delete data.password;
-		}
-
+		} 
+		
 		const invalid = validator.setFields(data).validate();
 		if (invalid) {
 			console.log(invalid);

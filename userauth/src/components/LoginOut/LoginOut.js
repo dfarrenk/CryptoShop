@@ -106,7 +106,7 @@ class Login extends Component {
 	responseHandler = response => {
 		console.log(response);
 		if (response.status < 300) {
-			window.location.assign("/");
+			window.location.assign("/searchPage.html");
 		}
 	}
 
