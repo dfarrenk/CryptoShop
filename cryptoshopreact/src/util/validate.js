@@ -1,4 +1,6 @@
 class Validator {
+	// the order of the object prop will reflected on the display
+	// order of the errors
 	setFields(args) {
 		for (let elem in args) {
 			this[elem] = args[elem];
@@ -7,7 +9,7 @@ class Validator {
 	}
 
 	get Allprops() {
-		return Object.entries(this);
+		return Object.entries(this); 
 	}
 
 	validate() {
@@ -23,6 +25,7 @@ class Validator {
 
 		console.log(invalid);
 		for (let elem in invalid) {
+			console.log(elem);
 			if (invalid[elem]) {
 				return { field: elem, message: invalid[elem] }; 
 			}
@@ -46,6 +49,8 @@ class Validator {
 				return !!prop.match(/.{8,}/) ? null : "invalid password";
 			case "passconfirm":
 				return this.password === prop ? null : "mismatched password";
+			case "originalpass":
+				return !!prop.match(/.{8,}/) && this.password !== prop ? null : "new password should not be the same as the old one"; 
 			default:
 				return null;
 		}
@@ -53,3 +58,4 @@ class Validator {
 }
 
 export default Validator;
+

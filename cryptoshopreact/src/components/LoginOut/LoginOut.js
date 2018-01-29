@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { login, register, reset } from "../../util/auth";
-import ErrorHandler from "../../util/errorhandler";
 import Form from "../Form";
+import ErrorHandler from "../../util/errorhandler";
+import { login, register, reset } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
@@ -22,7 +22,7 @@ class Login extends Component {
 	inputHandler = evt => {
 		const { name, value } = evt.target;
 		this.setState({ [name]: value });
-	};
+	}
 
 	submitHandler = evt => {
 		evt.preventDefault();
@@ -32,46 +32,51 @@ class Login extends Component {
 			delete fields[elem].err;
 		}
 
-		if (resetPass) {
-			reset(this.state)
-				.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							console.log(res);
-							throw res;
-						}
-						this.responseHandler(res);
-					})
+		switch (true) {
+			case resetPass:
+				reset(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						console.log(res);
+						throw res;
+					}
+					this.responseHandler(res);
+				})
 				.catch(err => this.validationHandler(err, fields));
-		} else {
-			isLogin
-			? login(this.state)
-					.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							throw res;
-						}
-						this.responseHandler(res);
-					})
-					.catch(err => this.validationHandler(err, fields))
-			: register(this.state)
-					.then(res => { 
-						const { status } = res;
-						if (status === 204 || status === 304) {
-							throw res;
-						}
-						this.responseHandler(res);
-					})
-					.catch(err => this.validationHandler(err, fields));
+				break;
+			case isLogin:
+				login(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						throw res;
+					}
+					this.responseHandler(res);
+				})
+				.catch(err => this.validationHandler(err, fields));
+				break;
+			case !isLogin:
+				register(this.state)
+				.then(res => {
+					const { status } = res;
+					if (status === 204 || status === 304) {
+						throw res;
+					}
+					this.responseHandler(res);
+				})
+				.catch(err => this.validationHandler(err, fields));
+				break;
+			default:
+				console.log("hmmn...this is an exception");
 		}
 
 		console.log(this.state);
-
 		this.setState({
 			password: "",
 			passconfirm: ""
 		});
-	};
+	}
 
 	validationHandler = (error, fields) => {
 		const errorhandler = new ErrorHandler();
@@ -81,25 +86,26 @@ class Login extends Component {
 			.then(errType => {
 				let { field, message } = errType;
 
-				if (!field) { // this is where we decided what to do with server error
+				if (!field) {
+					// this is where we decided what to do with server error
 					fields.username.err = message;
 					field = "username";
 				} else {
 					fields[field].err = message;
 				}
-				this.setState({ 
+				this.setState({
 					[field]: "",
-					fields: fields 
+					fields: fields
 				});
 			});
-	};
+	}
 
 	responseHandler = response => {
 		console.log(response);
-		if (response.status < 400) {
-			window.location.assign("/"); 
+		if (response.status < 300) {
+			window.location.assign("/");
 		}
-	};
+	}
 
 	clearFields = (resetname, value) => {
 		for (let elem in fields) {
@@ -107,6 +113,7 @@ class Login extends Component {
 		}
 
 		this.setState({
+			reset: true,
 			username: "",
 			password: "",
 			passconfirm: "",
@@ -120,108 +127,65 @@ class Login extends Component {
 		const msg = isLogin ? "New User?" : "Already Registered?";
 		return (
 			<p key="footer" className="--anchor">
-				{
-					isLogin
-					? [ 
-						<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>Forgot Your Password?</a>, 
-						<span key="backslash"> / </span>
+				{isLogin
+					? [
+							<a key="forgotpass" onClick={() => this.clearFields("resetPass", !resetPass)}>
+								Forgot Your Password?
+							</a>,
+							<span key="backslash"> / </span>
 						]
-					: ""
-				}
-				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>{msg}</a>
+					: ""}
+				<a key="userchoice" onClick={() => this.clearFields("isLogin", !isLogin)}>
+					{msg}
+				</a>
 			</p>
 		);
 	}
 
-	renResetPass() {
-		const { username, email } = this.state.fields;
-		username.val = "please let us know your username";
-		email.val = "and the email you use to register";
-		const resetFields = [username, email];
+	renderBody() {
+		const { isLogin, resetPass, fields } = this.state;
+		const { username, password, email, passconfirm } = fields;
 
-		console.log(resetFields);
-		return this.renderFields(resetFields);
+		if (resetPass) {
+			username.val = "please let us know your username";
+			email.val = "and the email you use to register";
+			return [username, email];
+		}
+		if (isLogin) {
+			username.val = "username or email";
+			password.val = "password";
+			return [username, password];
+		}
+
+		return [username, email, password, passconfirm];
 	}
 
-	renLogin() {
-		const { username, password } = this.state.fields;
-		username.val = "username or email";
-		password.val = "password";
-		const loginFields = [username, password];
-
-		return loginFields; /*this.renderFields(loginFields);*/
-	}
-
-	renRegister() {
-		const { username, password, email, passconfirm } = this.state.fields;
-		const registerFields = [username, email, password, passconfirm];
-
-		return registerFields; /*this.renderFields(registerFields);*/
-	}
-	
 	render() {
-		const { isLogin } = this.state;
+		const { isLogin, resetPass } = this.state;
+		let name = isLogin ? "Login" : "Register";
+		let footer = this.renFooter();
+
+		if (resetPass) {
+			name = "Confirm";
+			footer = (
+				<p key="footer" className="--anchor">
+					<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
+				</p>
+			);
+		};
 
 		return (
-			<Form 
-				fields={isLogin ? this.renLogin() : this.renRegister()}
+			<Form
+				fields={this.renderBody()}
 				submit={this.submitHandler}
-				className=""
-				states={{ 
-					username: "",
-					password: "",
-					passconfirm: "",
-					email: "" 
-				}}
+				input={this.inputHandler}
+				className="card"
+				name={name}
+				footer={footer}
+				states={this.state}
 			/>
-		)
+		);
 	}
-
-	
-	// renderFields(args) {
-	// 	const fields = args.map((elem, index) => {
-	// 		return (
-	// 			<div key={index} className="form-group">
-	// 				<label htmlFor={elem.name}>{elem.label}</label>
-	// 				<input
-	// 					type={elem.type}
-	// 					onChange={this.inputHandler}
-	// 					name={elem.name}
-	// 					id={elem.name}
-	// 					placeholder={elem.err || elem.val}
-	// 					className={`form-control ${elem.err && "err"}`}
-	// 					value={this.state[elem.name]}
-	// 				/>
-	// 			</div>
-	// 		);
-	// 	});
-
-	// 	return fields;
-	// }
-
-	// render() {
-	// 	const { isLogin, resetPass } = this.state;
-
-	// 	return (
-	// 		<form onSubmit={this.submitHandler} className="card">
-	// 			{
-	// 				!resetPass
-	// 				? [
-	// 						isLogin ? this.renLogin() : this.renRegister(),
-	// 						<input key="submit" type="submit" value={isLogin ? "Login" : "Register"} />,
-	// 						this.renFooter()
-	// 					]
-	// 				: [
-	// 						this.renResetPass(),
-	// 						<input key="submitReset" type="submit" value="Confirm" />,
-	// 						<p key="footer" className="--anchor">
-	// 							<a onClick={() => this.clearFields("resetPass", !resetPass)}>Never Mind...</a>
-	// 						</p>
-	// 					]
-	// 			}
-	// 		</form>
-	// 	);
-	// }
 }
 
 export default Login;

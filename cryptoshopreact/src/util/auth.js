@@ -1,10 +1,11 @@
 import axios from "axios";
 import Validator from "./validate";
 
+const validator = new Validator();
+
 const login = fields => {
 	return new Promise((resolve, reject) => {
 		const { username, password } = fields;
-		const validator = new Validator();
 		const data = { username, password };
 
 		if (username.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
@@ -26,7 +27,6 @@ const login = fields => {
 const register = fields => {
 	return new Promise((resolve, reject) => {
 		const { email, username, password, passconfirm } = fields;
-		const validator = new Validator();
 		const data = { username, email, password, passconfirm };
 
 		const invalid = validator.setFields(data).validate();
@@ -43,7 +43,6 @@ const register = fields => {
 const reset = fields => {
 	return new Promise((resolve, reject) => {
 		const { username, email } = fields;
-		const validator = new Validator();
 		const data = { username, email };
 
 		const invalid = validator.setFields(data).validate();
@@ -56,4 +55,25 @@ const reset = fields => {
 	});
 }
 
-export { login, register, reset };
+const update = fields => {
+	return new Promise((resolve, reject) => {
+		const { originalpass, password, email } = fields;
+		const data = { email, password: originalpass };
+
+		if (password) {
+			console.log("it's password mode");
+			data.newpassword = password;
+			delete data.email;
+		}
+
+		const invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		resolve(axios.post("/user/forgotPass", data));
+	});
+}
+
+export { login, register, reset, update };
