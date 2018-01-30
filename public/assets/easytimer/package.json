@@ -1,0 +1,134 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "easytimer.js",
+        "scope": null,
+        "escapedName": "easytimer.js",
+        "name": "easytimer.js",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/ubuntu/workspace/project-3"
+    ]
+  ],
+  "_from": "easytimer.js@latest",
+  "_id": "easytimer.js@2.0.3",
+  "_inCache": true,
+  "_location": "/easytimer.js",
+  "_nodeVersion": "8.9.4",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/easytimer.js-2.0.3.tgz_1516950138878_0.06840629200451076"
+  },
+  "_npmUser": {
+    "name": "vacilone",
+    "email": "albert.glez.mld@gmail.com"
+  },
+  "_npmVersion": "5.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "easytimer.js",
+    "scope": null,
+    "escapedName": "easytimer.js",
+    "name": "easytimer.js",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/easytimer.js/-/easytimer.js-2.0.3.tgz",
+  "_shasum": "d3fb20ba3d4ee7517dbbb0bdaa101a81d9d9748f",
+  "_shrinkwrap": null,
+  "_spec": "easytimer.js",
+  "_where": "/home/ubuntu/workspace/project-3",
+  "author": {
+    "name": "Albert Gonzalez"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ]
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/albert-gonzalez/easytimer.js/issues"
+  },
+  "dependencies": {},
+  "description": "Timer/Chronometer/Countdown compatible with AMD and NodeJS",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "bootstrap": "^3.3.7",
+    "chai": "^4.1.2",
+    "eslint": "^4.7.2",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "http-server": "~0.10.0",
+    "jquery": "^3.2.1",
+    "mocha": "^3.5.3",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-css-only": "^0.2.0",
+    "rollup-plugin-license": "^0.5.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "sinon": "~3.3.0"
+  },
+  "directories": {
+    "test": "test",
+    "src": "src"
+  },
+  "dist": {
+    "integrity": "sha512-nuPq3h+odQDcrWHtZTdAZc4NICHZpBodJCcKNkIXFrKnkrp08ZIBIdrOknCRfdv4geIebpMLM9/WxHqkEo2aHg==",
+    "shasum": "d3fb20ba3d4ee7517dbbb0bdaa101a81d9d9748f",
+    "tarball": "https://registry.npmjs.org/easytimer.js/-/easytimer.js-2.0.3.tgz"
+  },
+  "gitHead": "5d4bd0cb27b9ce495e02e2c11537906b026119e7",
+  "homepage": "https://github.com/albert-gonzalez/easytimer.js#readme",
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "amd",
+    "requirejs",
+    "timer",
+    "chronometer",
+    "countdown",
+    "mocha"
+  ],
+  "license": "MIT",
+  "main": "dist/easytimer.js",
+  "maintainers": [
+    {
+      "name": "vacilone",
+      "email": "albert.glez.mld@gmail.com"
+    }
+  ],
+  "name": "easytimer.js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albert-gonzalez/easytimer.js.git"
+  },
+  "scripts": {
+    "build": "rollup -c && rollup -c --environment optimize",
+    "build-examples": "rollup -c rollup.config.examples.js",
+    "prestart": "npm install",
+    "start": "http-server -a 0.0.0.0 -p 8001",
+    "test": "mocha"
+  },
+  "version": "2.0.3"
+}
