@@ -1,0 +1,20 @@
+{
+    "username": {
+		"name": "username",
+		"val": "username or email to confirm your credential",
+		"type": "text",
+		"label": "Username:"
+	},
+	"password": {
+		"name": "password",
+		"val": "password must be at least 8 characters long",
+		"type": "password",
+		"label": "New Password:"
+	},
+	"passconfirm": {
+		"name": "passconfirm",
+		"val": "please type in your password again",
+		"type": "password",
+		"label": "Confirm Your Password:"
+	}
+}

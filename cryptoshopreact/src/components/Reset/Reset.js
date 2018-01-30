@@ -1,24 +1,22 @@
 import React, { Component } from "react";
 import Form from "../Form";
 import ErrorHandler from "../../util/errorhandler";
-import { update } from "../../util/auth";
+import { reset } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
-class Emailupdate extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: "",
-			originalpass: "",
-			password: "",
-			passconfirm: "",
-			isEmail: true,
-			fields: fields,
-		};
-	}
+class Reset extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: "",
+            password: "",
+            passconfirm: "",
+            fields: fields
+        }
+    }
 
-	inputHandler = evt => {
+    inputHandler = evt => {
 		const { name, value } = evt.target;
 		this.setState({ [name]: value });
 	}
@@ -31,7 +29,7 @@ class Emailupdate extends Component {
 			delete fields[elem].err;
 		}
 
-		update(this.state)
+		reset(this.state)
 			.then(res => {
 				const { status } = res;
 				if (status === 204 || status === 304) {
@@ -44,7 +42,6 @@ class Emailupdate extends Component {
 
 		console.log(this.state);
 		this.setState({
-			originalpass: "",
 			password: "",
 			passconfirm: ""
 		});
@@ -57,7 +54,7 @@ class Emailupdate extends Component {
 			.errorHandling()
 			.then(errType => {
 				let { field, message } = errType;
-
+                console.log(errType)
 				if (!field) {
 					this.props.result("error", message);
 				} else {
@@ -86,7 +83,6 @@ class Emailupdate extends Component {
 		this.setflag();
 		this.setState({
 			email: "",
-			originalpass: "",
 			password: "",
 			passconfirm: "",
 			[resetname]: value
@@ -110,9 +106,8 @@ class Emailupdate extends Component {
 	}
 
 	renderBody() {
-		const { isEmail, fields } = this.state;
-		const { email, originalpass, password, passconfirm } = fields;
-		return isEmail ? [ email, originalpass ] : [ originalpass, password, passconfirm ];
+		const { username, password, passconfirm } = fields;
+		return [ username, password, passconfirm ];
 	}
 
 	render() {
@@ -130,4 +125,4 @@ class Emailupdate extends Component {
 	}
 }
 
-export default Emailupdate;
+export default Reset;

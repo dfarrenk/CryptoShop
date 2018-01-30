@@ -2,7 +2,7 @@
    "routes": [
       "/user/verification",
       "/user/changePass",
-      "/login"
+      "/"
    ],
    "subjects": [
       "Click to verify",

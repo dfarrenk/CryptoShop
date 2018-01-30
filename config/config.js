@@ -65,7 +65,7 @@ const forceSSL_config = {
 const server_config = {
    port: process.env.PORT || 8080,
    httpsPort: 443,
-   mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
+   mongoURL: /*process.env.MONGOLAB_URI ||*/ "mongodb://localhost/crypto"
 };
 
 const jwt_config = {
@@ -93,7 +93,7 @@ const session_config = {
    genid: GenUUIDAndEmit,
    cookie: {
       maxAge: null, // set maxAge when user's authenticated
-      secure: !devMode // devMode ? false : true
+      secure: false/*!devMode*/ // devMode ? false : true
    }
 };
 

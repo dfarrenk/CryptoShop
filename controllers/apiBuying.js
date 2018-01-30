@@ -3,9 +3,12 @@ const eBay = require("../lib/eBay.js")();
 const coinbase = require("../lib/coinbase.js")();
 const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js");
+const ServErr = require("../util/servError.js");
+const mail = require("../lib/sendgrid.js");
 const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
 const DEBUG = !(process.env.NODE_ENV == "production");
+
 //1)DONE: user go to search page
 //2)DONE: select item
 //3)DONE: click Payment
@@ -24,7 +27,7 @@ module.exports = function() {
       })
    })
 
-   //5)
+   //5) 
    routes.post("/buyItem/", Auth, (req, res) => {
       console.log("\x1b[32mDEBUG: \x1b[0mbuyItem route fires! ");
 
@@ -32,7 +35,14 @@ module.exports = function() {
       const Userinfo = req.session[_id];
 
       if (!Userinfo.emailverified) {
-         return res.status(401).send("Email is not verified, please verified your email address");
+         signToken(req, Userinfo, expiredIn)
+         .then(refId => {
+            mail({ hostname: req.headers.origin, user: Userinfo, token: refId }, 0);
+            return res.status(401).send("Email is not verified, please verified your email address");
+         })
+         .catch(err => {
+            ServErr(res, err);
+         });
       }
 
       DEBUG && console.log(Userinfo);

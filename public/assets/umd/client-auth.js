@@ -437,6 +437,242 @@ module.exports = emptyFunction;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Form__ = __webpack_require__(38);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Form__["a"]; });
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ErrorHandler = function () {
+   function ErrorHandler() {
+      _classCallCheck(this, ErrorHandler);
+   }
+
+   ErrorHandler.prototype.getError = function getError(err) {
+      if (err.response) {
+         this.err = err.response.data.message;
+         this.code = err.response.status; // this should be error code
+      } else if (err.status) {
+         this.err = err.data.message;
+         this.code = err.status; // this should be error code
+      } else {
+         this.err = err.message;
+         this.field = err.field;
+      }
+      return this;
+   };
+
+   ErrorHandler.prototype.errorHandling = function errorHandling() {
+      var code = this.code,
+          err = this.err,
+          field = this.field;
+
+      var errorType = {};
+
+      if (code) {
+         errorType = this.servErr(code, err);
+      } else {
+         errorType = this.valErr(field, err);
+      }
+      return Promise.resolve(errorType); // return object consist of set parts
+   };
+
+   ErrorHandler.prototype.valErr = function valErr(field, errmsg) {
+      console.log("validation error");
+
+      if (errmsg.match("missing originalpass")) {
+         return this.errMsg(field, "missing original password");
+      }
+      if (errmsg.match("missing passconfirm")) {
+         return this.errMsg(field, "missing password confirmation");
+      }
+      return this.errMsg(field, errmsg);
+   };
+
+   ErrorHandler.prototype.servErr = function servErr(code, err) {
+      switch (code) {
+         case 204:
+            return this.errMsg("user cannot be found in the database", "Please make sure you put in all the correct information for our server.", code);
+         case 304:
+            return this.errMsh(err, "", code);
+         case 401:
+            return this.errMsg(err, "Please make sure you enter the correct password.", code);
+         case 403:
+            return this.errMsg(err, "Please login or register an account before making any purchase.", code);
+         case 404:
+            return this.errMsg(err, "The page you are looking for doesn't exist", code);
+         case 409:
+            return this.errMsg(err, "An account with the same username or email has already been registered.", code, "database");
+         case 410:
+            return this.errMsg(err, "requested link expired.", code); // action?
+         case 500:
+            return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
+         default:
+            console.log("seriously wrong");
+      }
+   };
+
+   ErrorHandler.prototype.errMsg = function errMsg(err, msg) {
+      if ((arguments.length <= 2 ? 0 : arguments.length - 2) === 0) {
+         var _message = msg;
+         var _field = err;
+         return { field: _field, message: _message };
+      }
+
+      var len = arguments.length <= 2 ? 0 : arguments.length - 2;
+      var message = void 0,
+          field = void 0;
+
+      if (len < 2) {
+         message = "Error Code: " + (arguments.length <= 2 ? undefined : arguments[2]) + ", " + err + ". " + msg;
+         return { field: field, message: message };
+      }
+
+      message = "Error Code: " + (arguments.length <= 2 ? undefined : arguments[2]) + ", " + err + " in our " + (arguments.length <= 3 ? undefined : arguments[3]) + ". " + msg;
+      return { field: field, message: message };
+   };
+
+   return ErrorHandler;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (ErrorHandler);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return login; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return register; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetreq; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return reset; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return update; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validate__ = __webpack_require__(60);
+
+
+
+var validator = new __WEBPACK_IMPORTED_MODULE_1__validate__["a" /* default */]();
+
+var login = function login(fields) {
+	return new Promise(function (resolve, reject) {
+		var username = fields.username,
+		    password = fields.password;
+
+		var data = { username: username, password: password };
+
+		if (username.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
+			console.log("it's email format");
+			data.email = username;
+			delete data.username;
+		}
+
+		var invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/login", data));
+	});
+};
+
+var register = function register(fields) {
+	return new Promise(function (resolve, reject) {
+		var email = fields.email,
+		    username = fields.username,
+		    password = fields.password,
+		    passconfirm = fields.passconfirm;
+
+		var data = { username: username, email: email, password: password, passconfirm: passconfirm };
+
+		var invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		delete data.passconfirm;
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/register", data));
+	});
+};
+
+var resetreq = function resetreq(fields) {
+	return new Promise(function (resolve, reject) {
+		var username = fields.username,
+		    email = fields.email;
+
+		var data = { username: username, email: email };
+
+		var invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/user/forgotPass", data));
+	});
+};
+
+var reset = function reset(fields) {
+	return new Promise(function (resolve, reject) {
+		var username = fields.username,
+		    password = fields.password,
+		    passconfirm = fields.passconfirm;
+
+		var data = { username: username, password: password, passconfirm: passconfirm };
+
+		var invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("/user/resetPass?" + window.location.search, data));
+	});
+};
+
+var update = function update(fields) {
+	return new Promise(function (resolve, reject) {
+		var originalpass = fields.originalpass,
+		    password = fields.password,
+		    passconfirm = fields.passconfirm,
+		    email = fields.email;
+
+		var data = { email: email, originalpass: originalpass };
+		var url = "/user/changeEmail";
+
+		if (!email) {
+			console.log("it's password mode");
+			url = "/user/changePass";
+			data.password = password;
+			data.passconfirm = passconfirm;
+			delete data.email;
+		}
+
+		var invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+
+		delete data.passconfirm;
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(url, data));
+	});
+};
+
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -536,7 +772,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -595,7 +831,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -663,227 +899,10 @@ if (true) {
 module.exports = warning;
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Form__ = __webpack_require__(38);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Form__["a"]; });
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ErrorHandler = function () {
-   function ErrorHandler() {
-      _classCallCheck(this, ErrorHandler);
-   }
-
-   ErrorHandler.prototype.getError = function getError(err) {
-      if (err.response) {
-         this.err = err.response.data.message;
-         this.code = err.response.status; // this should be error code
-      } else if (err.status) {
-         this.err = err.data.message;
-         this.code = err.status; // this should be error code
-      } else {
-         this.err = err.message;
-         this.field = err.field;
-      }
-      return this;
-   };
-
-   ErrorHandler.prototype.errorHandling = function errorHandling() {
-      var code = this.code,
-          err = this.err,
-          field = this.field;
-
-      var errorType = {};
-
-      if (code) {
-         errorType = this.servErr(code, err);
-      } else {
-         errorType = this.valErr(field, err);
-      }
-      return Promise.resolve(errorType); // return object consist of set parts
-   };
-
-   ErrorHandler.prototype.valErr = function valErr(field, errmsg) {
-      console.log("validation error");
-      if (errmsg.match("missing originalpass")) {
-         return this.errMsg(field, "missing original password");
-      }
-      if (errmsg.match("missing passconfirm")) {
-         return this.errMsg(field, "missing password confirmation");
-      }
-      return this.errMsg(field, errmsg);
-   };
-
-   ErrorHandler.prototype.servErr = function servErr(code, err) {
-      switch (code) {
-         case 204:
-            return this.errMsg("user cannot be found in the database", "Please make sure you put in all the correct information for our server.", code);
-         case 304:
-            return this.errMsh(err, "", code);
-         case 401:
-            return this.errMsg(err, "Please make sure you enter the correct password.", code);
-         case 403:
-            return this.errMsg(err, "Please login or register an account before making any purchase.", code);
-         case 404:
-            return this.errMsg(err, "The page you are looking for doesn't exist", code);
-         case 409:
-            return this.errMsg(err, "An account with the same username or email has already been registered.", code, "database");
-         case 410:
-            return this.errMsg(err, "requested link expired.", code); // action?
-         case 500:
-            return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
-         default:
-            console.log("seriously wrong");
-      }
-   };
-
-   ErrorHandler.prototype.errMsg = function errMsg(err, msg) {
-      if ((arguments.length <= 2 ? 0 : arguments.length - 2) === 0) {
-         var _message = msg;
-         var _field = err;
-         return { field: _field, message: _message };
-      }
-
-      var len = arguments.length <= 2 ? 0 : arguments.length - 2;
-      var message = void 0,
-          field = void 0;
-
-      if (len < 2) {
-         message = "Error Code: " + (arguments.length <= 2 ? undefined : arguments[2]) + ", " + err + ". " + msg;
-         return { field: field, message: message };
-      }
-
-      message = "Error Code: " + (arguments.length <= 2 ? undefined : arguments[2]) + ", " + err + " in our " + (arguments.length <= 3 ? undefined : arguments[3]) + ". " + msg;
-      return { field: field, message: message };
-   };
-
-   return ErrorHandler;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (ErrorHandler);
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return login; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return register; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return reset; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return update; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__validate__ = __webpack_require__(60);
-
-
-
-var validator = new __WEBPACK_IMPORTED_MODULE_1__validate__["a" /* default */]();
-
-var login = function login(fields) {
-	return new Promise(function (resolve, reject) {
-		var username = fields.username,
-		    password = fields.password;
-
-		var data = { username: username, password: password };
-
-		if (username.match(/(.*?@[a-z]+\.[a-z]+)+$/g)) {
-			console.log("it's email format");
-			data.email = username;
-			delete data.username;
-		}
-
-		var invalid = validator.setFields(data).validate();
-		if (invalid) {
-			console.log(invalid);
-			return reject(invalid);
-		}
-
-		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/login", data));
-	});
-};
-
-var register = function register(fields) {
-	return new Promise(function (resolve, reject) {
-		var email = fields.email,
-		    username = fields.username,
-		    password = fields.password,
-		    passconfirm = fields.passconfirm;
-
-		var data = { username: username, email: email, password: password, passconfirm: passconfirm };
-
-		var invalid = validator.setFields(data).validate();
-		if (invalid) {
-			console.log(invalid);
-			return reject(invalid);
-		}
-
-		delete data.passconfirm;
-		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/register", data));
-	});
-};
-
-var reset = function reset(fields) {
-	return new Promise(function (resolve, reject) {
-		var username = fields.username,
-		    email = fields.email;
-
-		var data = { username: username, email: email };
-
-		var invalid = validator.setFields(data).validate();
-		if (invalid) {
-			console.log(invalid);
-			return reject(invalid);
-		}
-
-		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/user/forgotPass", data));
-	});
-};
-
-var update = function update(fields) {
-	return new Promise(function (resolve, reject) {
-		var originalpass = fields.originalpass,
-		    password = fields.password,
-		    passconfirm = fields.passconfirm,
-		    email = fields.email;
-
-		var data = { email: email, originalpass: originalpass };
-		var url = "/user/changeEmail";
-
-		if (!email) {
-			console.log("it's password mode");
-			url = "/user/changePass";
-			data.password = password;
-			data.passconfirm = passconfirm;
-			delete data.email;
-		}
-
-		var invalid = validator.setFields(data).validate();
-		if (invalid) {
-			console.log(invalid);
-			return reject(invalid);
-		}
-
-		delete data.passconfirm;
-		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(url, data));
-	});
-};
-
-
 
 /***/ }),
 /* 10 */
@@ -1170,7 +1189,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AuthModal__ = __webpack_require__(35);
 
@@ -1253,8 +1272,8 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(1);
-var invariant = __webpack_require__(4);
-var warning = __webpack_require__(5);
+var invariant = __webpack_require__(7);
+var warning = __webpack_require__(8);
 var ExecutionEnvironment = __webpack_require__(19);
 var _assign = __webpack_require__(20);
 var emptyFunction = __webpack_require__(2);
@@ -17127,8 +17146,8 @@ module.exports = emptyObject;
 
 
 if (true) {
-  var invariant = __webpack_require__(4);
-  var warning = __webpack_require__(5);
+  var invariant = __webpack_require__(7);
+  var warning = __webpack_require__(8);
   var ReactPropTypesSecret = __webpack_require__(30);
   var loggedTypeFailures = {};
 }
@@ -17362,14 +17381,16 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_LoginOut__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_UserUpdate__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Error__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__index_css__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Reset__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Error__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_css__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__index_css__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -17419,6 +17440,8 @@ var Auth = function (_Component) {
 				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_LoginOut__["a" /* default */], { flag: this.flagState, result: this.flagResponse });
 			case "info_auth":
 				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_UserUpdate__["a" /* default */], { flag: this.flagState, result: this.flagResponse });
+			case "reset_auth":
+				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Reset__["a" /* default */], { flag: this.flagState, result: this.flagResponse });
 			default:
 				console.log("errrrr");
 		}
@@ -17468,7 +17491,7 @@ var Auth = function (_Component) {
 		), response ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			"div",
 			{ key: "messagebody", className: "modal-footer" },
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Error__["a" /* default */], { response: response })
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Error__["a" /* default */], { response: response })
 		) : null];
 	};
 
@@ -17493,9 +17516,9 @@ var Auth = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_auth__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_auth__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__authconfig_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__style_css__ = __webpack_require__(62);
@@ -17550,7 +17573,7 @@ var Login = function (_Component) {
 
 			switch (true) {
 				case resetPass:
-					Object(__WEBPACK_IMPORTED_MODULE_3__util_auth__["c" /* reset */])(_this.state).then(function (res) {
+					Object(__WEBPACK_IMPORTED_MODULE_3__util_auth__["d" /* resetreq */])(_this.state).then(function (res) {
 						var status = res.status;
 
 						if (status === 204 || status === 304) {
@@ -17629,13 +17652,14 @@ var Login = function (_Component) {
 				delete __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a[elem].err;
 			}
 
-			_this.setflag();
-			_this.setState((_this$setState3 = {
+			Promise.resolve(_this.setState((_this$setState3 = {
 				username: "",
 				password: "",
 				passconfirm: "",
 				email: ""
-			}, _this$setState3[resetname] = value, _this$setState3));
+			}, _this$setState3[resetname] = value, _this$setState3))).then(function (data) {
+				_this.setflag();
+			});
 		};
 
 		_this.state = {
@@ -17748,6 +17772,7 @@ var Login = function (_Component) {
 			return [username, password];
 		}
 
+		username.val = "username is your alias on our site";
 		return [username, email, password, passconfirm];
 	};
 
@@ -17894,7 +17919,7 @@ module.exports = __webpack_require__(41);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(10);
 var Axios = __webpack_require__(43);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(6);
 
 /**
  * Create an instance of Axios
@@ -17977,7 +18002,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(6);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(53);
 var dispatchRequest = __webpack_require__(54);
@@ -18708,7 +18733,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(55);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(6);
 var isAbsoluteURL = __webpack_require__(56);
 var combineURLs = __webpack_require__(57);
 
@@ -19071,9 +19096,9 @@ module.exports = {"username":{"name":"username","val":"username is your alias on
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_auth__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_auth__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__authconfig_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__style_css__ = __webpack_require__(66);
@@ -19086,7 +19111,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-// import Err from "../Error";
 
 
 
@@ -19119,7 +19143,7 @@ var Emailupdate = function (_Component) {
 				delete fields[elem].err;
 			}
 
-			Object(__WEBPACK_IMPORTED_MODULE_3__util_auth__["d" /* update */])(_this.state).then(function (res) {
+			Object(__WEBPACK_IMPORTED_MODULE_3__util_auth__["e" /* update */])(_this.state).then(function (res) {
 				var status = res.status;
 
 				if (status === 204 || status === 304) {
@@ -19161,7 +19185,7 @@ var Emailupdate = function (_Component) {
 		_this.responseHandler = function (response) {
 			console.log(response);
 			if (response.status < 300 && response.status > 100) {
-				window.location.reload(); // true?
+				window.location.reload(true); // true?
 			}
 		};
 
@@ -19261,8 +19285,8 @@ module.exports = {"email":{"name":"email","val":"example@gmail.com","type":"emai
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Error__ = __webpack_require__(68);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Error__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Reset__ = __webpack_require__(68);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Reset__["a"]; });
 
 
 /***/ }),
@@ -19272,7 +19296,199 @@ module.exports = {"email":{"name":"email","val":"example@gmail.com","type":"emai
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_css__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_auth__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__authconfig_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__style_css__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__style_css__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+var Reset = function (_Component) {
+	_inherits(Reset, _Component);
+
+	function Reset(props) {
+		_classCallCheck(this, Reset);
+
+		var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+		_this.inputHandler = function (evt) {
+			var _this$setState;
+
+			var _evt$target = evt.target,
+			    name = _evt$target.name,
+			    value = _evt$target.value;
+
+			_this.setState((_this$setState = {}, _this$setState[name] = value, _this$setState));
+		};
+
+		_this.submitHandler = function (evt) {
+			evt.preventDefault();
+			var fields = _this.state.fields;
+
+
+			for (var elem in fields) {
+				delete fields[elem].err;
+			}
+
+			Object(__WEBPACK_IMPORTED_MODULE_3__util_auth__["c" /* reset */])(_this.state).then(function (res) {
+				var status = res.status;
+
+				if (status === 204 || status === 304) {
+					console.log(res);
+					throw res;
+				}
+				_this.responseHandler(res);
+			}).catch(function (err) {
+				return _this.validationHandler(err, fields);
+			});
+
+			console.log(_this.state);
+			_this.setState({
+				password: "",
+				passconfirm: ""
+			});
+		};
+
+		_this.validationHandler = function (error, fields) {
+			var errorhandler = new __WEBPACK_IMPORTED_MODULE_2__util_errorhandler__["a" /* default */]();
+			errorhandler.getError(error).errorHandling().then(function (errType) {
+				var _this$setState2;
+
+				var field = errType.field,
+				    message = errType.message;
+
+				console.log(errType);
+				if (!field) {
+					_this.props.result("error", message);
+				} else {
+					fields[field].err = message;
+				}
+
+				_this.setState((_this$setState2 = {}, _this$setState2[field] = "", _this$setState2.fields = fields, _this$setState2));
+			});
+		};
+
+		_this.responseHandler = function (response) {
+			console.log(response);
+			if (response.status < 300 && response.status > 100) {
+				window.location.reload(true); // true?
+			}
+		};
+
+		_this.clearFields = function (resetname, value) {
+			var _this$setState3;
+
+			for (var elem in __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a) {
+				delete __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a[elem].err;
+			}
+
+			_this.setflag();
+			_this.setState((_this$setState3 = {
+				email: "",
+				password: "",
+				passconfirm: ""
+			}, _this$setState3[resetname] = value, _this$setState3));
+		};
+
+		_this.state = {
+			username: "",
+			password: "",
+			passconfirm: "",
+			fields: __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a
+		};
+		return _this;
+	}
+
+	Reset.prototype.setflag = function setflag() {
+		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
+	};
+
+	Reset.prototype.renFooter = function renFooter() {
+		var _this2 = this;
+
+		var isEmail = this.state.isEmail;
+
+		var msg = isEmail ? "Change Password?" : "Change Email?";
+		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+			"p",
+			{ key: "footer", className: "--anchor float-right" },
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				"a",
+				{ key: "userchoice", onClick: function onClick() {
+						return _this2.clearFields("isEmail", !isEmail);
+					} },
+				msg
+			)
+		);
+	};
+
+	Reset.prototype.renderBody = function renderBody() {
+		var username = __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a.username,
+		    password = __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a.password,
+		    passconfirm = __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a.passconfirm;
+
+		return [username, password, passconfirm];
+	};
+
+	Reset.prototype.render = function render() {
+		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Form__["a" /* default */], {
+			key: "content",
+			fields: this.renderBody(),
+			submit: this.submitHandler,
+			input: this.inputHandler,
+			name: "Confirm",
+			footer: this.renFooter(),
+			states: this.state
+		});
+	};
+
+	return Reset;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Reset);
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+module.exports = {"username":{"name":"username","val":"username or email to confirm your credential","type":"text","label":"Username:"},"password":{"name":"password","val":"password must be at least 8 characters long","type":"password","label":"New Password:"},"passconfirm":{"name":"passconfirm","val":"please type in your password again","type":"password","label":"Confirm Your Password:"}}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Error__ = __webpack_require__(72);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Error__["a"]; });
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_css__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_css__);
 
 
@@ -19292,7 +19508,7 @@ var Err = function Err(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Err);
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

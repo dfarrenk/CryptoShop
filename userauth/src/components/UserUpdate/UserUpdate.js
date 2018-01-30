@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Form from "../Form";
-// import Err from "../Error";
 import ErrorHandler from "../../util/errorhandler";
 import { update } from "../../util/auth";
 import fields from "./authconfig.json";
@@ -22,7 +21,7 @@ class Emailupdate extends Component {
 	inputHandler = evt => {
 		const { name, value } = evt.target;
 		this.setState({ [name]: value });
-	};
+	}
 
 	submitHandler = evt => {
 		evt.preventDefault();
@@ -49,7 +48,7 @@ class Emailupdate extends Component {
 			password: "",
 			passconfirm: ""
 		});
-	};
+	}
 
 	validationHandler = (error, fields) => {
 		const errorhandler = new ErrorHandler();
@@ -70,12 +69,12 @@ class Emailupdate extends Component {
 					fields: fields
 				});
 			});
-	};
+	}
 
 	responseHandler = response => {
 		console.log(response);
 		if (response.status < 300 && response.status > 100) {
-			window.location.reload(); // true?
+			window.location.reload(true); // true?
 		}
 	}
 

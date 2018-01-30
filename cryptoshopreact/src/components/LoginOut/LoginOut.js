@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Form from "../Form";
 import ErrorHandler from "../../util/errorhandler";
-import { login, register, reset } from "../../util/auth";
+import { login, register, resetreq } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
@@ -39,7 +39,7 @@ class Login extends Component {
 
 		switch (true) {
 			case resetPass:
-				reset(this.state)
+				resetreq(this.state)
 				.then(res => {
 					const { status } = res;
 					if (status === 204 || status === 304) {
@@ -115,17 +115,18 @@ class Login extends Component {
 			delete fields[elem].err;
 		}
 
-		this.setflag();
-		this.setState({
+		Promise.resolve(this.setState({
 			username: "",
 			password: "",
 			passconfirm: "",
 			email: "",
 			[resetname]: value
+		})).then(data => {
+			this.setflag();
 		});
 	}
 
-	setflag () {
+	setflag() {
 		const { isLogin, resetPass } = this.state;
 		if (resetPass) {
 			return this.props.flag("user", "forgot");
@@ -188,7 +189,8 @@ class Login extends Component {
 			password.val = "password";
 			return [username, password];
 		}
-
+		
+		username.val = "username is your alias on our site";
 		return [username, email, password, passconfirm];
 	}
 
