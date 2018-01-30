@@ -30,8 +30,8 @@ module.exports = function() {
 
       const user = memoryStore[refId] || isInSessHistory;
       if (!user) {
-         console.log(user);
-         console.log(memoryStore);
+         DEBUG && console.log(user);
+         DEBUG && console.log(memoryStore);
          return ServErr(res, 10);
       }
 
@@ -81,7 +81,7 @@ module.exports = function() {
          .then(refId => {
             const { username, email } = req.session[uid];
 
-            mail({ user: { username, password, email } }, 2);
+            mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
             res.status(200).json({
                message: "awesome",
                newRef: refId
@@ -104,7 +104,7 @@ module.exports = function() {
             const { _id, username } = user;
             const refId = Uid(24);
             memoryStore.setTemp = [{ _id, username }, refId];
-            mail({ user, token: refId }, 1);
+            mail({ hostname: req.headers.origin, user, token: refId }, 1);
 
             res.status(200).json({ message: "success" });
          })
@@ -183,7 +183,7 @@ module.exports = function() {
          .then(refId => {
             const { username, email } = req.session[_id];
 
-            mail({ user: { username, password, email } }, 2);
+            mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
             res.status(200).json({
                message: "awesome",
                newRef: refId

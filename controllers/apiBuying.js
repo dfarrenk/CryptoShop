@@ -30,6 +30,7 @@ module.exports = function() {
 
       const { _id, username } = req.user;
       const Userinfo = req.session[_id];
+
       if (!Userinfo.emailverified) {
          return res.status(401).send("Email is not verified, please verified your email address");
       }

@@ -1,5 +1,6 @@
 "use strict";
 const DEBUG = true;
+
 const authRoute = require("express").Router();
 const Auth = require("../lib/authcallback.js");
 const ServErr = require("../util/servError.js");
@@ -15,9 +16,8 @@ module.exports = function() {
 
    authRoute.post("/login", function(req, res) {
       DEBUG && console.log(req.body);
-      DEBUG && console.log("[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]");
       DEBUG && console.log(req.headers);
-      DEBUG && console.log(req.headers.origin);
+
       const { username, password, email } = req.body;
       const searchField = email ? { email } : { username };
       let user = undefined;
