@@ -1,5 +1,6 @@
 // AJAX Get request to pull item ID from listings for crypto purchase on backend
 $(document).on("click", ".buyItNow", function() {
+  var DEBUG = false;
   var data = $(event.target).attr("value");
   DEBUG && console.log("Clicked:"+data);
   $("#buyItNowModal").modal();
@@ -88,7 +89,8 @@ $(function() {
     return new Promise((resolve, reject) => {
 
       var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
-      var url = "https://"+window.location.hostname+":4443/find/"+searchTerm+"/"+$("#dropdown".val());
+      var url = "https://"+window.location.hostname+":443/find/"+searchTerm+"/"+ $("#dropdown").val();
+      console.log("Url:"+url);
       //commented code for production mode
       // var key = "ShaunBen-studentP-PRD-c132041a0-6a4708b8";
       // var url = "https://svcs.ebay.com/services/search/FindingService/v1";
@@ -148,15 +150,15 @@ $(function() {
 
   // Create an ajax call to get items by specified category
 
-  $(".categorySearch").click(function(catSearch) {
-    catSearch = $(this).attr("value");
-    console.log(catSearch);
-    $("#productDisplay").empty();
-    eBayCategorySearch(catSearch).then(function() {
-      $(".showEbay").collapse();
-    });
+  // $(".categorySearch").click(function(catSearch) {
+  //   catSearch = $(this).attr("value");
+  //   console.log(catSearch);
+  //   $("#productDisplay").empty();
+  //   eBayCategorySearch(catSearch).then(function() {
+  //     $(".showEbay").collapse();
+  //   });
 
-  });
+  // });
 
   function eBayCategorySearch(catSearch) {
     return new Promise((resolve, reject) => {
