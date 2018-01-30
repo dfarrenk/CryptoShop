@@ -1,6 +1,5 @@
 "use strict";
-const DEBUG = true;
-
+const DEBUG = false;
 const authRoute = require("express").Router();
 const Auth = require("../lib/authcallback.js");
 const ServErr = require("../util/servError.js");
@@ -16,6 +15,7 @@ module.exports = function() {
 
    authRoute.post("/login", function(req, res) {
       DEBUG && console.log(req.body);
+      DEBUG && console.log(req.headers);
       const { username, password, email } = req.body;
       const searchField = email ? { email } : { username };
       let user = undefined;
@@ -59,7 +59,7 @@ module.exports = function() {
             return signToken(req, data, expiredIn)
          })
          .then(refId => {
-            mail({ user, token: refId }, 0);
+            mail({ hostname: req.headers.origin, user, token: refId }, 0);
             return res.status(201).json({ message: "ok", token: req.session.token });
          })
          .catch(err => {
@@ -79,14 +79,7 @@ module.exports = function() {
       res.status(200).send("/");
    });
 
-   authRoute.get("/user", Auth, function(req, res) {
-      DEBUG && console.log("======================================");
-      DEBUG && console.log(req.hostname);
-
-      const { user, session } = req;
-      const userInfo = session[user._id];
-      res.status(200).json(userInfo);
-   });
-
    return authRoute;
 };
+
+console.log("UserAuth controller: \x1b[32mloaded!\x1b[0m");

@@ -27,7 +27,7 @@ class ErrorHandler {
    }
 
    valErr(field, errmsg) {
-      console.log("something's wrong > <");
+      console.log("validation error");
       if (errmsg.match("missing originalpass")) {
          return this.errMsg(field, "missing original password");
       }
@@ -56,12 +56,11 @@ class ErrorHandler {
          case 500:
             return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
          default:
-            console.log("no one should see this");
+            console.log("seriously wrong");
       }
    }
 
-   errMsg(err, msg, ...options) { // this should be a pure message contructor
-      // options: [ code, origin (server/database), optional msg, naction ]
+   errMsg(err, msg, ...options) { 
       if (options.length === 0) {
          const message = msg;
          const field = err;

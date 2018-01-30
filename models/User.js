@@ -115,3 +115,4 @@ let UserSchema = new Schema({
 
 let User = mongoose.model("User", UserSchema);
 module.exports = User;
+console.log("UserSchema: \x1b[32mloaded!\x1b[0m");

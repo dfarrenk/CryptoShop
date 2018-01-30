@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 const _ = require("lodash");
 
 class MemoryStore {
@@ -18,7 +18,7 @@ class MemoryStore {
    }
 
    garbageCollector() {
-      DEBUG && console.log("start collecting");
+      console.log("start collecting");
       setInterval(() => {
          const sessions = this.getUsers;
          const cleaners = this.getCleaners;

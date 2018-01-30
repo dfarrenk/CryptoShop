@@ -1,6 +1,5 @@
 "use strict";
-const DEBUG = true;
-
+const DEBUG = false;
 const Join = require("path").join;
 const Uid = require("uid-safe").sync;
 const authUpdate = require("express").Router();
@@ -31,6 +30,8 @@ module.exports = function() {
 
       const user = memoryStore[refId] || isInSessHistory;
       if (!user) {
+         DEBUG && console.log(user);
+         DEBUG && console.log(memoryStore);
          return ServErr(res, 10);
       }
 
@@ -80,7 +81,7 @@ module.exports = function() {
          .then(refId => {
             const { username, email } = req.session[uid];
 
-            mail({ user: { username, password, email } }, 2);
+            mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
             res.status(200).json({
                message: "awesome",
                newRef: refId
@@ -103,7 +104,7 @@ module.exports = function() {
             const { _id, username } = user;
             const refId = Uid(24);
             memoryStore.setTemp = [{ _id, username }, refId];
-            mail({ user, token: refId }, 1);
+            mail({ hostname: req.headers.origin, user, token: refId }, 1);
 
             res.status(200).json({ message: "success" });
          })
@@ -111,7 +112,6 @@ module.exports = function() {
             return ServErr(res, err);
          });
    });
-
 
    //////////////////////
    // privilege routes //
@@ -136,8 +136,6 @@ module.exports = function() {
          })
          .then(data => {
             if (data) {
-               // if the same as existing (it happens), unchanged
-               // if used by another user, 409 conflict 
                const { username } = data;
                throw username === curuser ? 304 : 9;
             };
@@ -185,7 +183,7 @@ module.exports = function() {
          .then(refId => {
             const { username, email } = req.session[_id];
 
-            mail({ user: { username, password, email } }, 2);
+            mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
             res.status(200).json({
                message: "awesome",
                newRef: refId
@@ -198,3 +196,5 @@ module.exports = function() {
 
    return authUpdate;
 };
+
+console.log("AuthUpdate controller: \x1b[32mloaded!\x1b[0m");
