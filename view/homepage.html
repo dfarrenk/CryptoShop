@@ -26,11 +26,14 @@
    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
    <script src="./assets/umd/client-auth.js"></script>
+   <script src="./aseets/react-script/react-currency-prices.js"></script>
+
 </head>
 
 <body>
    <div id="particles-js">
    </div>
+
 
    <!-- Bootstrap Nav-->
    <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
@@ -85,12 +88,12 @@
                Xchange Rates per 1 coin
             </div>
             <ul class="list-group list-group-flush">
-               <li class="list-group-item">Bitcoin: $10,813 </li>
-               <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
-               <li class="list-group-item">Ethereum: $967.62</li>
-               <li class="list-group-item">Dash: $766.66</li>
-               <li class="list-group-item">Byteball Bytes: $723.21</li>
-               <li class="list-group-item">Litecoin: $175.17</li>
+               <li class="list-group-item">Bitcoin: $10,225 </li>
+               <li class="list-group-item">Bitcoin Cash: $1,530</li>
+               <li class="list-group-item">Ethereum: $1,098</li>
+               <li class="list-group-item">Dash: $713</li>
+               <li class="list-group-item">Byteball Bytes: $635</li>
+               <li class="list-group-item">Litecoin: $168</li>
             </ul>
          </div>
          <!--<div class="card sidebar-card" id="searchHistory" style="width: 15.6rem;">-->
@@ -278,6 +281,7 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
    <script src="./assets/js/profile.js"></script>
    <script src="./assets/js/results.js"></script>
+   <script src="./assets/easytimer/dist/easytimer.min.js"></script>
    <script src="./assets/js/home.js"></script>
    <!-- Menu Toggle Script -->
    <script>
@@ -293,7 +297,10 @@
          React.createElement(UserAuth, { switch: "user_auth" }, null),
          document.getElementById("root")
       );
-      
+      // ReactDOM.render(
+      //    React.createElement(window.ReactCurrencyPrices, {}, null), document.getElementById('bitcoinCurrent')
+      // );
+
       particlesJS("particles-js", { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#444" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#444" }, "polygon": { "nb_sides": 5 }, "image": { "src": "img/github.svg", "width": 100, "height": 100 } }, "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#444", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
       var count_particles, stats, update;
       stats = new Stats();
