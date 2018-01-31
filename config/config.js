@@ -66,7 +66,7 @@ const forceSSL_config = {
 const server_config = {
    port: process.env.PORT || 8080,
    httpsPort: 4443,
-   mongoURL: /*process.env.MONGOLAB_URI ||*/ "mongodb://localhost/crypto"
+   mongoURL: process.env.MONGOLAB_URI || "mongodb://localhost/crypto"
 };
 
 const jwt_config = {
