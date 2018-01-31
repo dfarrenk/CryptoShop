@@ -35,7 +35,6 @@ function ExtractFromSession(req) {
    }
    catch (err) {
       DEBUG && console.log("this is token err");
-      console.log("nana");
       console.error(err);
 
       delete req.session.user;

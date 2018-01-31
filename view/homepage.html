@@ -8,20 +8,19 @@
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
    <style>
-      #particles-js {
-         position: fixed;
-         z-index: -50;
-         width: 100%;
-         height: 100%;
-         top: 0;
-         left: 0;
-      }
+   #particles-js {
+      /*background-color: #4069ac;*/
+      position: fixed;
+      z-index: -50;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+   }
    </style>
-
    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
    <link rel="stylesheet" type="text/css" href="./assets/css/sidebar.css">
    <link rel="stylesheet" href="./assets/umd/main.css">
-
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
@@ -32,8 +31,6 @@
 <body>
    <div id="particles-js">
    </div>
-
-
    <!-- Bootstrap Nav-->
    <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
       <a class="navbar-brand" href="homepage.html">
@@ -71,7 +68,7 @@
          <ul class="navbar-nav ml-auto text-center">
             <!--<a class="nav-link btn" href="aboutUs" id="aboutUs" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">About Us</a>-->
             <a class="nav-link btn menu-toggle" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Xchange Rates</a>
-            <a class="nav-link btn" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
+            <a id="_toggle" class="nav-link btn" href="#loginModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Log In</a>
             <!--<a class="nav-link btn" href="#signUpModal" data-toggle="modal" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Up</a>-->
             <!--<a class="nav-link btn" href="viewCart" id="viewCart" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">View Cart</a>-->
          </ul>
@@ -152,22 +149,23 @@
                   </div>
                </div>
             </div>
-            <!-- Footer -->
-            <div class="container-fluid fixed-bottom" id="footer">
-               <div class="row text-center justify-content-center">
-                  <nav class="navbar sticky-bottom navbar-light">
-                     <a class="navbar-brand">
-              <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
-              <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
-              </a>
-                  </nav>
-               </div>
-            </div>
          </div>
       </div>
       <!-- /#page-content-wrapper -->
    </div>
    <!-- /#wrapper -->
+   <!-- Footer -->
+   <div class="container-fluid fixed-bottom" id="footer">
+      <div class="row text-center justify-content-center">
+         <nav class="navbar sticky-bottom navbar-light">
+            <a class="navbar-brand">
+              <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
+              <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
+              </a>
+         </nav>
+      </div>
+   </div>
+   <!-- /#footer -->
    <!-- Log In Modal Ready for React-->
    <div class="modal fade" id="loginModalReact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -263,11 +261,7 @@
                </button>
             </div>
             <div class="modal-body">
-               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl
-                  ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent
-                  luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus
-                  legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam
-                  littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
                <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                </div>
@@ -284,20 +278,20 @@
    <script src="./assets/js/home.js"></script>
    <!-- Menu Toggle Script -->
    <script>
-      $(".menu-toggle").click(function(e) {
-         e.preventDefault();
-         $("#wrapper").toggleClass("toggled");
-      });
+   $(".menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+   });
    </script>
    <script type="text/javascript" src="particles.js"></script>
    <script type="text/javascript" src="app.js"></script>
    <script type="text/javascript">
-      ReactDOM.render(
-         React.createElement(UserAuth, { switch: "user_auth" }, null),
-         document.getElementById("root")
-      );
-      
-      // particlesJS("particles-js", { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#444" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#444" }, "polygon": { "nb_sides": 5 }, "image": { "src": "img/github.svg", "width": 100, "height": 100 } }, "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#444", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
+   ReactDOM.render(
+      React.createElement(UserAuth, { switch: "user_auth" }, null),
+      document.getElementById("root")
+   );
+
+   particlesJS("particles-js", { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#fff" }, "shape": { "type": "circle", "stroke": { "width": 2, "color": "#4069ac" }, "polygon": { "nb_sides": 5 }, "image": { "src": "img/github.svg", "width": 100, "height": 100 } }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.3, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#4069ac", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
    </script>
 </body>
 
