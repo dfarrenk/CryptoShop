@@ -77,6 +77,7 @@ $(function() {
     }).catch(err => {
       console.log("If you are looking at this..means that you are not signed in");
       console.log(err);
+      location.replace("/");
     });
   });
 }); // Document Ready End

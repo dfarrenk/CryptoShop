@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/sidebar.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/sidebar.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
         <!--<a class="nav-link" href="aboutUs" id="aboutUs" style="color: black; font-size: 1.2em;">About Us</a>-->
         <a class="nav-link menu-toggle" style="color: black; font-size: 1.2em;">Xchange Rates</a>
         <a class="nav-link" href="profile.html" style="color: black; font-size: 1.2em;">Profile</a>
-        <a class="nav-link signOutStatic" href="#" style="color: white; font-size: 1.2em; text-shadow: 2px 2px 15px black;">Sign Out</a>
+        <a class="nav-link signOutStatic" href="#" style="color: black; font-size: 1.2em;">Sign Out</a>
         <!--<a class="nav-link" href="viewCart" id="viewCart" style="color: black; font-size: 1.2em;">View Cart</a>-->
       </div>
     </div>
@@ -67,132 +67,136 @@
           Xchange Rates per 1 coin
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Bitcoin: $10,813 </li>
-          <li class="list-group-item">Bitcoin Cash: $1,602.52</li>
-          <li class="list-group-item">Ethereum: $967.62</li>
-          <li class="list-group-item">Dash: $766.66</li>
-          <li class="list-group-item">Byteball Bytes: $723.21</li>
-          <li class="list-group-item">Litecoin: $175.17</li>
+          <li class="list-group-item">Bitcoin: $10,225 </li>
+          <li class="list-group-item">Bitcoin Cash: $1,530</li>
+          <li class="list-group-item">Ethereum: $1,098</li>
+          <li class="list-group-item">Dash: $713</li>
+          <li class="list-group-item">Byteball Bytes: $635</li>
+          <li class="list-group-item">Litecoin: $168</li>
         </ul>
       </div>
 
       <!--<div class="card sidebar-card" style="width: 15.6rem;">-->
-        <!--  <div class="card-header text-center">-->
-          <!--    Recent Searches-->
-          <!--  </div>-->
-          <!--  <ul class="list-group list-group-flush">-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--    <li class="list-group-item">Your search Here</li>-->
-            <!--  </ul>-->
-            <!--</div>-->
+      <!--  <div class="card-header text-center">-->
+      <!--    Recent Searches-->
+      <!--  </div>-->
+      <!--  <ul class="list-group list-group-flush">-->
+      <!--    <li class="list-group-item">Your search Here</li>-->
+      <!--    <li class="list-group-item">Your search Here</li>-->
+      <!--    <li class="list-group-item">Your search Here</li>-->
+      <!--    <li class="list-group-item">Your search Here</li>-->
+      <!--    <li class="list-group-item">Your search Here</li>-->
+      <!--  </ul>-->
+      <!--</div>-->
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="col">
+          <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+              <a class="btn nav-link" data-target=".showEbay" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showEbay">eBay</a>
+            </li>
+            <!--<li class="nav-item">-->
+            <!--  <a class="btn nav-link" data-target=".showAmazon" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showAmazon">Amazon</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+            <!--  <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>-->
+            <!--</li>-->
+          </ul>
+        </div>
+
+
+
+
+
+        <!-- Card model will get looped over to dynamically create in handlebars-->
+        <div class="loader"></div>
+        <div class="row text-center" id="productMaster">
+          <div class="jumbotron jumbotron-fluid" id="hideMeOnSearch">
+            <div class="container">
+              <h1 class="display-4">Search Results Will be Displayed here</h1>
+              <p class="lead">Start by using the search box above!</p>
+            </div>
           </div>
-          <!-- /#sidebar-wrapper -->
-
-          <!-- Page Content -->
-          <div id="page-content-wrapper">
-            <div class="container-fluid">
-              <div class="col">
-                <ul class="nav nav-tabs justify-content-center">
-                  <li class="nav-item">
-                    <a class="btn nav-link" data-target=".showEbay" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showEbay">eBay</a>
-                  </li>
-                  <!--<li class="nav-item">-->
-                    <!--  <a class="btn nav-link" data-target=".showAmazon" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showAmazon">Amazon</a>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item">-->
-                      <!--  <a class="btn nav-link" data-target=".showWalmart" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="showWalmart">Wal-mart</a>-->
-                      <!--</li>-->
-                    </ul>
-                  </div>
+          <div class="row text-center" id="productDisplay"></div>
+          <!-- Ebay search results -->
+          <!-- Walmart Search Results -->
+        </div>
 
 
 
 
-
-                  <!-- Card model will get looped over to dynamically create in handlebars-->
-                  <div class="loader"></div>
-                  <div class="row text-center" id="productMaster">
-                    <div class="jumbotron jumbotron-fluid" id="hideMeOnSearch">
-                      <div class="container">
-                        <h1 class="display-4">Search Results Will be Displayed here</h1>
-                        <p class="lead">Start by using the search box above!</p>
-                      </div>
-                    </div>
-                    <div class="row text-center" id="productDisplay"></div>
-                    <!-- Ebay search results -->
-                    <!-- Walmart Search Results -->
-                  </div>
+        <!-- Footer -->
+        <div class="fixed-bottom" id="footer">
+          <div class="row text-center justify-content-center">
+            <nav class="navbar sticky-bottom navbar-light">
+              <a class="navbar-brand">
+                <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
+                <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
 
 
 
+    </div>
+    <!-- /#page-content-wrapper -->
 
-                  <!-- Footer -->
-                  <div class="fixed-bottom" id="footer">
-                    <div class="row text-center justify-content-center">
-                      <nav class="navbar sticky-bottom navbar-light">
-                        <a class="navbar-brand">
-                          <img src="./assets/images/cryptoLogo-transWhite.png" width="100" alt="cryptoLogo" />
-                          <p id="footText" style="font-size: 0.5em;">Copyright ©2018 cryptoShop LLC. All rights reserved.</p>
-                        </a>
-                      </nav>
-                    </div>
-                  </div>
-                </div>
+  </div>
+  <!-- /#wrapper -->
 
-
-
-              </div>
-              <!-- /#page-content-wrapper -->
-
-            </div>
-            <!-- /#wrapper -->
-
-            <div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">You want to order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <h3 id="modalName">Title</h3>
-                    <img src="" alt="of item" id="modalImg">
-                    <p id="modalPrice">Price: </p>
-                    <button id="paymentBtn">Payment</button>
-                    <div id="paymentInfo"></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="placeOrderBtn">Make purchase</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">You want to order</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3 id="modalName">Title</h3>
+          <img src="" alt="of item" id="modalImg">
+          <p id="modalPrice">Price: </p>
+          <button id="paymentBtn">Payment</button>
+          <div id="paymentInfo"></div>
+        </div>
+        <div class="modal-footer">
+          <div id="countdownExample">
+            <div class="values"></div>
+          </div>
+          <button type="button" class="btn btn-primary" id="placeOrderBtn">Make purchase</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-            <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-            <script src="./assets/js/profile.js"></script>
-            <script src="./assets/js/results.js"></script>
-            <script src="./assets/js/home.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="./assets/easytimer/dist/easytimer.min.js"></script>
+  <script src="./assets/js/profile.js"></script>
+  <script src="./assets/js/results.js"></script>
+  <script src="./assets/js/home.js"></script>
 
-            <!-- Menu Toggle Script -->
-            <script>
-              $(".menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-              });
-            </script>
+  <!-- Menu Toggle Script -->
+  <script>
+    $(".menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
 
-            <!-- script for payment -->
-            <script src="./assets/js/purchase.js"></script>
-          </body>
+  <!-- script for payment -->
+  <script src="./assets/js/purchase.js"></script>
+</body>
 
-          </html>
+</html>

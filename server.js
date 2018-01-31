@@ -47,10 +47,10 @@ app.use(ExpSess(sessConf));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("forceSSLOptions", fsslConf);
-app.use(ForceSSL);
+// app.use(ForceSSL);
 
 // all routers
-app.all("*", require("./controllers")); 
+app.all("*", require("./controllers"));
 
 server.listen(PORT, function(err) {
    console.log("Server started at: %s", server.address().port);

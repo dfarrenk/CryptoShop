@@ -6,6 +6,7 @@ const Auth = require("../lib/authcallback.js");
 const ServErr = require("../util/servError.js");
 const mail = require("../lib/sendgrid.js");
 const signToken = require("../lib/signToken.js");
+const mail = require("../lib/sendgrid.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
 const DEBUG = !(process.env.NODE_ENV == "production");
 
@@ -68,11 +69,11 @@ module.exports = function() {
                      eBay.buyItem(下.ebayId, price, (status) => {
                         DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mtatus of purchase from buyItem(): " + status);
                         CRUD.updatePush(_id, { "orders": 下 })
-                        .then(data => {
-                           DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
-                           res.send(status);
-                           return signToken(req, data, expiredIn);
-                        }).catch(console.log.bind(console));
+                           .then(data => {
+                              DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
+                              res.send(status);
+                              return signToken(req, data, expiredIn);
+                           }).catch(console.log.bind(console));
                      });
                   });
                }
@@ -84,7 +85,8 @@ module.exports = function() {
                }
             });
          }, 10000);
-      } else {
+      }
+      else {
          //send error to user because we got wrong BTC address,  (we have to change status code to appropriate DONE)
          res.status(200).send("incorrect bitcoin address");
       };

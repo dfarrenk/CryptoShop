@@ -32,7 +32,8 @@ function ExtractFromSession(req) {
       const { token, key } = user;
       const decoded = Jwt.verify(token, key); // decode with private key first
       return decoded.token;
-   } catch (err) {
+   }
+   catch (err) {
       DEBUG && console.log("this is token err");
       console.error(err);
 
@@ -64,7 +65,7 @@ const forceSSL_config = {
 
 const server_config = {
    port: process.env.PORT || 8080,
-   httpsPort: 443,
+   httpsPort: 4443,
    mongoURL: /*process.env.MONGOLAB_URI ||*/ "mongodb://localhost/crypto"
 };
 
@@ -93,7 +94,7 @@ const session_config = {
    genid: GenUUIDAndEmit,
    cookie: {
       maxAge: null, // set maxAge when user's authenticated
-      secure: false/*!devMode*/ // devMode ? false : true
+      secure: devMode // devMode ? false : true
    }
 };
 
