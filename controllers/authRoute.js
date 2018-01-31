@@ -11,6 +11,7 @@ const mail = require("../lib/sendgrid.js");
 const _ = require("lodash");
 
 const { "token-timeout": expiredIn } = require("../config/config.json");
+require("../util/errorHandler")();
 
 module.exports = function() {
 
@@ -39,7 +40,7 @@ module.exports = function() {
          })
          .then(refId => {
             DEBUG && console.log(refId);
-            return res.status(202).json({ message: "ok", token: req.session.token });
+            return res.status(202).json({ refId, redirect: "/searchPage.html" });
          })
          .catch(err => {
             ServErr(res, err);
@@ -62,7 +63,7 @@ module.exports = function() {
          })
          .then(refId => {
             mail({ hostname: req.headers.origin, user, token: refId }, 0);
-            return res.status(201).json({ message: "ok", token: req.session.token });
+            return res.status(201).json({ refId, redirect: "/searchPage.html" });
          })
          .catch(err => {
             if (err.code) {

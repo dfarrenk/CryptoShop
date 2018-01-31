@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "../Form";
-import ErrorHandler from "../../util/errorhandler";
+import { default as Auth } from "../Authentication";
 import { login, register, resetreq } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
-class Login extends Component {
+class Login extends Auth {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,11 +18,6 @@ class Login extends Component {
 			checkbox: false,
 			resetPass: false
 		};
-	}
-
-	inputHandler = evt => {
-		const { name, value } = evt.target;
-		this.setState({ [name]: value });
 	}
 
 	submitHandler = evt => {
@@ -41,34 +36,34 @@ class Login extends Component {
 			case resetPass:
 				resetreq(this.state)
 				.then(res => {
-					const { status } = res;
+					const { status, data } = res;
 					if (status === 204 || status === 304) {
-						console.log(res);
 						throw res;
 					}
-					this.responseHandler(res);
+					this.responseHandler("reload", data.reload);
 				})
 				.catch(err => this.validationHandler(err, fields));
 				break;
 			case isLogin:
 				login(this.state)
 				.then(res => {
-					const { status } = res;
+					const { status, data } = res;
 					if (status === 204 || status === 304) {
 						throw res;
 					}
-					this.responseHandler(res);
+					console.log(res);
+					this.responseHandler("assign", data.redirect);
 				})
 				.catch(err => this.validationHandler(err, fields));
 				break;
 			case !isLogin:
 				register(this.state)
 				.then(res => {
-					const { status } = res;
+					const { status, data } = res;
 					if (status === 204 || status === 304) {
 						throw res;
 					}
-					this.responseHandler(res);
+					this.responseHandler("assign", data.redirect);
 				})
 				.catch(err => this.validationHandler(err, fields));
 				break;
@@ -83,49 +78,22 @@ class Login extends Component {
 		});
 	}
 
-	validationHandler = (error, fields) => {
-		const errorhandler = new ErrorHandler();
-		errorhandler
-			.getError(error)
-			.errorHandling()
-			.then(errType => {
-				let { field, message } = errType;
-
-				if (!field) {
-					this.props.result("error", message);
-				} else {
-					fields[field].err = message;
-				}
-				this.setState({
-					[field]: "",
-					fields: fields
-				});
-			});
-	}
-
-	responseHandler = response => {
-		const { resetPass } = this.state;
-		
-		if (resetPass) {
-			return window.location.reload();
-		}
-		window.location.assign("/searchPage.html");
-	}
-
 	clearFields = (resetname, value) => {
 		for (let elem in fields) {
 			delete fields[elem].err;
 		}
 
-		Promise.resolve(this.setState({
+		const setfields = {
 			username: "",
 			password: "",
 			passconfirm: "",
 			email: "",
 			[resetname]: value
-		})).then(data => {
-			this.setflag();
-		}).catch(console.log.bind(console));
+		};
+		Promise
+			.resolve(this.setState(setfields))
+			.then(this.setflag.bind(this))
+			.catch(console.log.bind(console));
 	}
 
 	setflag() {

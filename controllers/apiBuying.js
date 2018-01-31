@@ -9,6 +9,8 @@ const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
 const DEBUG = !(process.env.NODE_ENV == "production");
 
+require("../util/errorHandler")();
+
 //1)DONE: user go to search page
 //2)DONE: select item
 //3)DONE: click Payment

@@ -10,6 +10,7 @@ const signToken = require("../lib/signToken.js");
 const CRUD = require("../lib/CRUD.js");
 
 const { "token-timeout": expiredIn } = require("../config/config.json");
+require("../util/errorHandler")();
 
 module.exports = function() {
 

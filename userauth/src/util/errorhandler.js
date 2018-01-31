@@ -1,15 +1,20 @@
 class ErrorHandler {
 
    getError(err) {
+      // this is true error (> 400)
       if (err.response) {
          this.err = err.response.data.message;
-         this.code = err.response.status; // this should be error code
-      } else if (err.status) {
+         this.code = err.response.status;
+      } 
+      // this is exception error (< 400)
+      else if (err.status) {
          this.err = err.data.message;
-         this.code = err.status; // this should be error code
-      } else {
+         this.code = err.status; 
+      } 
+      // this is validation error
+      else {
          this.err = err.message;
-         this.field = err.field;
+         this.field = err.field; 
       }
       return this;
    }
@@ -17,18 +22,17 @@ class ErrorHandler {
    errorHandling() {
       const { code, err, field } = this
       let errorType = {};
-
       if (code) {
          errorType = this.servErr(code, err);
       } else {
          errorType = this.valErr(field, err);
       }
-      return Promise.resolve(errorType); // return object consist of set parts
+      // return object consist of set parts
+      return Promise.resolve(errorType); 
    }
 
    valErr(field, errmsg) {
       console.log("validation error");
-
       if (errmsg.match("missing originalpass")) {
          return this.errMsg(field, "missing original password");
       }
@@ -45,7 +49,8 @@ class ErrorHandler {
          case 304:
          	return this.errMsh(err, "", code);
          case 401:
-            return this.errMsg(err, "Please make sure you enter the correct password.", code);
+            const message = err === "unauthorized" ? "Your current login session has expired." : "Please make sure you enter the correct password.";
+            return this.errMsg(err, message, code);
          case 403:
             return this.errMsg(err, "Please login or register an account before making any purchase.", code);
          case 404:
@@ -53,7 +58,7 @@ class ErrorHandler {
          case 409:
             return this.errMsg(err, "An account with the same username or email has already been registered.", code, "database");
          case 410:
-            return this.errMsg(err, "requested link expired.", code); // action?
+            return this.errMsg(err, "requested link expired.", code); 
          case 500:
             return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
          default:
@@ -67,15 +72,12 @@ class ErrorHandler {
          const field = err;
          return { field, message };
       }
-
       const len = options.length;
       let message, field;
-
       if (len < 2) {
          message = `Error Code: ${options[0]}, ${err}. ${msg}`;
          return { field, message };
       }
-
       message = `Error Code: ${options[0]}, ${err} in our ${options[1]}. ${msg}`;
       return { field, message };
    }

@@ -2,6 +2,8 @@ const DEBUG = false;
 const Join = require("path").join;
 const htmlRoute = require("express").Router();
 
+require("../util/errorHandler")();
+
 module.exports = function() {
    
    htmlRoute.get("/", (req, res) => {
