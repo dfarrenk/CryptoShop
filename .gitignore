@@ -62,3 +62,9 @@ typings/
 
 # Encryptions 
 encryption/
+
+# create-react-app
+cryptoshopreact/
+
+# notes
+.txt

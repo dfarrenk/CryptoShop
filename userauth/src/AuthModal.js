@@ -19,6 +19,9 @@ class Auth extends Component {
 				email: "Change your email",
 				password: "Change your password"
 			},
+			reset: {
+				password: "Reset password"
+			},
 			message: "",
 			response: ""
 		};
@@ -40,18 +43,25 @@ class Auth extends Component {
 			case "info_auth":
 				return <UserUpdate flag={this.flagState} result={this.flagResponse} />;
 			case "reset_auth":
-				return <Reset flag={this.flagState} result={this.flagResponse} />;
+				return <Reset result={this.flagResponse} />;
 			default:
-				console.log("errrrr");
+				console.log("Error: check switch prop");
 		}
 	}
 
 	componentDidMount() {
+		const { user, info, reset } = this.state;
 		const mode = this.props.switch;
-		const { user, info } = this.state;
-		mode.match(/\user/)
-			? this.setState({ message: user.login })
-			: this.setState({ message: info.email });
+		switch(true) {
+			case !!mode.match(/user/): 
+				return this.setState({ message: user.login });
+			case !!mode.match(/info/):
+				return this.setState({ message: info.email });
+			case !!mode.match(/reset/):
+				return this.setState({ message: reset.password });
+			default:
+				console.log("Error: check if switch prop is given correctly.");
+		}
 	}
 
 	render() {

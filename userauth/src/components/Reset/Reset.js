@@ -6,17 +6,17 @@ import fields from "./authconfig.json";
 import "./style.css";
 
 class Reset extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-            passconfirm: "",
-            fields: fields
-        }
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			username: "",
+			password: "",
+			passconfirm: "",
+			fields: fields
+		};
+	}
 
-    inputHandler = evt => {
+	inputHandler = evt => {
 		const { name, value } = evt.target;
 		this.setState({ [name]: value });
 	}
@@ -35,9 +35,9 @@ class Reset extends Component {
 				if (status === 204 || status === 304) {
 					console.log(res);
 					throw res;
-					}
+				}
 				this.responseHandler(res);
-				})
+			})
 			.catch(err => this.validationHandler(err, fields));
 
 		console.log(this.state);
@@ -54,7 +54,7 @@ class Reset extends Component {
 			.errorHandling()
 			.then(errType => {
 				let { field, message } = errType;
-                console.log(errType)
+				console.log(errType);
 				if (!field) {
 					this.props.result("error", message);
 				} else {
@@ -69,10 +69,7 @@ class Reset extends Component {
 	}
 
 	responseHandler = response => {
-		console.log(response);
-		if (response.status < 300 && response.status > 100) {
-			window.location.reload(true); // true?
-		}
+		window.location.assign("/");
 	}
 
 	clearFields = (resetname, value) => {
@@ -80,34 +77,16 @@ class Reset extends Component {
 			delete fields[elem].err;
 		}
 
-		this.setflag();
 		this.setState({
 			email: "",
 			password: "",
-			passconfirm: "",
-			[resetname]: value
+			passconfirm: ""
 		});
-	}
-
-	setflag () {
-		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
-	}
-
-	renFooter() {
-		const { isEmail } = this.state;
-		const msg = isEmail ? "Change Password?" : "Change Email?";
-		return (
-			<p key="footer" className="--anchor float-right">
-				<a key="userchoice" onClick={() => this.clearFields("isEmail", !isEmail)}>
-					{msg}
-				</a>
-			</p>
-		);
 	}
 
 	renderBody() {
 		const { username, password, passconfirm } = fields;
-		return [ username, password, passconfirm ];
+		return [username, password, passconfirm];
 	}
 
 	render() {
@@ -117,8 +96,7 @@ class Reset extends Component {
 				fields={this.renderBody()}
 				submit={this.submitHandler}
 				input={this.inputHandler}
-				name={"Confirm"}
-				footer={this.renFooter()}
+				name={"Submit"}
 				states={this.state}
 			/>
 		);
