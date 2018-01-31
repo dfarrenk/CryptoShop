@@ -65,7 +65,7 @@ const reset = fields => {
 			console.log(invalid);
 			return reject(invalid);
 		}
-		resolve(axios.put("/user/resetPass?" + window.location.search, data));
+		resolve(axios.put("/user/resetPass" + window.location.search, data));
 	});
 };
 

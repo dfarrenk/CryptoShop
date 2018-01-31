@@ -72,10 +72,7 @@ class Emailupdate extends Component {
 	}
 
 	responseHandler = response => {
-		console.log(response);
-		if (response.status < 300 && response.status > 100) {
-			window.location.reload(true); // true?
-		}
+		window.location.reload(true); // true?
 	}
 
 	clearFields = (resetname, value) => {
@@ -90,10 +87,12 @@ class Emailupdate extends Component {
 			password: "",
 			passconfirm: "",
 			[resetname]: value
-		});
+		}); 
 	}
 
 	setflag () {
+		// resolve async by changing the condition of trigger
+		// isEmail --> flag --> !isEmail
 		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
 	}
 

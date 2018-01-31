@@ -23,14 +23,14 @@ class Form extends Component {
 	}
 
 	render() {
-		const { className, fields, name, optional } = this.props;
+		const { className, fields, name, optional, footer, submit } = this.props;
 
 		return (
-			<form onSubmit={this.props.submit} className={className || ""}>
+			<form onSubmit={submit} className={className || ""}>
 				{this.renderFields(fields)}
 				{optional ? <div className="form-group">{optional}</div> : null}
 				<input key="submit" type="submit" value={name} />
-				{this.props.footer}
+				{footer}
 			</form>
 		);
 	}

@@ -6,7 +6,6 @@ const Auth = require("../lib/authcallback.js");
 const ServErr = require("../util/servError.js");
 const mail = require("../lib/sendgrid.js");
 const signToken = require("../lib/signToken.js");
-const mail = require("../lib/sendgrid.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
 const DEBUG = !(process.env.NODE_ENV == "production");
 

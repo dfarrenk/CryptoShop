@@ -636,7 +636,7 @@ var reset = function reset(fields) {
 			console.log(invalid);
 			return reject(invalid);
 		}
-		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("/user/resetPass?" + window.location.search, data));
+		resolve(__WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("/user/resetPass" + window.location.search, data));
 	});
 };
 
@@ -17428,6 +17428,9 @@ var Auth = function (_Component) {
 				email: "Change your email",
 				password: "Change your password"
 			},
+			reset: {
+				password: "Reset password"
+			},
 			message: "",
 			response: ""
 		};
@@ -17441,19 +17444,29 @@ var Auth = function (_Component) {
 			case "info_auth":
 				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_UserUpdate__["a" /* default */], { flag: this.flagState, result: this.flagResponse });
 			case "reset_auth":
-				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Reset__["a" /* default */], { flag: this.flagState, result: this.flagResponse });
+				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Reset__["a" /* default */], { result: this.flagResponse });
 			default:
-				console.log("errrrr");
+				console.log("Error: check switch prop");
 		}
 	};
 
 	Auth.prototype.componentDidMount = function componentDidMount() {
-		var mode = this.props.switch;
 		var _state = this.state,
 		    user = _state.user,
-		    info = _state.info;
+		    info = _state.info,
+		    reset = _state.reset;
 
-		mode.match(/\user/) ? this.setState({ message: user.login }) : this.setState({ message: info.email });
+		var mode = this.props.switch;
+		switch (true) {
+			case !!mode.match(/user/):
+				return this.setState({ message: user.login });
+			case !!mode.match(/info/):
+				return this.setState({ message: info.email });
+			case !!mode.match(/reset/):
+				return this.setState({ message: reset.password });
+			default:
+				console.log("Error: check if switch prop is given correctly.");
+		}
 	};
 
 	Auth.prototype.render = function render() {
@@ -17639,10 +17652,13 @@ var Login = function (_Component) {
 		};
 
 		_this.responseHandler = function (response) {
-			console.log(response);
-			if (response.status < 300) {
-				window.location.assign("/searchPage.html");
+			var resetPass = _this.state.resetPass;
+
+
+			if (resetPass) {
+				return window.location.reload();
 			}
+			window.location.assign("/searchPage.html");
 		};
 
 		_this.clearFields = function (resetname, value) {
@@ -17659,7 +17675,7 @@ var Login = function (_Component) {
 				email: ""
 			}, _this$setState3[resetname] = value, _this$setState3))).then(function (data) {
 				_this.setflag();
-			});
+			}).catch(console.log.bind(console));
 		};
 
 		_this.state = {
@@ -17875,12 +17891,14 @@ var Form = function (_Component) {
 		    className = _props.className,
 		    fields = _props.fields,
 		    name = _props.name,
-		    optional = _props.optional;
+		    optional = _props.optional,
+		    footer = _props.footer,
+		    submit = _props.submit;
 
 
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			"form",
-			{ onSubmit: this.props.submit, className: className || "" },
+			{ onSubmit: submit, className: className || "" },
 			this.renderFields(fields),
 			optional ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				"div",
@@ -17888,7 +17906,7 @@ var Form = function (_Component) {
 				optional
 			) : null,
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { key: "submit", type: "submit", value: name }),
-			this.props.footer
+			footer
 		);
 	};
 
@@ -19183,10 +19201,7 @@ var Emailupdate = function (_Component) {
 		};
 
 		_this.responseHandler = function (response) {
-			console.log(response);
-			if (response.status < 300 && response.status > 100) {
-				window.location.reload(true); // true?
-			}
+			window.location.reload(true); // true?
 		};
 
 		_this.clearFields = function (resetname, value) {
@@ -19217,6 +19232,8 @@ var Emailupdate = function (_Component) {
 	}
 
 	Emailupdate.prototype.setflag = function setflag() {
+		// resolve async by changing the condition of trigger
+		// isEmail --> flag --> !isEmail
 		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
 	};
 
@@ -19382,25 +19399,19 @@ var Reset = function (_Component) {
 		};
 
 		_this.responseHandler = function (response) {
-			console.log(response);
-			if (response.status < 300 && response.status > 100) {
-				window.location.reload(true); // true?
-			}
+			window.location.assign("/");
 		};
 
 		_this.clearFields = function (resetname, value) {
-			var _this$setState3;
-
 			for (var elem in __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a) {
 				delete __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a[elem].err;
 			}
 
-			_this.setflag();
-			_this.setState((_this$setState3 = {
+			_this.setState({
 				email: "",
 				password: "",
 				passconfirm: ""
-			}, _this$setState3[resetname] = value, _this$setState3));
+			});
 		};
 
 		_this.state = {
@@ -19411,29 +19422,6 @@ var Reset = function (_Component) {
 		};
 		return _this;
 	}
-
-	Reset.prototype.setflag = function setflag() {
-		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
-	};
-
-	Reset.prototype.renFooter = function renFooter() {
-		var _this2 = this;
-
-		var isEmail = this.state.isEmail;
-
-		var msg = isEmail ? "Change Password?" : "Change Email?";
-		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-			"p",
-			{ key: "footer", className: "--anchor float-right" },
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-				"a",
-				{ key: "userchoice", onClick: function onClick() {
-						return _this2.clearFields("isEmail", !isEmail);
-					} },
-				msg
-			)
-		);
-	};
 
 	Reset.prototype.renderBody = function renderBody() {
 		var username = __WEBPACK_IMPORTED_MODULE_4__authconfig_json___default.a.username,
@@ -19449,8 +19437,7 @@ var Reset = function (_Component) {
 			fields: this.renderBody(),
 			submit: this.submitHandler,
 			input: this.inputHandler,
-			name: "Confirm",
-			footer: this.renFooter(),
+			name: "Submit",
 			states: this.state
 		});
 	};

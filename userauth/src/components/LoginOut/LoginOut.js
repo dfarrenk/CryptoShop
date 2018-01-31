@@ -104,10 +104,12 @@ class Login extends Component {
 	}
 
 	responseHandler = response => {
-		console.log(response);
-		if (response.status < 300) {
-			window.location.assign("/searchPage.html");
+		const { resetPass } = this.state;
+		
+		if (resetPass) {
+			return window.location.reload();
 		}
+		window.location.assign("/searchPage.html");
 	}
 
 	clearFields = (resetname, value) => {
@@ -123,7 +125,7 @@ class Login extends Component {
 			[resetname]: value
 		})).then(data => {
 			this.setflag();
-		});
+		}).catch(console.log.bind(console));
 	}
 
 	setflag() {
