@@ -77,6 +77,7 @@ module.exports = function() {
       const { user, session } = req;
       const { _id } = user;
 
+      req.session.authenticated = false;
       delete req.session.user;
       delete req.session[_id];
       res.status(200).send("/");

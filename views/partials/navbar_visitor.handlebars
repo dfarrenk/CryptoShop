@@ -2,7 +2,7 @@
 </div>
 <!-- Bootstrap Nav-->
 <nav class="navbar navbar-expand-lg navbar-fixed-top" id="topNav">
-  <a class="navbar-brand" href="homepage.html">
+  <a class="navbar-brand" href="/">
         <img src="./assets/images/cryptoLogo-transWhite.png" width="200" alt="cryptoLogo" />
       </a>
   <div class="dropdown d-lg-none">
@@ -19,18 +19,15 @@
   </div>
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
-    <button id="homeSearch" class="btn my-2 my-sm-0" type="submit">Search</button>
+    <button id="searchBtn" class="btn my-2 my-sm-0" type="submit">Search</button>
     <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Search Categories
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item nav-link categorySearch" href="#" id="catElectronics" value="293">Electronics</a>
-        <a class="dropdown-item nav-link categorySearch" href="#" id="catClothing" value="11450">Clothing</a>
-        <a class="dropdown-item nav-link categorySearch" href="#" id="catHousehold" value="11700">Household</a>
-        <a class="dropdown-item nav-link categorySearch" href="#" id="catWatches" value="14324">Watches</a>
-        <a class="dropdown-item nav-link categorySearch" href="#" id="catAutos" value="6001">Automobiles</a>
-      </div>
+      <select class="custom-select" id="dropdown">
+        <option value="293" selected>Electronics</option>
+        <option value="11450">Clothing</option>
+        <option value="11700">Household</option>
+        <option value="14324">Watches</option>
+        <option value="6001">Automobiles</option>
+      </select>
     </div>
   </form>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">

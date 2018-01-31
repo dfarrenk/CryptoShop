@@ -8,26 +8,32 @@ module.exports = function() {
 
   htmlRoute.get("/", (req, res) => {
     DEBUG && console.log(req.headers);
-    // res.status(200).sendFile(Join(__dirname, "../view/homepage.html"));
     res.status(200).render("homepage");
   });
 
-  htmlRoute.get("/search/:id", function(req, res) {
-    let searchTerm = req.params.id;
-    res.status(200).send("/searchPage.html?item=" + searchTerm);
-  });
-
   htmlRoute.get("/search", (req, res) => {
-		DEBUG && console.log(req.headers);
-		res.status(200).render("searchPage");
+  	DEBUG && console.log(req.session.authenticated);
+    DEBUG && console.log(req.headers);
+    const isUser = req.session.authenticated; // pass boolean;
+    res.status(200).render("searchpage", { user: isUser });
   });
 
+  htmlRoute.get("/profile", (req, res) => {
+    DEBUG && console.log(req.headers);
+    res.status(200).render("profilepage");
+  });
 
 
   return htmlRoute;
 }
 
 console.log("eBay controller: \x1b[32mloaded!\x1b[0m");
+
+// htmlRoute.get("/search/:id", function(req, res) {
+//   let searchTerm = req.params.id;
+//   res.status(200).send("/searchPage.html?item=" + searchTerm);
+// });
+
 
 
 // htmlRoute.post("/api/user", function(req, res) {

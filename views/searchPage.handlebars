@@ -1,5 +1,9 @@
 <!-- // should setup a if statement -->
-{{> navbar_user}}
+{{#if user}} 
+  {{> navbar_user}} 
+  {{else}} 
+  {{> navbar_visitor}} 
+{{/if}}
 <!-- All of this Content Below to the script tags, need to be split into Handlebar format-->
 <!-- Page Wrapper-->
 <div id="wrapper">
@@ -40,7 +44,7 @@
 <!-- /#wrapper -->
 <!-- /#wrapper -->
 {{> footer}} {{> modal_login}} {{> modal_error}}
-<div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
+<!-- <div class="modal" tabindex="-1" role="dialog" id="buyItNowModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -62,11 +66,11 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 {{> scripts}}
 <script type="text/javascript">
 ReactDOM.render(
-  React.createElement(UserAuth, { switch: "user_auth" }, null),
+  React.createElement(UserAuth, { switch: "info_auth" }, null),
   document.getElementById("root")
 );
 </script>

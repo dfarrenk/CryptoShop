@@ -27,11 +27,8 @@ const certificate = httpsConf;
 const server_s = https.createServer(certificate, app);
 
 // static
-// const staticPath = Join(__dirname, "view");
 const staticPath = Join(__dirname, "public")
-app.use(express.static("public"));
 app.use(express.static(staticPath));
-app.use("/assets", express.static(staticPath));
 
 // handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
