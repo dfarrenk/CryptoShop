@@ -89,7 +89,7 @@ module.exports = function() {
       }
       else {
          //send error to user because we got wrong BTC address,  (we have to change status code to appropriate DONE)
-         res.status(200).send("incorrect bitcoin address");
+         res.status(422).send("incorrect bitcoin address");
       };
 
    });

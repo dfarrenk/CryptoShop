@@ -10,15 +10,14 @@ const ExpSess = require("express-session");
 const ForceSSL = require("express-force-ssl");
 const Passport = require("./config/jwt.js");
 const {
-   server_config: serConf,
-   session_config: sessConf,
-   https_config: httpsConf,
-   forceSSL_config: fsslConf,
-   store_config: storeConf,
-   memoryStore
+  server_config: serConf,
+  session_config: sessConf,
+  https_config: httpsConf,
+  forceSSL_config: fsslConf,
+  store_config: storeConf,
+  memoryStore
 } = require("./config/config.js");
 const { port: PORT, httpsPort: PORTs, mongoURL } = serConf;
-
 
 // http/https setup
 const http = require("http");
@@ -53,11 +52,11 @@ app.set("forceSSLOptions", fsslConf);
 app.all("*", require("./controllers"));
 
 server.listen(PORT, function(err) {
-   console.log("Server started at: %s", server.address().port);
+  console.log("Server started at: %s", server.address().port);
 });
 
 server_s.listen(PORTs, function(err) {
-   memoryStore.garbageCollector();
-   console.log("Https server running on port %s", server_s.address().port);
-   console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
+  memoryStore.garbageCollector();
+  console.log("Https server running on port %s", server_s.address().port);
+  console.log("\x1b[32mI'm ready to serve you, my master!\x1b[0m")
 });
