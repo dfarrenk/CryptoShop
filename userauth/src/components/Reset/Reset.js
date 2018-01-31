@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "../Form";
-import ErrorHandler from "../../util/errorhandler";
+import { default as Auth } from "../Authentication";
 import { reset } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
-class Reset extends Component {
+class Reset extends Auth {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -14,11 +14,6 @@ class Reset extends Component {
 			passconfirm: "",
 			fields: fields
 		};
-	}
-
-	inputHandler = evt => {
-		const { name, value } = evt.target;
-		this.setState({ [name]: value });
 	}
 
 	submitHandler = evt => {
@@ -31,12 +26,12 @@ class Reset extends Component {
 
 		reset(this.state)
 			.then(res => {
-				const { status } = res;
+				const { status, data } = res;
 				if (status === 204 || status === 304) {
 					console.log(res);
 					throw res;
 				}
-				this.responseHandler(res);
+				this.responseHandler("assign", data.redirect);
 			})
 			.catch(err => this.validationHandler(err, fields));
 
@@ -45,31 +40,6 @@ class Reset extends Component {
 			password: "",
 			passconfirm: ""
 		});
-	}
-
-	validationHandler = (error, fields) => {
-		const errorhandler = new ErrorHandler();
-		errorhandler
-			.getError(error)
-			.errorHandling()
-			.then(errType => {
-				let { field, message } = errType;
-				console.log(errType);
-				if (!field) {
-					this.props.result("error", message);
-				} else {
-					fields[field].err = message;
-				}
-
-				this.setState({
-					[field]: "",
-					fields: fields
-				});
-			});
-	}
-
-	responseHandler = response => {
-		window.location.assign("/");
 	}
 
 	clearFields = (resetname, value) => {

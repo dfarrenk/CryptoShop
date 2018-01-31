@@ -14,6 +14,7 @@ const mail = require("../lib/sendgrid.js");
 const { memoryStore } = require("../config/config.js");
 
 const { "token-timeout": expiredIn } = require("../config/config.json");
+require("../util/errorHandler")();
 
 module.exports = function() {
 
@@ -41,10 +42,7 @@ module.exports = function() {
             return signToken(req, data, expiredIn);
          })
          .then(refId => {
-            res.status(200).json({
-               message: "awesome",
-               newRef: refId
-            });
+            res.status(200).json({ refId, redirect: "/" });
          })
          .catch(err => {
             return ServErr(res, err);
@@ -64,10 +62,10 @@ module.exports = function() {
             }
             const { _id, username } = user;
             const refId = Uid(24);
+
             memoryStore.setTemp = [{ _id, username }, refId];
             mail({ hostname: req.headers.origin, user, token: refId }, 1);
-
-            res.status(200).json({ message: "success" });
+            res.status(200).json({ refId, reload: false });
          })
          .catch(err => {
             return ServErr(res, err);
@@ -84,47 +82,41 @@ module.exports = function() {
       res.status(200).sendFile(Join(__dirname, "../view/changepass.html"));
    });
 
-
    // check if the session open for reset is still alive
    // if no send expired response
    // if the username or email doesn't match the temp in store
    // send 204 as false unmatched err
    authUpdate.put("/user/resetPass", function(req, res) {
       DEBUG && console.log(memoryStore);
-      console.log(req.body);
-      
       const { username, password } = req.body;
       const refId = req.query["t"];
-      console.log(req.query["t"]);
-      const { _id: uid, username: _user } = memoryStore.temp[refId];
+      try {
+         const { _id: uid, username: _user } = memoryStore.temp[refId];
+         if (username !== _user) {
+            return ServErr(res, 204);
+         }
+         hash
+            .create(password, username)
+            .then(({ salt, hash, publickey }) => {
+               return CRUD.update(uid, { salt, password: hash, publickey })
+            })
+            .then(data => {
+               return signToken(req, data, expiredIn);
+            })
+            .then(refId => {
+               const { username, email } = req.session[uid];
 
-      if (username !== _user) {
-         return ServErr(res, 204);
-      }
-
-      hash
-         .create(password, username)
-         .then(({ salt, hash, publickey }) => {
-            return CRUD.update(uid, { salt, password: hash, publickey })
-         })
-         .then(data => {
-            return signToken(req, data, expiredIn);
-         })
-         .then(refId => {
-            const { username, email } = req.session[uid];
-
-            mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
-            res.status(200).json({
-               message: "awesome",
-               newRef: refId
+               mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
+               res.status(200).json({ refId, redirect: "/" });
+            })
+            .catch(err => {
+               return ServErr(res, err);
             });
-         })
-         .catch(err => {
-            return ServErr(res, err);
-         });
+      } catch(err) {
+         console.log(err);
+         return ServErr(res, 10);
+      }
    });
-
-   
 
    //////////////////////
    // privilege routes //
@@ -136,7 +128,7 @@ module.exports = function() {
       let user = undefined;
 
       CRUD
-         .read({ _id }) 
+         .read({ _id })
          .then(data => {
             user = data;
             return hash.compare(password, user);
@@ -144,7 +136,7 @@ module.exports = function() {
          .then(isMatched => {
             if (!isMatched) {
                throw 1;
-            }; 
+            };
             return CRUD.read({ email }); // check if email is already in use without receiving dupkey error
          })
          .then(data => {
@@ -159,12 +151,12 @@ module.exports = function() {
          })
          .then(refId => {
             mail({ user, token: refId }, 0);
-            res.status(200).json({ message: "ok", token: req.session.token });
+            res.status(200).json({ refId, reload: true });
          })
          .catch(err => {
             if (err === 304) {
                return ServErr(res, err, "email");
-            } 
+            }
             return ServErr(res, err);
          });
    });
@@ -198,10 +190,7 @@ module.exports = function() {
             const { username, email } = req.session[_id];
 
             mail({ hostname: req.headers.origin, user: { username, password, email } }, 2);
-            res.status(200).json({
-               message: "awesome",
-               newRef: refId
-            });
+            res.status(200).json({ refId, reload: true });
          })
          .catch(err => {
             return ServErr(res, err);

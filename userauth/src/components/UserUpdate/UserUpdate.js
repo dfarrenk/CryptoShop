@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "../Form";
-import ErrorHandler from "../../util/errorhandler";
+import { default as Auth } from "../Authentication";
 import { update } from "../../util/auth";
 import fields from "./authconfig.json";
 import "./style.css";
 
-class Emailupdate extends Component {
+class Emailupdate extends Auth {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,11 +18,6 @@ class Emailupdate extends Component {
 		};
 	}
 
-	inputHandler = evt => {
-		const { name, value } = evt.target;
-		this.setState({ [name]: value });
-	}
-
 	submitHandler = evt => {
 		evt.preventDefault();
 		const { fields } = this.state;
@@ -33,12 +28,12 @@ class Emailupdate extends Component {
 
 		update(this.state)
 			.then(res => {
-				const { status } = res;
+				const { status, data } = res;
 				if (status === 204 || status === 304) {
 					console.log(res);
 					throw res;
 					}
-				this.responseHandler(res);
+				this.responseHandler("reload", data.reload);
 				})
 			.catch(err => this.validationHandler(err, fields));
 
@@ -48,31 +43,6 @@ class Emailupdate extends Component {
 			password: "",
 			passconfirm: ""
 		});
-	}
-
-	validationHandler = (error, fields) => {
-		const errorhandler = new ErrorHandler();
-		errorhandler
-			.getError(error)
-			.errorHandling()
-			.then(errType => {
-				let { field, message } = errType;
-
-				if (!field) {
-					this.props.result("error", message);
-				} else {
-					fields[field].err = message;
-				}
-
-				this.setState({
-					[field]: "",
-					fields: fields
-				});
-			});
-	}
-
-	responseHandler = response => {
-		window.location.reload(true); // true?
 	}
 
 	clearFields = (resetname, value) => {
@@ -90,9 +60,8 @@ class Emailupdate extends Component {
 		}); 
 	}
 
+	// isEmail --> flag --> !isEmail
 	setflag () {
-		// resolve async by changing the condition of trigger
-		// isEmail --> flag --> !isEmail
 		return this.state.isEmail ? this.props.flag("info", "password") : this.props.flag("info", "email");
 	}
 
