@@ -1,6 +1,0 @@
-/*!
- * client-auth v1.0.0
- * MIT Licensed
- */
-body{margin:0;padding:0;font-family:sans-serif}input[type=submit]{display:block;border-radius:.25rem;border-width:0;padding:.5rem 1rem;color:#fff;background-color:#007bff;cursor:pointer;--webkit-transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;-o-transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;-webkit-transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out}input[type=submit]:hover{background-color:#0768d0}input.err::-webkit-input-placeholder{color:red}input.err:-ms-input-placeholder,input.err::-ms-input-placeholder{color:red}input.err::placeholder{color:red}
-/*# sourceMappingURL=main.77c88ea0.css.map*/

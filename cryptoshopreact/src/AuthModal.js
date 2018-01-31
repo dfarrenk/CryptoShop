@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Login from "./components/LoginOut";
 import UserUpdate from "./components/UserUpdate";
+import Reset from "./components/Reset";
 import Err from "./components/Error";
 import "./index.css";
 
@@ -38,6 +39,8 @@ class Auth extends Component {
 				return <Login flag={this.flagState} result={this.flagResponse} />;
 			case "info_auth":
 				return <UserUpdate flag={this.flagState} result={this.flagResponse} />;
+			case "reset_auth":
+				return <Reset flag={this.flagState} result={this.flagResponse} />;
 			default:
 				console.log("errrrr");
 		}

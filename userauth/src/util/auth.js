@@ -40,7 +40,7 @@ const register = fields => {
 	});
 };
 
-const reset = fields => {
+const resetreq = fields => {
 	return new Promise((resolve, reject) => {
 		const { username, email } = fields;
 		const data = { username, email };
@@ -53,7 +53,21 @@ const reset = fields => {
 
 		resolve(axios.post("/user/forgotPass", data));
 	});
-}
+};
+
+const reset = fields => {
+	return new Promise((resolve, reject) => {
+		const { username, password, passconfirm } = fields;
+		const data = { username, password, passconfirm };
+		
+		const invalid = validator.setFields(data).validate();
+		if (invalid) {
+			console.log(invalid);
+			return reject(invalid);
+		}
+		resolve(axios.put("/user/resetPass?" + window.location.search, data));
+	});
+};
 
 const update = fields => {
 	return new Promise((resolve, reject) => {
@@ -78,6 +92,6 @@ const update = fields => {
 		delete data.passconfirm;
 		resolve(axios.put(url, data));
 	});
-}
+};
 
-export { login, register, reset, update };
+export { login, register, resetreq, reset, update };	

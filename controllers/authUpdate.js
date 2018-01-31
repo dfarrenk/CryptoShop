@@ -1,5 +1,5 @@
 "use strict";
-const DEBUG = false;
+const DEBUG = true;
 const Join = require("path").join;
 const Uid = require("uid-safe").sync;
 const authUpdate = require("express").Router();
@@ -51,19 +51,51 @@ module.exports = function() {
          });
    });
 
+   // request server to sent reset email to user
+   // set a timeout to expired link
+   authUpdate.post("/user/forgotPass", function(req, res) {
+      CRUD
+         .read(req.body)
+         .then(user => {
+            DEBUG && console.log("I forgot my password");
+
+            if (!user) {
+               throw 204;
+            }
+            const { _id, username } = user;
+            const refId = Uid(24);
+            memoryStore.setTemp = [{ _id, username }, refId];
+            mail({ hostname: req.headers.origin, user, token: refId }, 1);
+
+            res.status(200).json({ message: "success" });
+         })
+         .catch(err => {
+            return ServErr(res, err);
+         });
+   });
+
+   // send react component rendered page to client
+   // tied to link sent to user
    authUpdate.get("/user/changePass", function(req, res) {
       const refId = req.query["t"];
       if (!memoryStore.temp[refId]) {
          return ServErr(res, 10);
       }
-      res.status(200).sendFile(Join(__dirname, "../cryptoshopreact/public/changepass.html"));
+      res.status(200).sendFile(Join(__dirname, "../view/changepass.html"));
    });
 
+
+   // check if the session open for reset is still alive
+   // if no send expired response
+   // if the username or email doesn't match the temp in store
+   // send 204 as false unmatched err
    authUpdate.put("/user/resetPass", function(req, res) {
       DEBUG && console.log(memoryStore);
-
+      console.log(req.body);
+      
       const { username, password } = req.body;
       const refId = req.query["t"];
+      console.log(req.query["t"]);
       const { _id: uid, username: _user } = memoryStore.temp[refId];
 
       if (username !== _user) {
@@ -92,26 +124,7 @@ module.exports = function() {
          });
    });
 
-   authUpdate.post("/user/forgotPass", function(req, res) {
-      CRUD
-         .read(req.body)
-         .then(user => {
-            DEBUG && console.log("I forgot my password");
-
-            if (!user) {
-               throw 204;
-            }
-            const { _id, username } = user;
-            const refId = Uid(24);
-            memoryStore.setTemp = [{ _id, username }, refId];
-            mail({ hostname: req.headers.origin, user, token: refId }, 1);
-
-            res.status(200).json({ message: "success" });
-         })
-         .catch(err => {
-            return ServErr(res, err);
-         });
-   });
+   
 
    //////////////////////
    // privilege routes //
@@ -158,6 +171,7 @@ module.exports = function() {
 
    authUpdate.put("/user/changePass", Auth, function(req, res) {
       DEBUG && console.log(req.body);
+      DEBUG && console.log(req.headers);
       const { originalpass: original, password } = req.body;
       const { _id } = req.user;
       let user = undefined;

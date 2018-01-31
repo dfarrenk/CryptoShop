@@ -10,6 +10,8 @@ if (window.location.pathname.match(/\/(?:login|register)+$/)) {
 	ReactDOM.render(<Auth switch="user_auth"/>, document.getElementById("root"));
 } else if (window.location.pathname.match(/\/(?:update)+$/)) {
 	ReactDOM.render(<Auth switch="info_auth"/>, document.getElementById("root"));
+} else if (window.location.pathname.match(/\/(?:reset)+$/)) {
+	ReactDOM.render(<Auth switch="reset_auth"/>, document.getElementById("root"));
 } else {
 	ReactDOM.render(<App />, document.getElementById("root"));
 }
