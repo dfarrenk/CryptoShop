@@ -1,36 +1,34 @@
-const DEBUG = false;
+const DEBUG = true;
 const Join = require("path").join;
 const htmlRoute = require("express").Router();
 
 require("../util/errorHandler")();
 
 module.exports = function() {
-   
-   htmlRoute.get("/", (req, res) => {
-      DEBUG && console.log("/");
-      res.status(200).sendFile(Join(__dirname, "../view/homepage.html"));
-   });
 
-   htmlRoute.get("/search/:id", function(req, res) {
-      let searchTerm = req.params.id;
-      res.status(200).send("/searchPage.html?item=" + searchTerm);
-   });
+  htmlRoute.get("/", (req, res) => {
+    DEBUG && console.log(req.headers);
+    // res.status(200).sendFile(Join(__dirname, "../view/homepage.html"));
+    res.status(200).render("homepage");
+  });
 
-   return htmlRoute;
+  htmlRoute.get("/search/:id", function(req, res) {
+    let searchTerm = req.params.id;
+    res.status(200).send("/searchPage.html?item=" + searchTerm);
+  });
+
+  htmlRoute.get("/search", (req, res) => {
+		DEBUG && console.log(req.headers);
+		
+  });
+
+
+
+  return htmlRoute;
 }
 
 console.log("eBay controller: \x1b[32mloaded!\x1b[0m");
 
-// htmlRoute.get("/login", (req, res) => {
-//    // console.log(req.session);
-//    console.log("get");
-//    // res.clearCookie("jwt-token");
-//    console.log(req.path);
-//    console.log(req.session.id);
-//    // res.send("/login");
-//    res.sendFile(Join(__dirname, "./cryptoshopreact/public/login.html"));
-//    // res.sendFile(Join(__dirname, "./cryptoshopreact/public/index.html"));
-// });
 
 // htmlRoute.post("/api/user", function(req, res) {
 //    console.log(req);
