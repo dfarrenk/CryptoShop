@@ -19,7 +19,7 @@ module.exports = function() {
 
   htmlRoute.get("/search", (req, res) => {
 		DEBUG && console.log(req.headers);
-		
+		res.status(200).render("searchPage");
   });
 
 

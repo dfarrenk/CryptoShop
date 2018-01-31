@@ -40,7 +40,7 @@ module.exports = function() {
          })
          .then(refId => {
             DEBUG && console.log(refId);
-            return res.status(202).json({ refId, redirect: "/searchPage.html" });
+            return res.status(202).json({ refId, redirect: "/search" });
          })
          .catch(err => {
             ServErr(res, err);
@@ -63,7 +63,7 @@ module.exports = function() {
          })
          .then(refId => {
             mail({ hostname: req.headers.origin, user, token: refId }, 0);
-            return res.status(201).json({ refId, redirect: "/searchPage.html" });
+            return res.status(201).json({ refId, redirect: "/search" });
          })
          .catch(err => {
             if (err.code) {
