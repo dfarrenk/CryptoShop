@@ -4,7 +4,7 @@ const Handlebars = require("handlebars");
 const ServErr = require("../util/servError.js");
 const htmlRoute = require("express").Router();
 const { memoryStore } = require("../config/config.js");
-const place = require("../lib/json/states.json");
+const place = require("../lib/json/state.json");
 
 require("../util/errorHandler")();
 
