@@ -1,120 +1,123 @@
 $(function() {
-   const DEBUG = false;
+    const DEBUG = false;
 
-   let userInfo = ({
-      firstname: "",
-      lastname: "",
-      address: {
-         addressOne: "",
-         addressTwo: "",
-         city: "",
-         state: "",
-         zip: "",
-      }
-   });
+    let userInfo = ({
+        firstname: "",
+        lastname: "",
+        address: {
+            addressOne: "",
+            addressTwo: "",
+            city: "",
+            state: "",
+            zip: "",
+        }
+    });
 
-   $("#editUsernameValues").click(function(e) {
-      e.preventDefault();
-      $("#firstName").attr("readonly", false);
-      $("#lastName").attr("readonly", false);
-      $("#inputAddress").attr("readonly", false);
-      $("#inputAddress2").attr("readonly", false);
-      $("#inputCity").attr("readonly", false);
-   });
+    $("#editUsernameValues").click(function(e) {
+        e.preventDefault();
+        $("#firstName").attr("readonly", false);
+        $("#lastName").attr("readonly", false);
+        $("#inputAddress").attr("readonly", false);
+        $("#inputAddress2").attr("readonly", false);
+        $("#inputCity").attr("readonly", false);
+    });
 
-   $("#saveUserUpdates").click(function(e) {
-      e.preventDefault();
-      $("#firstName").attr("readonly", true);
-      $("#lastName").attr("readonly", true);
-      $("#inputAddress").attr("readonly", true);
-      $("#inputAddress2").attr("readonly", true);
-      $("#inputCity").attr("readonly", true);
+    $("#saveUserUpdates").click(function(e) {
+        e.preventDefault();
+        $("#firstName").attr("readonly", true);
+        $("#lastName").attr("readonly", true);
+        $("#inputAddress").attr("readonly", true);
+        $("#inputAddress2").attr("readonly", true);
+        $("#inputCity").attr("readonly", true);
 
-      userInfo.firstname = $("#firstName").val().trim();
-      userInfo.lastname = $("#lastName").val().trim();
-      userInfo.address.addressOne = $("#inputAddress").val().trim();
-      userInfo.address.addressTwo = $("#inputAddress2").val().trim();
-      userInfo.address.city = $("#inputCity").val().trim();
-      userInfo.address.state = $("#inputState").val().trim();
-      userInfo.address.zip = $("#inputZip").val().trim();
+        userInfo.firstname = $("#firstName").val().trim();
+        userInfo.lastname = $("#lastName").val().trim();
+        userInfo.address.addressOne = $("#inputAddress").val().trim();
+        userInfo.address.addressTwo = $("#inputAddress2").val().trim();
+        userInfo.address.city = $("#inputCity").val().trim();
+        userInfo.address.state = $("#inputState").val().trim();
+        userInfo.address.zip = $("#inputZip").val().trim();
 
-      console.log(userInfo);
+        console.log(userInfo);
 
-      $.ajax({
-         url: "/api/user",
-         method: "PUT",
-         data: userInfo
-      });
-   });
-
-   $("#editEmailBtn").click(function(e) {
-      e.preventDefault();
-      $("#editEmail").attr("readonly", false);
-   });
-
-   $("#editPassBtn").click(function(e) {
-      e.preventDefault();
-      $("#editPass").attr("readonly", false);
-   });
-
-
-   $(".saveInfo").click(function(e) {
-      e.preventDefault();
-      $("#passConfirm").modal();
-   });
-
-   $("#passConfirmSave").click(function(e) {
-      e.preventDefault();
-      let newEmail = $("#editEmail").val().trim();
-      let newPass = $("#editPass").val().trim();
-      let url = "/user/changePass";
-
-      const userInfoUpdate = ({
-         password: $("#passConfirmation").val().trim(),
-         newpassword: newPass
-      });
-
-      if (newEmail) {
-         userInfoUpdate.email = newEmail;
-         delete userInfoUpdate.newpassword;
-         url = "/user/changeEmail";
-      }
-
-      console.log(userInfoUpdate);
-      $.ajax({
+        $.ajax({
+            url: "/api/user",
             method: "PUT",
-            url,
-            dataType: "json",
-            data: userInfoUpdate
-         }).then(function(res) {
-            if (!res) {
-               throw res;
-            }
-            console.log(res);
-         })
-         .catch(function(err) {
-            if (err === undefined) {
-               return console.log("This is a 304");
-            }
-            console.log(err);
-         });
-   });
+            data: userInfo
+        }).then(function(res) {
+
+        })
+    });
+
+    $("#editEmailBtn").click(function(e) {
+        e.preventDefault();
+        $("#editEmail").attr("readonly", false);
+    });
+
+    $("#editPassBtn").click(function(e) {
+        e.preventDefault();
+        $("#editPass").attr("readonly", false);
+    });
 
 
-   var url = "https://" + window.location.hostname + ":443/api/myOrders";
-   $.get(url).done(function(result) {
-      DEBUG && console.log("orders list received!");
-      DEBUG && console.log(result);
-      for (var i = result.length - 1; i >= 0; i--) {
+    $(".saveInfo").click(function(e) {
+        e.preventDefault();
+        $("#passConfirm").modal();
+    });
 
-         $("#purchases").prepend(`<tr>
+    $("#passConfirmSave").click(function(e) {
+        e.preventDefault();
+        let newEmail = $("#editEmail").val().trim();
+        let newPass = $("#editPass").val().trim();
+        let url = "/user/changePass";
+
+        const userInfoUpdate = ({
+            password: $("#passConfirmation").val().trim(),
+            newpassword: newPass
+        });
+
+        if (newEmail) {
+            userInfoUpdate.email = newEmail;
+            delete userInfoUpdate.newpassword;
+            url = "/user/changeEmail";
+        }
+
+        console.log(userInfoUpdate);
+        $.ajax({
+                method: "PUT",
+                url,
+                dataType: "json",
+                data: userInfoUpdate
+            }).then(function(res) {
+                if (!res) {
+                    throw res;
+                }
+                console.log(res);
+            })
+            .catch(function(err) {
+                $("#error").modal();
+                if (err === undefined) {
+                    return console.log("This is a 304");
+                }
+                console.log(err);
+            });
+    });
+
+
+    var url = "https://" + window.location.hostname + ":443/api/myOrders";
+    $.get(url).done(function(result) {
+        DEBUG && console.log("orders list received!");
+        DEBUG && console.log(result);
+        for (var i = result.length - 1; i >= 0; i--) {
+
+            $("#purchases").prepend(`<tr>
           <td><img src="" />ebay img</td>
           <td>${result[i].ebayId}</td>
           <td>${result[i].amountRecieved}</td>
           <td>${result[i].amountRecieved/12000}</td>
           </tr>`);
-      }
-   }).catch(console.log.bind(console));
+        }
+    }).catch(console.log.bind(console));
 });
 
 //Document Ready End
