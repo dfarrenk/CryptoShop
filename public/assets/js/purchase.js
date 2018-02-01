@@ -50,7 +50,7 @@ $(function() {
 			url: "/buyItem",
 			data: {
 				"ebayId": $(event.currentTarget).attr("data-id"),
-				"btcAddress": /*$("#btcAddress").text()*/"13WJ6nxHKtJWTA5A9GWNmhi6d1FyPidZDK",
+				"btcAddress": $("#btcAddress").text(),
 				"mailAddress": "\"wallace road"
 			},
 			header: {
