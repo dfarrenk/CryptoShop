@@ -1,5 +1,5 @@
 $(function() {
-  
+
   let username;
   let email;
   let password;
@@ -81,7 +81,7 @@ $(function() {
       const errmsg = error.message;
       $("#errmsg").text(errmsg);
       $("#error").modal();
-      // location.replace("/");
+      location.reload();
     });
   });
 }); // Document Ready End

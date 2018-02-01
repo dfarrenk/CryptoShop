@@ -44,6 +44,10 @@ $(function() {
          url: "/api/user",
          method: "PUT",
          data: userInfo
+      }).then(response=>{
+         location.reload();
+      }).catch(err=>{
+         location.assign("/search");
       });
    });
 
@@ -82,22 +86,22 @@ $(function() {
 
       console.log(userInfoUpdate);
       $.ajax({
-            method: "PUT",
-            url,
-            dataType: "json",
-            data: userInfoUpdate
-         }).then(function(res) {
-            if (!res) {
-               throw res;
-            }
-            console.log(res);
-         })
-         .catch(function(err) {
-            if (err === undefined) {
-               return console.log("This is a 304");
-            }
-            console.log(err);
-         });
+         method: "PUT",
+         url,
+         dataType: "json",
+         data: userInfoUpdate
+      }).then(function(res) {
+         if (!res) {
+            throw res;
+         }
+         console.log(res);
+      })
+      .catch(function(err) {
+         if (err === undefined) {
+            return console.log("This is a 304");
+         }
+         console.log(err);
+      });
    });
 
 
