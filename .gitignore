@@ -63,6 +63,9 @@ typings/
 # Encryptions 
 encryption/
 
+# html files
+view/
+
 # create-react-app
 cryptoshopreact/
 
