@@ -60,8 +60,6 @@ typings/
 # csr RSA certificate
 .csr
 
-# Encryptions 
-encryption/
 
 # html files
 view/
