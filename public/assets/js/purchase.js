@@ -1,11 +1,11 @@
 $(function() {
 	
-	//var socket = io();
+	var socket = io('https://localhost:3000', {secure: true});
 
-	var timer = new Timer();
 	console.log("Purchase modul: ok!");
 
 	$("#paymentBtn").on("click", (event) => {
+		var timer = new Timer();
 		timer.start({ countdown: true, startValues: { minutes: 15 } });
 		$('#countdownExample .values').html(timer.getTimeValues().toString());
 		timer.addEventListener('secondsUpdated', function(e) {

@@ -1,5 +1,5 @@
 const routes = require("express").Router();
-const eBay = require("../lib/eBay.js")();
+const eBay = require("../lib/eBay.js")(routes);
 const coinbase = require("../lib/coinbase.js")();
 const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js")();
@@ -70,11 +70,11 @@ module.exports = function() {
                      eBay.buyItem(下.ebayId, price, (status) => {
                         DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mtatus of purchase from buyItem(): " + status);
                         CRUD.updatePush(_id, { "orders": 下 })
-                           .then(data => {
-                              DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
-                              res.send(status);
-                              return signToken(req, data, expiredIn);
-                           }).catch(console.log.bind(console));
+                        .then(data => {
+                           DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
+                           res.send(status);
+                           return signToken(req, data, expiredIn);
+                        }).catch(console.log.bind(console));
                      });
                   });
                }
