@@ -1,10 +1,19 @@
 $(function() {
 	
-	var socket = io();
+	//var socket = io();
 
 	var timer = new Timer();
 	console.log("Purchase modul: ok!");
+
 	$("#paymentBtn").on("click", (event) => {
+		timer.start({ countdown: true, startValues: { minutes: 15 } });
+		$('#countdownExample .values').html(timer.getTimeValues().toString());
+		timer.addEventListener('secondsUpdated', function(e) {
+			$('#countdownExample .values').html(timer.getTimeValues().toString());
+		});
+		timer.addEventListener('targetAchieved', function(e) {
+			$('#countdownExample .values').html('Timer Expiered');
+		});
 		$.get({
 			url: "/getAddress"
 				/*}).catch(function(err, res) {
@@ -36,14 +45,6 @@ $(function() {
 					if (err) throw err;*/
 				}).then(answer => {
 					console.log(answer);
-					timer.start({ countdown: true, startValues: { minutes: 15 } });
-					$('#countdownExample .values').html(timer.getTimeValues().toString());
-					timer.addEventListener('secondsUpdated', function(e) {
-						$('#countdownExample .values').html(timer.getTimeValues().toString());
-					});
-					timer.addEventListener('targetAchieved', function(e) {
-						$('#countdownExample .values').html('Timer Expiered');
-					});
 				})
 				.catch(console.log.bind(console));
 			});
