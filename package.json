@@ -6,9 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watchAll": "jest --watchAll",
-    "start": "concurrently \"node server.js\" \"npm run client\"",
-    "startReactRender": "babel-node server.js",
-    "client": "node scripts/start-client.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
