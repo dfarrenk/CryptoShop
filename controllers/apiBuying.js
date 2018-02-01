@@ -1,5 +1,6 @@
+const DEBUG = !(process.env.NODE_ENV == "production");
 const routes = require("express").Router();
-const eBay = require("../lib/eBay.js")(routes);
+const eBay = require("../lib/eBay.js")();
 const coinbase = require("../lib/coinbase.js")();
 const CRUD = require("../lib/CRUD.js");
 const Auth = require("../lib/authcallback.js")();
@@ -7,7 +8,26 @@ const ServErr = require("../util/servError.js");
 const mail = require("../lib/sendgrid.js");
 const signToken = require("../lib/signToken.js");
 const { "token-timeout": expiredIn } = require("../config/config.json");
-const DEBUG = !(process.env.NODE_ENV == "production");
+//https server for web-token
+const {https_config} = require("../config/config.js");
+const https = require("https");
+//Web-socket implementation, I have to create a https-server one more time, because IO require HTTP server, not a route, I want to read docs if it is able to read router somehow
+const server_s = https.createServer(https_config, routes);
+const io = require('socket.io')(server_s);
+io.on('connection', function (socket) {
+   console.log("User connected:");
+   socket.emit('news', { hello: 'world' });
+   socket.on('my other event', function (data) {
+      console.log(data);
+   });
+   socket.on('disconnect', function () {
+      console.log('user disconnected');
+   });
+});
+server_s.listen(3000, function(){
+   console.log('\x1b[32mWeb-socket listening on *:3000\x1b[0m');
+});
+
 
 require("../util/errorHandler")();
 
