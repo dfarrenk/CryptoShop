@@ -40,8 +40,13 @@ $(function() {
 					.html(`
 						<p>Please, send no less than <span id="btcPrice"></span> to following address: <span id="btcAddress">` + addressBTC + `</span> and click "Make purchase"</p>
 						`);
-					$("#btcPrice").text(($("#modalPrice").text().substr(1)/10000));
-
+					var price= +$("#modalPrice").text().substr(1);
+					var rate = $("#btcRate").text();
+					console.log(price);
+					console.log(rate);
+					$("#btcPrice").text(
+						price/rate
+						);
 				})
 				.catch(console.log.bind(console));
 			})
