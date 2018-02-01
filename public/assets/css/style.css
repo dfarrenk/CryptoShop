@@ -17,8 +17,9 @@ body {
 }
 
 #wrapper {
-  min-height: calc(100% - 5rem);
-  padding-bottom: 5rem;
+  min-height: calc(100% - 1rem);
+  padding-bottom: 7rem;
+  height: 100%;
 }
 
 #cover {

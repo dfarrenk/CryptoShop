@@ -2,7 +2,7 @@
 const DEBUG = true;
 
 const authRoute = require("express").Router();
-const Auth = require("../lib/authcallback.js");
+const Auth = require("../lib/authcallback.js")();
 const ServErr = require("../util/servError.js");
 const CRUD = require("../lib/CRUD.js");
 const hash = require("../lib/encryptor.js");
@@ -40,7 +40,7 @@ module.exports = function() {
          })
          .then(refId => {
             DEBUG && console.log(refId);
-            return res.status(202).json({ refId, redirect: "/searchPage.html" });
+            return res.status(202).json({ refId, redirect: "/search" });
          })
          .catch(err => {
             ServErr(res, err);
@@ -63,7 +63,7 @@ module.exports = function() {
          })
          .then(refId => {
             mail({ hostname: req.headers.origin, user, token: refId }, 0);
-            return res.status(201).json({ refId, redirect: "/searchPage.html" });
+            return res.status(201).json({ refId, redirect: "/search" });
          })
          .catch(err => {
             if (err.code) {
@@ -77,6 +77,7 @@ module.exports = function() {
       const { user, session } = req;
       const { _id } = user;
 
+      req.session.authenticated = false;
       delete req.session.user;
       delete req.session[_id];
       res.status(200).send("/");

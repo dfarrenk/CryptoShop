@@ -4,7 +4,7 @@ const Join = require("path").join;
 const infoRoute = require("express").Router();
 const _ = require("lodash");
 
-const Auth = require("../lib/authcallback.js");
+const Auth = require("../lib/authcallback.js")();
 const ServErr = require("../util/servError.js");
 const signToken = require("../lib/signToken.js");
 const CRUD = require("../lib/CRUD.js");
