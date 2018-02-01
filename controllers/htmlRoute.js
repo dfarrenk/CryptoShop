@@ -1,28 +1,33 @@
-const DEBUG = true;
+const DEBUG = false;
 const Join = require("path").join;
+const _ = require("lodash");
+const Auth = require("../lib/authcallback.js")("manual");
+const ServErr = require("../util/servError.js");
+const Uid = require("uid-safe").sync;
 const htmlRoute = require("express").Router();
+const { memoryStore } = require("../config/config.js");
 
 require("../util/errorHandler")();
 
 module.exports = function() {
 
-  htmlRoute.get("/", (req, res) => {
+  htmlRoute.get("/", function(req, res) {
     DEBUG && console.log(req.headers);
     res.status(200).render("homepage");
   });
 
-  htmlRoute.get("/search", (req, res) => {
-  	DEBUG && console.log(req.session.authenticated);
-    DEBUG && console.log(req.headers);
-    const isUser = req.session.authenticated; // pass boolean;
-    res.status(200).render("searchpage", { user: isUser });
+  htmlRoute.get("/search", Auth, function(req, res, next) {
+		const isUser = !res.locals.error;
+    res.status(200).render("searchpage", { user: isUser });	
   });
 
-  htmlRoute.get("/profile", (req, res) => {
-    DEBUG && console.log(req.headers);
-    res.status(200).render("profilepage");
+  htmlRoute.get("/profile", Auth, function(req, res) {
+    if (res.locals.error) {
+      console.log(res.locals.error);
+      return res.status(302).redirect("/search");
+    }
+    res.status(200).render("profilepage")
   });
-
 
   return htmlRoute;
 }

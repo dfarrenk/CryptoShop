@@ -2,7 +2,7 @@
 const DEBUG = true;
 
 const authRoute = require("express").Router();
-const Auth = require("../lib/authcallback.js");
+const Auth = require("../lib/authcallback.js")();
 const ServErr = require("../util/servError.js");
 const CRUD = require("../lib/CRUD.js");
 const hash = require("../lib/encryptor.js");

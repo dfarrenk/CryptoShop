@@ -5,7 +5,7 @@ const PassportJwt = require("passport-jwt");
 const Fs = require("fs");
 const ExtractJwt = PassportJwt.ExtractJwt;
 const Jwt = require("jsonwebtoken");
-const Uid = require("uid-safe");
+const Uid = require("uid-safe").sync;
 const MongoStore = require("./store_config");
 const memoryStore = require("./memoryStore.js");
 const EventEmitter = require("events");
@@ -44,7 +44,7 @@ function ExtractFromSession(req) {
 }
 
 function GenUUIDAndEmit(req) {
-   const string = Uid.sync(24);
+   const string = Uid(24);
    console.log("UID gen: %s", string);
    return string;
 }
