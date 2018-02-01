@@ -25,6 +25,7 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "nwb": "0.21.x",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
