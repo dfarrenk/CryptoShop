@@ -1,4 +1,4 @@
-const DEBUG = !(process.env.NODE_ENV == "production");
+const DEBUG = (process.env.NODE_ENV == "production");
 const routes = require("express").Router();
 const eBay = require("../lib/eBay.js")();
 const coinbase = require("../lib/coinbase.js")();
@@ -14,8 +14,11 @@ const https = require("https");
 //Web-socket implementation, I have to create a https-server one more time, because IO require HTTP server, not a route, I want to read docs if it is able to read router somehow
 const server_s = https.createServer(https_config, routes);
 const io = require('socket.io')(server_s);
+let currentSocket=null;
+let currentClientId = null;
 io.on('connection', function (socket) {
-   console.log("User connected:");
+   DEBUG && console.log("Order process started:");
+   DEBUG && console.log(socket.client.conn.id)
    socket.emit('news', { hello: 'world' });
    socket.on('my other event', function (data) {
       console.log(data);
@@ -23,6 +26,8 @@ io.on('connection', function (socket) {
    socket.on('disconnect', function () {
       console.log('user disconnected');
    });
+   currentSocket = socket;
+   currentClientId = socket.client.conn.id;
 });
 server_s.listen(3000, function(){
    console.log('\x1b[32mWeb-socket listening on *:3000\x1b[0m');
@@ -43,7 +48,7 @@ require("../util/errorHandler")();
 
 module.exports = function() {
    routes.get("/getAddress", (req, res) => {
-      console.log("/getAddress fires!");
+      DEBUG && console.log("/getAddress fires!");
       coinbase.getAddress((address) => {
          res.send(address)
       })
@@ -51,8 +56,7 @@ module.exports = function() {
 
    //5) 
    routes.post("/buyItem/", Auth, (req, res) => {
-      console.log("\x1b[32mDEBUG: \x1b[0mbuyItem route fires! ");
-
+      DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mbuyItem route fires! ");
       const { _id, username } = req.user;
       const Userinfo = req.session[_id];
 
@@ -92,6 +96,7 @@ module.exports = function() {
                         CRUD.updatePush(_id, { "orders": 下 })
                         .then(data => {
                            DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mAdd order information to the DB");
+                           currentSocket.emit(currentClientId, "completed!");
                            res.send(status);
                            return signToken(req, data, expiredIn);
                         }).catch(console.log.bind(console));
@@ -101,10 +106,13 @@ module.exports = function() {
                //we have to create a client-side counter also
                counter15Min--;
                if (!counter15Min) {
+                  currentSocket.emit(currentClientId, "timeout");
                   clearInterval(transactionIntervalCheck);
                   res.status(410);
                }
             });
+            console.log("Current client id: "+ currentClientId);
+            currentSocket.emit(currentClientId, "Not completed");
          }, 10000);
       }
       else {

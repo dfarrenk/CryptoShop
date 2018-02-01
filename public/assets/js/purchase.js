@@ -6,10 +6,21 @@ $(function() {
 
 	$("#paymentBtn").on("click", (event) => {
 		var socket = io('https://localhost:3000', {secure: true});
+		
 		socket.on("news", (message)=>{
 			console.log("From server: ");
 			console.log(message);
 		})
+		socket.on("connect", ()=>{
+			socket.on(socket.id, (message)=>{
+				console.log("To "+ socket.id);
+				if(message=="completed!"){
+					timer.stop();
+					$("#countdownExample").html("Item purchased!");
+				}
+			});
+		})
+		
 		timer.start({ countdown: true, startValues: { minutes: 15 } });
 		$('#countdownExample .values').html(timer.getTimeValues().toString());
 		timer.addEventListener('secondsUpdated', function(e) {
@@ -39,7 +50,7 @@ $(function() {
 			url: "/buyItem",
 			data: {
 				"ebayId": $(event.currentTarget).attr("data-id"),
-				"btcAddress": $("#btcAddress").text(),
+				"btcAddress": /*$("#btcAddress").text()*/"13WJ6nxHKtJWTA5A9GWNmhi6d1FyPidZDK",
 				"mailAddress": "\"wallace road"
 			},
 			header: {
