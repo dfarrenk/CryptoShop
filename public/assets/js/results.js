@@ -19,7 +19,6 @@ $(document).on("click", ".buyItNow", function() {
 });
 
 
-
 $(function() {
 
   $(document).ajaxStart(function() {
@@ -46,7 +45,6 @@ $(function() {
     ebayAPI(searchTerm).then(function(data) {
       $(".showEbay").collapse();
       // $("#hideMeOnSearch").toggle("hide");
-
     });
   });
 

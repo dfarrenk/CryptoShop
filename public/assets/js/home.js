@@ -1,7 +1,5 @@
 $(function() {
   
-  const errhandler = new ErrorHandler();
-
   let username;
   let email;
   let password;
@@ -80,13 +78,7 @@ $(function() {
       console.log("If you are looking at this..means that you are not signed in");
       console.log(err);
       const { status, responseJSON: error } = err;
-      const errmsg = errhandler(status, error.message);
-      console.log(errmsg);
-      // const errmsg = error.message;
-      // console.log(errorhandler);
-
-
-
+      const errmsg = error.message;
       $("#errmsg").text(errmsg);
       $("#error").modal();
       // location.replace("/");
