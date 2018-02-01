@@ -10,7 +10,7 @@ $(function() {
 		socket.on("news", (message)=>{
 			console.log("From server: ");
 			console.log(message);
-		})
+		});
 		socket.on("connect", ()=>{
 			socket.on(socket.id, (message)=>{
 				console.log("To "+ socket.id);
@@ -19,7 +19,7 @@ $(function() {
 					$("#countdownExample").html("Item purchased!");
 				}
 			});
-		})
+		});
 		
 		timer.start({ countdown: true, startValues: { minutes: 15 } });
 		$('#countdownExample .values').html(timer.getTimeValues().toString());
@@ -38,8 +38,9 @@ $(function() {
 					.parent()
 					.find("#paymentInfo")
 					.html(`
-						<p>Please, send exactly X-bitcoin to following address: <span id="btcAddress">` + addressBTC + `</span> and click "Make purchase"</p>
+						<p>Please, send no less than <span id="btcPrice"></span> to following address: <span id="btcAddress">` + addressBTC + `</span> and click "Make purchase"</p>
 						`);
+					$("#btcPrice").text(($("#modalPrice").text().substr(1)/10000));
 
 				})
 				.catch(console.log.bind(console));

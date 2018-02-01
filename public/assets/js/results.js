@@ -143,7 +143,7 @@ $(function() {
             "<img class'card-img-top' src='" + imageUrl + "'>" +
             "<div class='card-body'>" +
             "<h6 class='card-title'>" + result[i].title + "</h6>" +
-            "<p class='card-text price'>" + "$" + result[i].price.value + "</p>" +
+            "<p class='card-text price'>" +"$"+ result[i].price.value + "</p>" +
             "<a class='card-text' href='" + result[i].itemWebUrl + "' target='_blank'>View on eBay</a>" +
             "<button class='btn btn-primary buyItNow' type='button' data-id='" + result[i].itemId.slice(3, 15) + "'> Buy It Now </button>" +
             "</div>" +
