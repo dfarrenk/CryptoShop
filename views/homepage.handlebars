@@ -50,10 +50,7 @@
   <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
-{{> footer}} 
-{{> modal_login}} 
-{{> modal_error}} 
-{{> scripts}}
+{{> footer}} {{> modal_login}} {{> modal_error}} {{> scripts}}
 <script type="text/javascript">
 ReactDOM.render(
   React.createElement(UserAuth, { switch: "user_auth" }, null),

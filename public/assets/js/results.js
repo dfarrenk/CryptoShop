@@ -36,6 +36,10 @@ $(function() {
   $("#searchBtn").click(function(e) {
     e.preventDefault();
     searchTerm = $("#searchBar").val().trim();
+    if (location.pathname !== "/search") {
+      location.assign("/search?" + "item=" + searchTerm);
+    }
+    
     console.log(searchTerm);
     $("#productMaster div").empty();
     // walmartAPI(searchTerm);
@@ -58,6 +62,7 @@ $(function() {
 
   //TODO run a search with searchQuery.item
   //TODO replace iphone with text from search field
+  //?search=car
 
   function searchToObject() {
     var pairs = window.location.search.substring(1).split("&"),

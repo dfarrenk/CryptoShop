@@ -1,4 +1,6 @@
 $(function() {
+  
+  const errhandler = new ErrorHandler();
 
   let username;
   let email;
@@ -77,7 +79,17 @@ $(function() {
     }).catch(err => {
       console.log("If you are looking at this..means that you are not signed in");
       console.log(err);
-      location.replace("/");
+      const { status, responseJSON: error } = err;
+      const errmsg = errhandler(status, error.message);
+      console.log(errmsg);
+      // const errmsg = error.message;
+      // console.log(errorhandler);
+
+
+
+      $("#errmsg").text(errmsg);
+      $("#error").modal();
+      // location.replace("/");
     });
   });
 }); // Document Ready End
