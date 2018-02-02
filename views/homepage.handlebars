@@ -1,4 +1,8 @@
-{{> navbar_visitor}}
+{{#if user}} 
+{{> navbar_user}} 
+{{else}} 
+{{> navbar_visitor}} 
+{{/if}}
 <!-- Page Wrapper-->
 <div id="wrapper">
   {{> sidebar}}
