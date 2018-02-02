@@ -21,7 +21,7 @@ $(function() {
 			});
 		});
 		
-		timer.start({ countdown: true, startValues: { minutes: 15 } });
+		timer.start({ countdown: true, startValues: { minutes: 25 } });
 		$('#countdownExample .values').html(timer.getTimeValues().toString());
 		timer.addEventListener('secondsUpdated', function(e) {
 			$('#countdownExample .values').html(timer.getTimeValues().toString());
@@ -38,7 +38,7 @@ $(function() {
 					.parent()
 					.find("#paymentInfo")
 					.html(`
-						<p>Please, send no less than <span id="btcPrice"></span> to following address: <span id="btcAddress">` + addressBTC + `</span> and click "Make purchase"</p>
+						<p>Please, send no less than <span id="btcPrice"></span> to following address: <span id="btcAddress">` + addressBTC + `</span> and click "Make purchase". Please, allow up to 24 hours for BTC-blockchain in order to get 6 confirmation. You will receive e-mail letter, and will able to see your purchese on <a href="https://thecryptoshop.herokuapp.com/profile">profile-page.</a></p>
 						`);
 					var price= +$("#modalPrice").text().substr(1);
 					var rate = $("#btcRate").text();
