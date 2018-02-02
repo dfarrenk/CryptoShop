@@ -10,9 +10,10 @@ require("../util/errorHandler")();
 
 module.exports = function() {
 
-  htmlRoute.get("/", function(req, res) {
+  htmlRoute.get("/", Auth, function(req, res) {
     DEBUG && console.log(req.headers);
-    res.status(200).render("homepage");
+    const isUser = !res.locals.error;
+    res.status(200).render("homepage", { user: isUser });
   });
 
   htmlRoute.get("/search", Auth, function(req, res, next) {

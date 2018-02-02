@@ -73,7 +73,7 @@ $(function() {
       url: "/logout"
     }).then(function(res) {
       console.log(res);
-      location.assign(res);
+      location.reload();
     }).catch(err => {
       console.log("If you are looking at this..means that you are not signed in");
       console.log(err);
@@ -81,7 +81,7 @@ $(function() {
       const errmsg = error.message;
       $("#errmsg").text(errmsg);
       $("#error").modal();
-      location.reload();
+      location.assign("/");
     });
   });
 }); // Document Ready End

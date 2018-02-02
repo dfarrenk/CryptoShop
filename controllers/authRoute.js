@@ -80,7 +80,7 @@ module.exports = function() {
       req.session.authenticated = false;
       delete req.session.user;
       delete req.session[_id];
-      res.status(200).send("/");
+      res.status(200).json({ message: "successfully signed out" });
    });
 
    return authRoute;
