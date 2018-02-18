@@ -2,16 +2,16 @@ var webpack = require("webpack");
 module.exports = {
 	entry: './reactUI/index.js',
 	output: {
-		filename: './reactUI/bundle.js'
+		filename: './reactUI/static/bundle.js'
 	},
 	module: {
-		loaders: [
+		rules: [
 		{
 			test: /\.js?/,
 			loader: "babel-loader",
 			exclude: /node-modules/,
-			quiery:{
-				presets: ["env"]
+			query:{
+				presets: ['es2015', 'react', 'stage-0', 'stage-1']
 			}
 		}
 		]
