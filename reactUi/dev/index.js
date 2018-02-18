@@ -1,16 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
-import Header from "./Components/Header";
+import App from "./app.js"
 
-class HelloMessage extends React.Component {
-	render() {
-		return <div>Hello !</div>;
-	}
-}
-
-ReactDom.render(<div>
-	<Header></Header>
-	<HelloMessage />
-	</div>,
+ReactDom.render(
+	<App></App>,
 	document.getElementById("appContainer")
 	)
