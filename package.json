@@ -60,6 +60,7 @@
     "react-dom": "^16.2.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
+    "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.11.0"
   },
   "proxy": "https://localhost:443"

@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
 	entry: './reactUI/index.js',
 	output: {
@@ -15,5 +16,8 @@ module.exports = {
 			}
 		}
 		]
-	}
+	},
+	plugins: [
+	new UglifyJsPlugin()
+	]
 }
