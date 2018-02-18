@@ -1,9 +1,9 @@
 var webpack = require("webpack");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
-	entry: './reactUI/index.js',
+	entry: './reactUI/dev/index.js',
 	output: {
-		filename: './reactUI/static/bundle.js'
+		filename: './reactUI/build/bundle.js'
 	},
 	module: {
 		rules: [
