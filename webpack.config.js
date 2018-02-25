@@ -16,10 +16,10 @@ module.exports = {
 			test: /\.js?/,
 			loader: "babel-loader",
 			exclude: [
-			path.resolve(__dirname, "app/demo-files")
+			path.resolve(__dirname, "node_modules")
 			],
 			query:{
-				presets: ['es2015', 'react', 'stage-0', 'stage-1']
+				presets: ['react']
 			}
 		}
 		]

@@ -4,7 +4,7 @@ import "./style.css"
 const Header = () =>{
 return (
 <div className="header">
-	<img src="#" alt="logo"/>
+	<img className="myLogo" src="#" alt="logo"/>
 	<h1>
 		Header
 	</h1>
