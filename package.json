@@ -62,7 +62,8 @@
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.2.0",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "webpack-uglify-parallel": "^0.1.4"
   },
   "proxy": "https://localhost:443"
 }
