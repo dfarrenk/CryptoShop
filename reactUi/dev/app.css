@@ -14,13 +14,22 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, li{
 	display: flex;
 	border:1px solid #ccc;
 	flex-wrap:wrap;
+	justify-content: space-around;
 }
 
 .row{
 	flex-direction: row;
+	margin: 20px;
 }
 
 .flex-item{
+	flex-grow: 1;
+	position: center;
+	margin: 5px;
 	text-align: center;
 	padding: 1.5em;
+	max-width: 275px;
+	min-width: 155px;
+	min-height: 150px;
+
 }
