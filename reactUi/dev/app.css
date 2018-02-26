@@ -9,3 +9,18 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, li{
 .app{
 
 }
+
+.flex-container{
+	display: flex;
+	border:1px solid #ccc;
+	flex-wrap:wrap;
+}
+
+.row{
+	flex-direction: row;
+}
+
+.flex-item{
+	text-align: center;
+	padding: 1.5em;
+}

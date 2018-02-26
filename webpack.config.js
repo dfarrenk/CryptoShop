@@ -19,6 +19,7 @@ module.exports = {
 			path.resolve(__dirname, "node_modules")
 			],
 			query:{
+				cacheDirectory: true,
 				presets: ['react']
 			}
 		}
@@ -28,6 +29,7 @@ module.exports = {
 	new UglifyJsParallelPlugin({
             workers: os.cpus().length, // usually having as many workers as cpu cores gives good results
             // other uglify options
-        })
+        }),
+	new webpack.optimize.DedupePlugin()
 	]
 }
