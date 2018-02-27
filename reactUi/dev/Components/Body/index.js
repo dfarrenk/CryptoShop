@@ -10,7 +10,6 @@ const populate = ()=>{
 	}
 }
 
-
 const Body = () =>{
 	populate()
 	return (
