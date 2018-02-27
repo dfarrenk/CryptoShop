@@ -4,8 +4,8 @@ import { Button } from 'react-bootstrap';
 
 let array = [];
 const populate = ()=>{
-	
-	for(let i=0;i<10;i++){
+
+	for(let i=0;i<Math.floor(Math.random()*25);i++){
 		array.push(<StoreItem className="flex-item" img="https://dummyimage.com/600x400/000/00ffd5.png"></StoreItem>)
 	}
 }
