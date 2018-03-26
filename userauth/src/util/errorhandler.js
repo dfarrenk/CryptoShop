@@ -58,7 +58,7 @@ class ErrorHandler {
          case 409:
             return this.errMsg(err, "An account with the same username or email has already been registered.", code, "database");
          case 410:
-            return this.errMsg(err, "requested link expired.", code); 
+            return this.errMsg(err, "Current request session has expired. ", code); 
          case 500:
             return this.errMsg(err, "internal server error, please note that our engineer has been notify.", code);
          default:

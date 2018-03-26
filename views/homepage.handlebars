@@ -1,4 +1,8 @@
-{{> navbar_visitor}}
+{{#if user}} 
+{{> navbar_user}} 
+{{else}} 
+{{> navbar_visitor}} 
+{{/if}}
 <!-- Page Wrapper-->
 <div id="wrapper">
   {{> sidebar}}
@@ -50,10 +54,7 @@
   <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
-{{> footer}} 
-{{> modal_login}} 
-{{> modal_error}} 
-{{> scripts}}
+{{> footer}} {{> modal_login}} {{> modal_error}} {{> scripts}}
 <script type="text/javascript">
 ReactDOM.render(
   React.createElement(UserAuth, { switch: "user_auth" }, null),

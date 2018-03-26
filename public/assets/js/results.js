@@ -19,7 +19,6 @@ $(document).on("click", ".buyItNow", function() {
 });
 
 
-
 $(function() {
 
     $(document).ajaxStart(function() {
@@ -33,17 +32,21 @@ $(function() {
     let searchTerm = searchToObject();
     searchTerm = searchTerm.item;
 
-    $("#searchBtn").click(function(e) {
-        e.preventDefault();
-        searchTerm = $("#searchBar").val().trim();
-        console.log(searchTerm);
-        $("#productMaster div").empty();
-        // walmartAPI(searchTerm);
-        ebayAPI(searchTerm).then(function(data) {
-            $(".showEbay").collapse();
-            // $("#hideMeOnSearch").toggle("hide");
 
-        });
+  $("#searchBtn").click(function(e) {
+    e.preventDefault();
+    searchTerm = $("#searchBar").val().trim();
+    if (location.pathname !== "/search") {
+      location.assign("/search?" + "item=" + searchTerm);
+    }
+    
+    console.log(searchTerm);
+    $("#productMaster div").empty();
+    // walmartAPI(searchTerm);
+    ebayAPI(searchTerm).then(function(data) {
+      $(".showEbay").collapse();
+      // $("#hideMeOnSearch").toggle("hide");
+
     });
 
 
@@ -56,8 +59,11 @@ $(function() {
         });
     }
 
-    //TODO run a search with searchQuery.item
-    //TODO replace iphone with text from search field
+
+  //TODO run a search with searchQuery.item
+  //TODO replace iphone with text from search field
+  //?search=car
+
 
     function searchToObject() {
         var pairs = window.location.search.substring(1).split("&"),
@@ -81,11 +87,77 @@ $(function() {
         // TODO get string from search bar
         let searchQuery = $("#searchBar").val().trim();
 
-        $.get("/search/" + searchQuery)
-            .done(function(res) {
-                console.log(res);
-                location.assign(res).done(function() {});
-            });
+
+    $.get("/search/" + searchQuery)
+    .done(function(res) {
+      console.log(res);
+      location.assign(res).done(function() {});
+    });
+  });
+
+  //Function to make Ebay API call and Display Results
+  function ebayAPI(searchTerm) {
+    return new Promise((resolve, reject) => {
+
+      var key = "VitaliyV-CryptoSh-SBX-610683bd3-3a4db4d6";
+      var url = "https://" + window.location.hostname + "/find/" + searchTerm + "/" + $("#dropdown").val();
+      console.log("Url:" + url);
+      //commented code for production mode
+      // var key = "ShaunBen-studentP-PRD-c132041a0-6a4708b8";
+      // var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+
+      // $.ajax({
+      //   url: url,
+      //   method: "GET",
+      //   dataType: "jsonp",
+      //   data: {
+      //     "OPERATION-NAME": "findItemsByKeywords",
+      //     "SERVICE-VERSION": "1.0.0",
+      //     "SECURITY-APPNAME": "ShaunBen-studentP-PRD-c132041a0-6a4708b8",
+      //     "RESPONSE-DATA-FORMAT": "JSON",
+      //     "paginationInput.entriesPerPage": "10",
+      //     keywords: searchTerm
+      //   }
+
+      $.get(url).done(function(result) {
+        console.log(result);
+
+        try {
+          result[0].itemId;
+        }
+        catch (err) {
+          if (err) {
+            console.log(err);
+            $("#productDisplay").html("<h3>No goods found</h3>");
+            return 1;
+          }
+        }
+        let len = result.length > 10 ? 10 : result.length;
+        for (var i = 0; i < len; i++) {
+          let imageUrl;
+          if (result[i].image) {
+            imageUrl = result[i].image.imageUrl;
+          }
+          else {
+            imageUrl = "http://via.placeholder.com/350x150";
+          }
+          var newCard =
+          $("<div class='col collapse multi-collapse showEbay' style='min-width: 14rem; max-width: 16rem; margin: 2%;'>" +
+            "<div class='card card-size'>" +
+            "<img class'card-img-top' src='" + imageUrl + "'>" +
+            "<div class='card-body'>" +
+            "<h6 class='card-title'>" + result[i].title + "</h6>" +
+            "<p class='card-text price'>" +"$"+ result[i].price.value + "</p>" +
+            "<a class='card-text' href='" + result[i].itemWebUrl + "' target='_blank'>View on eBay</a>" +
+            "<button class='btn btn-primary buyItNow' type='button' data-id='" + result[i].itemId.slice(3, 15) + "'> Buy It Now </button>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
+          $("#productDisplay").append(newCard);
+          resolve();
+        }
+      });
+
     });
 
     //Function to make Ebay API call and Display Results

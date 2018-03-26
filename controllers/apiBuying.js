@@ -81,7 +81,7 @@ module.exports = function() {
             "ebayId": req.body.ebayId
          };
          //8) check transaction every 10 seconds, 
-         let counter15Min = 90;
+         let counter24hours = 144;
          let transactionIntervalCheck = setInterval(() => {
             DEBUG && console.log("\x1b[32mDEBUG: \x1b[0mcheck transaction (interval 10 seconds): start");
             coinbase.checkTransaction(下.btcAddress, (transaction) => {
@@ -104,8 +104,8 @@ module.exports = function() {
                   });
                }
                //we have to create a client-side counter also
-               counter15Min--;
-               if (!counter15Min) {
+               counter24hours--;
+               if (!counter24hours) {
                   currentSocket.emit(currentClientId, "timeout");
                   clearInterval(transactionIntervalCheck);
                   res.status(410);

@@ -60,11 +60,15 @@ typings/
 # csr RSA certificate
 .csr
 
-# Encryptions 
-encryption/
+
+# html files
+view/
 
 # create-react-app
 cryptoshopreact/
 
 # notes
 .txt
+
+#test server
+test.js

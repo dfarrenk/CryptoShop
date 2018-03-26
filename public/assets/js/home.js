@@ -66,18 +66,22 @@ $(function() {
     });
 
 
-    $(".signOutStatic").click(function(e) {
-        e.preventDefault();
-        console.log("posting");
-        $.post({
-            url: "/logout"
-        }).then(function(res) {
-            console.log(res);
-            location.assign(res);
-        }).catch(err => {
-            console.log("If you are looking at this..means that you are not signed in");
-            console.log(err);
-            location.replace("/");
-        });
+
+  $(".signOutStatic").click(function(e) {
+    e.preventDefault();
+    console.log("posting");
+    $.post({
+      url: "/logout"
+    }).then(function(res) {
+      console.log(res);
+      location.reload();
+    }).catch(err => {
+      console.log("If you are looking at this..means that you are not signed in");
+      console.log(err);
+      const { status, responseJSON: error } = err;
+      const errmsg = error.message;
+      $("#errmsg").text(errmsg);
+      $("#error").modal();
+      location.assign("/");
     });
 }); // Document Ready End
